@@ -4,17 +4,15 @@ services:
     image: postgres
     container_name: movie-database
     restart: always
-    ports:
-      - "${POSTGRES_PORT}:5432"
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
 
     networks:
-      - movieNetwork
+      - movie-reminder-network
     volumes:
-      - data:/var/lib/postgresql/data
+      - movie-reminder-data:/var/lib/postgresql/data
 
   movieReminder:
     image: movie-reminder
@@ -23,20 +21,20 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "${MOVIE_PORT}:8080"
     depends_on:
       - database
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://database:${POSTGRES_PORT}/${POSTGRES_DB}"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://database:5432/${POSTGRES_DB}"
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION: ${JWT_EXPIRATION}
     networks:
-      - movieNetwork
-  
+      - movie-reminder-network
+
 networks:
-  movieNetwork:
+  movie-reminder-network:
 
 volumes:
-  data:
+  movie-reminder-data:
