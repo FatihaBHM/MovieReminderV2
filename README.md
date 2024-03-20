@@ -21,6 +21,19 @@ JWT_EXPIRATION=1800000
 MOVIE_PORT=8080
 ```
 
+Si vous souhaitez utiliser docker-compose.server-sam.yml, vous devez ajouter les variables d'environnement suivantes :
+```
+TUNNEL_TOKEN=mettre_une_cle_secrete // récupérer sur cloudlfare
+```
+
+Puis sur Cloudflare, dans les tunnels, ajouter un tunnel et récupérer le token.
+
+Puis dans le Public Hostanme, ajouter le nom de domaine que vous souhaitez utiliser ainsi que le type et l'url: 
+- Type = `HTTP`
+- URL = `movieNetwork:8080`
+
+![img.png](img.png)
+
 ---
 
 ## Lancer l'application
@@ -32,6 +45,12 @@ docker-compose up
 ou
 ```shell
 docker-compose up -d # pour lancer en arrière-plan
+```
+
+ou
+
+```shell
+docker-compose -f docker-compose.server-sam.yml up - d
 ```
 
 ---
@@ -47,7 +66,7 @@ docker-compose down
 
 ## Accéder à l'application
 
-L'application est accessible à l'adresse suivante :
+L'application est accessible à l'adresse suivante, si vous lancez cela en local :
 ```
 http://localhost:8080
 ```
