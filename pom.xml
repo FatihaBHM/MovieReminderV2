@@ -25,10 +25,10 @@
     </properties>
 
     <modules>
-        <module>exposition</module>
         <module>domain</module>
         <module>infrastructure</module>
         <module>application</module>
+        <module>exposition</module>
     </modules>
 
     <dependencies>
