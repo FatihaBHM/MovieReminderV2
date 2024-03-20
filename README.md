@@ -1,19 +1,8 @@
-[//]: # (#projet fil rouge Epita-La Fabrique Version4 en anglais)
-
-[//]: # (mesFilmsEtSeries - movieReminder)
-
-[//]: # ()
-[//]: # (#Rebelote : )
-
-[//]: # (#1-architecture avec modification du pom parents et des enfants)
-
-[//]: # (#2Classes et relations #3configuration Docker)
-
 # Docker
 ## Cloner le projet
 
 ```shell
-git clone git@github.com:FatihaBHM/movieReminder-mesFilmsEtSeries.git
+git clone git@github.com:FatihaBHM/MovieReminderV2.git
 ```
 
 ---
@@ -22,9 +11,14 @@ git clone git@github.com:FatihaBHM/movieReminder-mesFilmsEtSeries.git
 
 Créer un fichier .env à la racine du projet avec les variables d'environnement suivantes :
 ```
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
+POSTGRES_PASSWORD=samsamsam
 POSTGRES_DB=movieReminder
+POSTGRES_USER=forma
+POSTGRES_URL=localhost
+POSTGRES_PORT=5432
+JWT_SECRET=mettre_une_cle_secrete
+JWT_EXPIRATION=1800000
+MOVIE_PORT=8080
 ```
 
 ---
