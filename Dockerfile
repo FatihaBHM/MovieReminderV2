@@ -3,10 +3,10 @@ WORKDIR /workspace/app
 
 COPY . .
 
-RUN chmod +x ./mvnw
-RUN ./mvnw clean package -DskipTests
+RUN exposition/mvnw clean package -DskipTests
 
 FROM eclipse-temurin:21-jdk-alpine
 VOLUME /tmp
-COPY --from=build /workspace/app/exposition/target/exposition-0.0.1-SNAPSHOT.jar app.jar
+ARG VERSION=1.0-SNAPSHOT
+COPY --from=build /workspace/app/exposition/target/exposition-$VERSION.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
