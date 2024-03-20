@@ -1,0 +1,19 @@
+meta {
+  name: register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{distant_url}}/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "samsamsam",
+    "email": "samuel.michaux@gmail.fr",
+    "password": "Sam-uel@123"
+  }
+}
