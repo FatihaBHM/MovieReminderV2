@@ -33,10 +33,11 @@ public class SecurityConfiguration {
         return http.csrf(AbstractHttpConfigurer::disable) // Réactiver en Production
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Réactiver en Production suivant les cas
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/").permitAll()
+//                        .requestMatchers("/").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers(SWAGGGER_WHITELIST).permitAll()
+                        .anyRequest().permitAll())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exception -> exception
@@ -58,6 +59,13 @@ public class SecurityConfiguration {
                         }))
                 .build();
     }
+
+    private static final String[] SWAGGGER_WHITELIST = {
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/swagger-resources"
+    };
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

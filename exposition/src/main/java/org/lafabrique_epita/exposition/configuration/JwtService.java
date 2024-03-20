@@ -44,19 +44,19 @@ public class JwtService {
         //heure creation (millisecondes) date de référence : 01/01/1970
         final long CurrentTime = System.currentTimeMillis();
         //heure expiration(ms) + 30 minutes(je choisis mon temps)
-        //final long expirationTime = CurrentTime + 30 * 60 * 1000;
+        final long expirationTime = CurrentTime + tokenExpiration;
 
         //data => claims(en jwt)
         Map<String, Object> claims = Map.of(
                 "email", user.getUsername(),
-                Claims.EXPIRATION, new Date(tokenExpiration),
+                Claims.EXPIRATION, new Date(expirationTime),
                 Claims.SUBJECT, user.getUsername()
         );
         //JWT dépendance
         //générer le token avec Jwts
         final String token = Jwts.builder()
                 .issuedAt(new Date(CurrentTime))
-                .expiration(new Date(tokenExpiration))
+                .expiration(new Date(expirationTime))
                 .subject(user.getUsername())
                 .claims(claims)
                 .signWith(key)

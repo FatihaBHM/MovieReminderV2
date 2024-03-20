@@ -43,11 +43,11 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthenticationDto authenticationDto) {
-        System.out.println(authenticationDto);
+//        System.out.println(authenticationDto);
         final Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationDto.email(), authenticationDto.password())
         );
-        System.out.println(authenticate.isAuthenticated());
+//        System.out.println(authenticate.isAuthenticated());
         if (authenticate.isAuthenticated()) {
             UserEntity userEntity = (UserEntity) authenticate.getPrincipal();
             ResponseAuthenticationUserDto user = new ResponseAuthenticationUserDto(userEntity.getPseudo(), userEntity.getEmail());
@@ -55,7 +55,7 @@ public class UserController {
             return new ResponseEntity<>(response, HttpStatus.OK);
 //            return ResponseEntity.ok(response);
         }
-        System.out.println("coucou, je suis sam");
+//        System.out.println("coucou, je suis sam");
         return errors(HttpStatus.UNAUTHORIZED, "Unauthorized");
     }
 
