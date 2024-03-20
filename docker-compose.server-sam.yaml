@@ -4,8 +4,6 @@ services:
     image: postgres
     container_name: movie-database
     restart: always
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -23,7 +21,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "${MOVIE_PORT}:8080"
     depends_on:
       - database
     environment:
@@ -34,7 +32,7 @@ services:
       JWT_EXPIRATION: ${JWT_EXPIRATION}
     networks:
       - movieNetwork
-  
+
   cloudflare:
     image: cloudflare/cloudflared
     container_name: movie-reminder-cloudflare
