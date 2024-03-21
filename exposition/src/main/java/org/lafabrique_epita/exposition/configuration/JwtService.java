@@ -21,7 +21,7 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("#{${jwt.expiration:1800000} * 60 * 1000}")
+    @Value("#{${jwt.expiration} * 60 * 1000}")
     private Long tokenExpiration;
 
     private SecretKey key;
@@ -34,7 +34,9 @@ public class JwtService {
     }
 
     @PostConstruct
-    private void init() {this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));}
+    private void init() {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
 
     public Map<String, String> generateToken(String email) {
         UserDetails user = userDetailsService.loadUserByUsername(email);
@@ -48,7 +50,7 @@ public class JwtService {
         //heure expiration(ms) + 30 minutes(je choisis mon temps)
         final long expirationTime = CurrentTime + tokenExpiration;
 
-        log.info("Expiration time: {}", new Date(expirationTime));
+//        log.info("Expiration time: {}", new Date(expirationTime));
 
         //data => claims(en jwt)
         Map<String, Object> claims = Map.of(
@@ -69,6 +71,7 @@ public class JwtService {
         return Map.of("bearer", token);
 
     }
+
     public String extractUsername(String jwtToken) {
         return getPayLoad(jwtToken).getSubject();
     }
@@ -77,6 +80,7 @@ public class JwtService {
         Date expiration = new Date();
         return expiration.after(getPayLoad(jwtToken).getExpiration());
     }
+
     private Claims getPayLoad(String jwtToken) {
         return (Claims) Jwts.parser().verifyWith(key).build().parse(jwtToken).getPayload();
     }
