@@ -1,0 +1,33 @@
+meta {
+  name: postMovies
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{local_url}}/movies
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTEwMTg2OTUsImV4cCI6MTcxMTEwNTA5NSwic3ViIjoidXRpbGlzYXRldXJAZ21haWwuZnIiLCJlbWFpbCI6InV0aWxpc2F0ZXVyQGdtYWlsLmZyIn0.3akx2fxB7bMuQaGMiIeUxE7G9yxjJDCCHRKr4qXZE20
+}
+
+body:json {
+  {
+    "id": 1542,
+    "titre": "Office Space",
+    "duration": 90,
+    "resume": "A depressed white-collar worker tries hypnotherapy, only to find himself in a perpetual state of devil-may-care bliss that prompts him to start living by his own rules, and hatch a hapless attempt to embezzle money from his soul-killing employers.",
+    "imageLandscape": "/osVUxxcXnJd9tqSRZBk4RxVl0As.jpg",
+    "score": 7.82,
+    "genres": [
+      {
+        "id": 35,
+        "name": "Comedy"
+      }
+    ],
+    "date": "1999-02-19"
+  }
+}

@@ -22,7 +22,7 @@ public class MovieEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idMovie;
+    private Long id;
 
     private String backdropPath;
 

@@ -41,15 +41,15 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private RoleEnum role = RoleEnum.USER;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "playlist_tv_id")
     private List<PlayListTvEntity> playListTvs;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="playlist_movie_id")
     private List<PlayListMovieEntity> playListMovies;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "favorite_id")
     private List<FavoriteEntity> favorites;
 

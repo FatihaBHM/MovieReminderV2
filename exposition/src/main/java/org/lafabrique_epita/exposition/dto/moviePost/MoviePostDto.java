@@ -1,4 +1,4 @@
-package org.lafabrique_epita.exposition.dto.movie;
+package org.lafabrique_epita.exposition.dto.moviePost;
 
 import jakarta.validation.constraints.*;
 
@@ -26,9 +26,7 @@ public record MoviePostDto(
 
         List<GenreMoviePostDto> genres,
 
-        LocalDate date,
-
-        List<CommentMoviePostDto> review
+        LocalDate date
 
 ) {
 }
