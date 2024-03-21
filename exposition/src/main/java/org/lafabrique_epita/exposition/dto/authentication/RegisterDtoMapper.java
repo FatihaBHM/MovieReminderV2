@@ -1,4 +1,4 @@
-package org.lafabrique_epita.exposition.dto;
+package org.lafabrique_epita.exposition.dto.authentication;
 
 import lombok.RequiredArgsConstructor;
 import org.lafabrique_epita.domain.entities.UserEntity;

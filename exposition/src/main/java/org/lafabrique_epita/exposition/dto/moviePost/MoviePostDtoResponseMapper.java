@@ -9,34 +9,28 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class MoviePostDtoResponseMapper {
-    public static MovieEntity convertToMovieEntity(MoviePostResponseDto moviePostResponseDto) {
-        MovieEntity movie = new MovieEntity();
+    public static MoviePostResponseDto convertToMovieDto(MovieEntity movieEntity) {
 
-        movie.setId(moviePostResponseDto.id());
+        return new MoviePostResponseDto(
+                movieEntity.getId(),
+                movieEntity.getIdTmdb(),
+                movieEntity.getTitle(),
+                movieEntity.getDuration(),
+                movieEntity.getOverview(),
+                movieEntity.getBackdropPath(),
+                movieEntity.getScore(),
+                movieEntity.getGenres().stream()
+                        .map(MoviePostDtoResponseMapper::convertToGenreDto)
+                        .toList(),
+                movieEntity.getReleaseDate()
+        );
+    }
 
-        movie.setTitle(moviePostResponseDto.title());
-
-        movie.setDuration(moviePostResponseDto.duration());
-
-        movie.setOverview(moviePostResponseDto.overview());
-
-        movie.setBackdropPath(moviePostResponseDto.backdropPath());
-
-        movie.setScore(moviePostResponseDto.score());
-
-        List<GenreEntity> genres = moviePostResponseDto.genres().stream()
-                .map(genreMoviePostDto -> new GenreEntity(
-                        genreMoviePostDto.id(),
-                        genreMoviePostDto.idTmdb(),
-                        genreMoviePostDto.name(),
-                        null,
-                        null))
-                .toList();
-        movie.setGenres(genres);
-
-        movie.setReleaseDate(moviePostResponseDto.releaseDate());
-
-        return movie;
+    private static GenreMoviePostResponseDto convertToGenreDto(GenreEntity genreEntity) {
+        return new GenreMoviePostResponseDto(
+                genreEntity.getIdTmdb(),
+                genreEntity.getName()
+        );
     }
 
 

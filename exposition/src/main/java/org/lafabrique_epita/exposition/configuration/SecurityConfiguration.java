@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.List;
@@ -30,7 +31,8 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable) // Réactiver en Production
+        return http
+                .csrf(AbstractHttpConfigurer::disable) // Réactiver en Production
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Réactiver en Production suivant les cas
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/login").permitAll()
@@ -69,9 +71,9 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         return request -> {
-            var cors = new org.springframework.web.cors.CorsConfiguration();
-            cors.setAllowedOrigins(List.of("*")); // En Production, remplacer par le site autorisé (ex: http://localhost:4200)
-            cors.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+            var cors = new CorsConfiguration();
+            cors.setAllowedOrigins(List.of("*"));
+            cors.setAllowedMethods(List.of("*"));
             cors.setAllowedHeaders(List.of("*"));
             return cors;
         };
