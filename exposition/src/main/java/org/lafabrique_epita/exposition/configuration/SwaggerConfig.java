@@ -25,10 +25,10 @@ public class SwaggerConfig {
                                 .email("samuel.michaux@gmail.com")
                                 .name("Samuel Michaux"))
                 )
-                .addSecurityItem(new SecurityRequirement().addList("Bearer"))
+                .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(
                         new Components()
-                                .addSecuritySchemes("bearerAuth",
+                                .addSecuritySchemes("Bearer Authentication",
                                         new SecurityScheme()
                                                 .type(SecurityScheme.Type.HTTP)
                                                 .scheme("bearer")

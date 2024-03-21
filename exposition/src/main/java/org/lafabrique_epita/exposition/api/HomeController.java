@@ -11,4 +11,10 @@ public class HomeController {
         return ResponseEntity.ok("ok");
     }
 
+
+    @GetMapping("/test")
+    public ResponseEntity test() {
+        return ResponseEntity.ok("ok");
+    }
+
 }

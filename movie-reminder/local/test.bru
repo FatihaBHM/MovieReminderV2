@@ -1,0 +1,15 @@
+meta {
+  name: test
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{local_url}}/test
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTA5NTg4OTYsImV4cCI6MTcxMDk2MDY5Niwic3ViIjoic2FtdWVsLm1pY2hhdXhAZ21haWwuZnIiLCJlbWFpbCI6InNhbXVlbC5taWNoYXV4QGdtYWlsLmZyIn0.qx-vKt1NcKnoyS_aF7LQuPp5v9paVYFiazTrJHYXHPmMYpar6EOLB2Y-DYJb_QDT
+}
