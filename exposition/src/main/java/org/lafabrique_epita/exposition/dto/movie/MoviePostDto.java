@@ -15,6 +15,7 @@ public record MoviePostDto(
         Integer duration,
         String resume,
         String imageLandscape,
+
         Float score,
         @NotNull
         @NotBlank
