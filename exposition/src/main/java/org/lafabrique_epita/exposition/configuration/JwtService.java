@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,12 +15,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class JwtService {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration:1800000}")
+    @Value("#{${jwt.expiration:1800000} * 60 * 1000}")
     private Long tokenExpiration;
 
     private SecretKey key;
@@ -45,6 +47,8 @@ public class JwtService {
         final long CurrentTime = System.currentTimeMillis();
         //heure expiration(ms) + 30 minutes(je choisis mon temps)
         final long expirationTime = CurrentTime + tokenExpiration;
+
+        log.info("Expiration time: {}", new Date(expirationTime));
 
         //data => claims(en jwt)
         Map<String, Object> claims = Map.of(

@@ -17,9 +17,11 @@ POSTGRES_USER=forma
 POSTGRES_URL=localhost
 POSTGRES_PORT=5432
 JWT_SECRET=mettre_une_cle_secrete
-JWT_EXPIRATION=1800000
+JWT_EXPIRATION=1440
 MOVIE_PORT=8080
 ```
+
+`JWT_EXPIRATION` est en minutes.
 
 Si vous souhaitez utiliser docker-compose.server-sam.yml, vous devez ajouter les variables d'environnement suivantes :
 ```
