@@ -9,14 +9,16 @@ import java.util.List;
 @Repository
 public class MovieRepositoryAdapter implements MovieRepository {
 
-        private final MovieJPARepository movieJPARepository;
+    private final MovieJPARepository movieJPARepository;
 
-        public MovieRepositoryAdapter(MovieJPARepository movieJPARepository) {
-            this.movieJPARepository = movieJPARepository;
-        }
+    public MovieRepositoryAdapter(MovieJPARepository movieJPARepository) {
+        this.movieJPARepository = movieJPARepository;
+    }
 
     @Override
     public MovieEntity save(MovieEntity movie) {
+        // save comment
+        // save genre
         return movieJPARepository.save(movie);
     }
 

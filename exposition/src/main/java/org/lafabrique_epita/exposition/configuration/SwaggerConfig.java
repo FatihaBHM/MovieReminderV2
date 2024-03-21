@@ -10,8 +10,6 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Collections;
-
 @Configuration
 public class SwaggerConfig {
 
@@ -34,7 +32,7 @@ public class SwaggerConfig {
                                                 .scheme("bearer")
                                                 .bearerFormat("JWT")
 
-                ));
+                                ));
     }
 
     @Bean

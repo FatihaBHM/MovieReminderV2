@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Entity
+@Table(name = "movie")
 public class MovieEntity {
 
     @Id
@@ -22,13 +25,6 @@ public class MovieEntity {
     private Long idMovie;
 
     private String backdropPath;
-
-    //@Column(nullable = true)
-   // private String image_landscape;
-
-    //@Column(nullable = true)
-    //private String image_portrait;
-
 
     @Column(nullable = false)
     private Long idTmdb;
@@ -53,21 +49,13 @@ public class MovieEntity {
     @JoinColumn(name = "favorite_id")
     private List<FavoriteEntity> favorites;
 
-    @ManyToMany
-    @JoinTable(name = "movie_comments", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "movie_comment", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private List<CommentEntity> comments;
 
-    @ManyToMany
-    @JoinTable(name = "movie_genres", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<GenreEntity> genres;
-
-    @ManyToMany
-    @JoinTable(name = "movie_languages", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "language_id"))
-    private List<LanguageEntity> languages;
-
-    @ManyToMany
-    @JoinTable(name = "movie_countries", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "country_id"))
-    private List<CountryEntity> countries;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

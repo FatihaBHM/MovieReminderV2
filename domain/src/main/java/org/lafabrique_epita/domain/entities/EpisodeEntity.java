@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Entity
+@Table(name = "episode")
 public class EpisodeEntity {
 
     @Id
@@ -49,7 +52,7 @@ public class EpisodeEntity {
     private SeasonEntity season;
 
     @ManyToMany
-    @JoinTable(name = "episode_comments", joinColumns = @JoinColumn(name = "episode_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
+    @JoinTable(name = "episode_comment", joinColumns = @JoinColumn(name = "episode_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private List<CommentEntity> comments;
 
     @CreatedDate
