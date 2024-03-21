@@ -21,18 +21,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleException(DataIntegrityViolationException exception) {
-        System.out.println(exception.getMessage());
-        Map<String, ?> m = Map.of("status", 400, "errorMessage", "L'utilisateur existe déjà");
+//        System.out.println(exception.getMessage());
+        Map<String, ?> m = Map.of("status", 400, "errorMessage", exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
             return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(responseBody);
 
         }catch (JsonProcessingException e) {
-            String resp = """
-{
-    "status": 400,
-    "errorMessage": "L'utilisateur existe déjà"
-}""";
+            String resp = new StringBuilder()
+                    .append("{\n")
+                    .append("    \"status\": 400,\n")
+                    .append("    \"errorMessage\": \"")
+                    .append(exception.getMessage())
+                    .append("\"\n")
+                    .append("}")
+                    .toString();
             return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(resp);
         }
     }
@@ -47,6 +50,24 @@ public class GlobalExceptionHandler {
             return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(jsonErrors);
         }
         return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(jsonErrors);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception exception) {
+        Map<String, ?> m = Map.of("status", 500, "errorMessage", "Internal server error");
+        try {
+            String responseBody = mapper.writeValueAsString(m);
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(responseBody);
+
+        } catch (JsonProcessingException e) {
+            String resp = new StringBuilder()
+                    .append("{\n")
+                    .append("    \"status\": 500,\n")
+                    .append("    \"errorMessage\": \"Internal server error\"\n")
+                    .append("}")
+                    .toString();
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(resp);
+        }
     }
 
 
