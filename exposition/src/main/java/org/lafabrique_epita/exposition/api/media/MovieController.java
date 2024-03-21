@@ -4,13 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.lafabrique_epita.application.service.media.MovieServiceImpl;
 import org.lafabrique_epita.domain.entities.MovieEntity;
-import org.lafabrique_epita.domain.entities.UserEntity;
+
 import org.lafabrique_epita.exposition.dto.movie.MoviePostDto;
 import org.lafabrique_epita.exposition.dto.movie.MoviePostDtoMapper;
-import org.lafabrique_epita.exposition.dto.movie.MoviePostDtoResponseMapper;
-import org.lafabrique_epita.exposition.dto.user.RegisterDto;
-import org.lafabrique_epita.exposition.dto.user.RegisterDtoMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
