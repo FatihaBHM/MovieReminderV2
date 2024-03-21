@@ -1,4 +1,4 @@
-package org.lafabrique_epita.exposition.dto.movie;
+package org.lafabrique_epita.exposition.dto.moviePost;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,8 +17,7 @@ public record MoviePostResponseDto(
         String backdropPath,
         Float score,
         List<GenreMoviePostResponseDto> genres,
-        LocalDate releaseDate,
-        List<CommentMoviePostResponseDto> comments
+        LocalDate releaseDate
 
 ) {
 }

@@ -33,7 +33,6 @@ public class SecurityConfiguration {
         return http.csrf(AbstractHttpConfigurer::disable) // Réactiver en Production
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Réactiver en Production suivant les cas
                 .authorizeHttpRequests(requests -> requests
-//                        .requestMatchers("/").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
                         .requestMatchers(SWAGGGER_WHITELIST).permitAll()

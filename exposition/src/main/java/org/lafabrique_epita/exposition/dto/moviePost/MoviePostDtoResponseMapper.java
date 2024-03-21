@@ -1,7 +1,6 @@
-package org.lafabrique_epita.exposition.dto.movie;
+package org.lafabrique_epita.exposition.dto.moviePost;
 
 import lombok.RequiredArgsConstructor;
-import org.lafabrique_epita.domain.entities.CommentEntity;
 import org.lafabrique_epita.domain.entities.GenreEntity;
 import org.lafabrique_epita.domain.entities.MovieEntity;
 
@@ -13,7 +12,7 @@ public class MoviePostDtoResponseMapper {
     public static MovieEntity convertToMovieEntity(MoviePostResponseDto moviePostResponseDto) {
         MovieEntity movie = new MovieEntity();
 
-        movie.setIdMovie(moviePostResponseDto.id());
+        movie.setId(moviePostResponseDto.id());
 
         movie.setTitle(moviePostResponseDto.title());
 
@@ -36,16 +35,6 @@ public class MoviePostDtoResponseMapper {
         movie.setGenres(genres);
 
         movie.setReleaseDate(moviePostResponseDto.releaseDate());
-
-        List<CommentEntity> comments = moviePostResponseDto.comments().stream()
-                .map(commentMoviePostDto -> new CommentEntity(
-                        commentMoviePostDto.id(),
-                        commentMoviePostDto.description(),
-                        commentMoviePostDto.score(),
-                        null,
-                        null))
-                .toList();
-        movie.setComments(comments);
 
         return movie;
     }

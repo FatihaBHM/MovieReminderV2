@@ -1,4 +1,4 @@
-package org.lafabrique_epita.exposition.dto.movie;
+package org.lafabrique_epita.exposition.dto.moviePost;
 
 import lombok.RequiredArgsConstructor;
 import org.lafabrique_epita.domain.entities.GenreEntity;

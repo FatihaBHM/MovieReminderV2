@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Entity
+@Table(name = "serie")
 public class SerieEntity {
 
     @Id
@@ -30,12 +33,6 @@ public class SerieEntity {
     private String overview;
 
     private String posterPath;
-
-   // @Column(nullable = true)
-    //private String image_landscape;
-
-    //@Column(nullable = true)
-   // private String image_portrait;
 
     private LocalDate lastAirDate;
 
@@ -53,20 +50,12 @@ public class SerieEntity {
     private List<FavoriteEntity> favorites;
 
     @ManyToMany
-    @JoinTable(name = "serie_comments", joinColumns = @JoinColumn(name = "serie_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
+    @JoinTable(name = "serie_comment", joinColumns = @JoinColumn(name = "serie_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private List<CommentEntity> comments;
 
     @ManyToMany
-    @JoinTable(name = "serie_genres", joinColumns = @JoinColumn(name = "serie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @JoinTable(name = "serie_genre", joinColumns = @JoinColumn(name = "serie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<GenreEntity> genres;
-
-    @ManyToMany
-    @JoinTable(name = "serie_languages", joinColumns = @JoinColumn(name = "serie_id"), inverseJoinColumns = @JoinColumn(name = "language_id"))
-    private List<LanguageEntity> languages;
-
-    @ManyToMany
-    @JoinTable(name = "serie_countries", joinColumns = @JoinColumn(name = "serie_id"), inverseJoinColumns = @JoinColumn(name = "country_id"))
-    private List<CountryEntity> countries;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
