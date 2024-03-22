@@ -45,7 +45,7 @@ public class EpisodeEntity {
 
     @OneToMany
     @JoinColumn(name = "playlist_tv_id")
-    private List<PlayListTvEntity> playListTvs;
+    private List<PlayListTvEntity> playListTvs = List.of();
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "season_id")
@@ -53,7 +53,7 @@ public class EpisodeEntity {
 
     @ManyToMany
     @JoinTable(name = "episode_comment", joinColumns = @JoinColumn(name = "episode_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    private List<CommentEntity> comments;
+    private List<CommentEntity> comments = List.of();
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

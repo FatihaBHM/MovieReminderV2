@@ -2,15 +2,16 @@ package org.lafabrique_epita.exposition.api.authentication;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.exposition.configuration.JwtService;
-import org.lafabrique_epita.exposition.dto.*;
-import org.lafabrique_epita.exposition.dto.AuthenticationDto;
-import org.lafabrique_epita.exposition.dto.RegisterDto;
-import org.lafabrique_epita.exposition.dto.RegisterDtoMapper;
-import org.lafabrique_epita.exposition.dto.ResponseAuthenticationDto;
-import org.lafabrique_epita.exposition.dto.ResponseAuthenticationUserDto;
+
+import org.lafabrique_epita.exposition.dto.authentication.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +39,7 @@ public class UserController {
         this.jwtService = jwtService;
         this.mapper = mapper;
     }
+
 
     @PostMapping("/register")
     public ResponseEntity<Long> save(@Valid @RequestBody RegisterDto registerDto) {

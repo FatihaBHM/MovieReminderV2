@@ -4,4 +4,8 @@ import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PlayListMovieJPARepository extends JpaRepository<PlayListMovieEntity, Long> {
+    PlayListMovieEntity findByMovieIdAndUserId(Long movieId, Long userId);
+
+    PlayListMovieEntity findByUserIdAndFavoriteTrue(Long userId);
+
 }

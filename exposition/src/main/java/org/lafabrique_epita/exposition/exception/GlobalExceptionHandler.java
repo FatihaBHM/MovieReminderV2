@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -54,7 +55,24 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception exception) {
-        Map<String, ?> m = Map.of("status", 500, "errorMessage", "Internal server error");
+        Map<String, ?> m = Map.of("status", 500, "errorMessage", exception.getMessage());
+        try {
+            String responseBody = mapper.writeValueAsString(m);
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(responseBody);
+
+        } catch (JsonProcessingException e) {
+            String resp = new StringBuilder()
+                    .append("{\n")
+                    .append("    \"status\": 500,\n")
+                    .append("    \"errorMessage\": \"Internal server error\"\n")
+                    .append("}")
+                    .toString();
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(resp);
+        }
+    }
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<String> handleException(IllegalStateException exception) {
+        Map<String, ?> m = Map.of("status", 500, "errorMessage", exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
             return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(responseBody);
@@ -72,11 +90,13 @@ public class GlobalExceptionHandler {
 
 
     private Map<String, String> collectErrors(MethodArgumentNotValidException exception) {
-        return exception.getBindingResult().getAllErrors()
-                .stream()
-                .collect(Collectors.toMap(
-                        error -> ((FieldError) error).getField(),
-                        DefaultMessageSourceResolvable::getDefaultMessage));
+        // TODO: si variable idTmdb retourner id_tmdb
+        Map<String, String> err = new HashMap<>();
+         for (ObjectError error : exception.getBindingResult().getAllErrors()) {
+             err.put(((FieldError) error).getField(), error.getDefaultMessage());
+         }
+
+        return err;
     }
 
     private String prepareResponse(Map<String, String> errorMessage) {

@@ -42,7 +42,7 @@ public class SeasonEntity {
 
     @ManyToMany
     @JoinTable(name = "season_comment", joinColumns = @JoinColumn(name = "season_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    private List<CommentEntity> comments;
+    private List<CommentEntity> comments = List.of();
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

@@ -1,4 +1,4 @@
-package org.lafabrique_epita.exposition.dto;
+package org.lafabrique_epita.exposition.dto.authentication;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

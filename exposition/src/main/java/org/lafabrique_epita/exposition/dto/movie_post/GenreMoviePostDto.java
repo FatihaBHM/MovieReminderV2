@@ -1,10 +1,14 @@
-package org.lafabrique_epita.exposition.dto.moviePost;
+package org.lafabrique_epita.exposition.dto.movie_post;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record GenreMoviePostDto(
-        Long id, //A enlever?
+        /*
+        Request => idTmdb
+        Response => idTmdb
+         */
+        Long id,
 
         @NotNull
         @NotBlank
