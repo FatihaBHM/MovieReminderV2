@@ -40,13 +40,7 @@ public class UserController {
         this.mapper = mapper;
     }
 
-    @Operation(
-            summary = "Register",
-            description = "Register to the application",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Register successful", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Long.class))),
-            }
-    )
+
     @PostMapping("/register")
     public ResponseEntity<Long> save(@Valid @RequestBody RegisterDto registerDto) {
         UserEntity user = RegisterDtoMapper.convertToUserEntity(registerDto);
@@ -54,13 +48,6 @@ public class UserController {
         return ResponseEntity.ok(id);
     }
 
-    @Operation(
-            summary = "Login",
-            description = "Login to the application",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Login successful", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseAuthenticationDto.class))),
-            }
-    )
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthenticationDto authenticationDto) {
 //        System.out.println(authenticationDto);

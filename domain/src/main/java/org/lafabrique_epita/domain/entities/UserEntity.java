@@ -43,15 +43,11 @@ public class UserEntity implements UserDetails {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "playlist_tv_id")
-    private List<PlayListTvEntity> playListTvs;
+    private List<PlayListTvEntity> playListTvs = List.of();
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="playlist_movie_id")
-    private List<PlayListMovieEntity> playListMovies;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "favorite_id")
-    private List<FavoriteEntity> favorites;
+    private List<PlayListMovieEntity> playListMovies = List.of();
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

@@ -43,19 +43,15 @@ public class MovieEntity {
 
     @OneToMany
     @JoinColumn(name = "playlist_movie_id")
-    private List<PlayListMovieEntity> playListMovies;
-
-    @OneToMany
-    @JoinColumn(name = "favorite_id")
-    private List<FavoriteEntity> favorites;
+    private List<PlayListMovieEntity> playListMovies = List.of();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "movie_comment", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    private List<CommentEntity> comments;
+    private List<CommentEntity> comments = List.of();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<GenreEntity> genres;
+    private List<GenreEntity> genres = List.of();
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

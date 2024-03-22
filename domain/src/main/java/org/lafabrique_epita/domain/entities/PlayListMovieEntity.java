@@ -34,6 +34,8 @@ public class PlayListMovieEntity {
 
     private float score;
 
+    private boolean favorite;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusEnum status;

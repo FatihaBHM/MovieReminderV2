@@ -1,14 +1,14 @@
-package org.lafabrique_epita.exposition.dto.moviePost;
+package org.lafabrique_epita.exposition.dto.movie_post;
 
-import lombok.RequiredArgsConstructor;
+import org.lafabrique_epita.domain.entities.CommentEntity;
 import org.lafabrique_epita.domain.entities.GenreEntity;
 import org.lafabrique_epita.domain.entities.MovieEntity;
 
-
-import java.util.List;
-
-@RequiredArgsConstructor
 public class MoviePostDtoResponseMapper {
+
+    private MoviePostDtoResponseMapper() {
+    }
+
     public static MoviePostResponseDto convertToMovieDto(MovieEntity movieEntity) {
 
         return new MoviePostResponseDto(
@@ -22,19 +22,26 @@ public class MoviePostDtoResponseMapper {
                 movieEntity.getGenres().stream()
                         .map(MoviePostDtoResponseMapper::convertToGenreDto)
                         .toList(),
-                movieEntity.getReleaseDate()
+                movieEntity.getReleaseDate(),
+                movieEntity.getComments().stream()
+                        .map(MoviePostDtoResponseMapper::convertToCommentDto)
+                        .toList()
         );
     }
 
-    private static GenreMoviePostResponseDto convertToGenreDto(GenreEntity genreEntity) {
-        return new GenreMoviePostResponseDto(
+    private static GenreMoviePostDto convertToGenreDto(GenreEntity genreEntity) {
+        return new GenreMoviePostDto(
                 genreEntity.getIdTmdb(),
                 genreEntity.getName()
         );
     }
 
-
-
-
+    private static CommentDto convertToCommentDto(CommentEntity commentEntity) {
+        return new CommentDto(
+                commentEntity.getId(),
+                commentEntity.getDescription(),
+                commentEntity.getScore()
+        );
+    }
 
 }
