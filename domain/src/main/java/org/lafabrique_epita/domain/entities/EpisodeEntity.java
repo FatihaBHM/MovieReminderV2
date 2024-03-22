@@ -43,10 +43,6 @@ public class EpisodeEntity {
 
     private String imagePath;
 
-    @OneToMany
-    @JoinColumn(name = "playlist_tv_id")
-    private List<PlayListTvEntity> playListTvs = List.of();
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "season_id")
     private SeasonEntity season;

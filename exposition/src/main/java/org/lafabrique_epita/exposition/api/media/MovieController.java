@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Movie", description = "The movie API")
 @RestController
-//@RequestMapping("/movies")
 public class MovieController {
 
     private final MovieServiceImpl movieService;
@@ -69,6 +68,13 @@ public class MovieController {
 
     // /movies/{id}?favorite=1
     @Operation(summary = "Add or remove a movie from the favorite list")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Movie added to the favorite list"),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorMessage.class)
+            )),
+    })
     @GetMapping("/movies/{id}")
     public ResponseEntity<Favorite> getFrontMovie(
             @PathVariable Long id,
@@ -84,8 +90,6 @@ public class MovieController {
         playListMovieEntity.setFavorite(favorite == 1);
 
         playlistMovieService.save(playListMovieEntity);
-
-
 
         Favorite favoriteResponse = new Favorite(playListMovieEntity.isFavorite());
 

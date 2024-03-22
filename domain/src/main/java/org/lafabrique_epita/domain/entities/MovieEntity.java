@@ -41,10 +41,6 @@ public class MovieEntity {
     @Column(nullable = false)
     private String title;
 
-    @OneToMany
-    @JoinColumn(name = "playlist_movie_id")
-    private List<PlayListMovieEntity> playListMovies = List.of();
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "movie_comment", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private List<CommentEntity> comments = List.of();
