@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PlayListTvRepositoryAdapter implements PlayListTvRepository {
 
-    private final MovieJPARepository movieJPARepository;
+    private final PlayListTvJPARepository playListTvJPARepository;
 
-    public PlayListTvRepositoryAdapter(MovieJPARepository movieJPARepository) {
-        this.movieJPARepository = movieJPARepository;
+
+    public PlayListTvRepositoryAdapter(PlayListTvJPARepository playListTvJPARepository) {
+        this.playListTvJPARepository = playListTvJPARepository;
     }
-
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.lafabrique_epita.application.service.user.UserServiceImpl;
+import org.lafabrique_epita.application.service.user.UserServiceAdapter;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.exceptions.UserException;
 import org.lafabrique_epita.exposition.configuration.JwtService;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class UserControllerTest {
 
     @Mock
-    private UserServiceImpl userService;
+    private UserServiceAdapter userService;
 
     @Mock
     private AuthenticationManager authenticationManager;
