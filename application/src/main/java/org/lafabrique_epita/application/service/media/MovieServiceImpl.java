@@ -2,6 +2,7 @@ package org.lafabrique_epita.application.service.media;
 
 import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.repositories.MovieRepository;
+import org.lafabrique_epita.domain.services.IMovieService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

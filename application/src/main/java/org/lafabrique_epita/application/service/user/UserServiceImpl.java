@@ -2,13 +2,14 @@ package org.lafabrique_epita.application.service.user;
 
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.repositories.UserRepository;
+import org.lafabrique_epita.domain.services.IUserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class UserServiceImpl implements IUserService{
+public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -22,5 +23,10 @@ public class UserServiceImpl implements IUserService{
     public Long save(UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Override
+    public boolean findByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }

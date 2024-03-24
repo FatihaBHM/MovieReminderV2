@@ -1,11 +1,15 @@
-package org.lafabrique_epita.application.service.media.playlist_movies;
+package org.lafabrique_epita.application.service.media;
 
 import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieID;
+import org.lafabrique_epita.domain.exceptions.PlayListMovieException;
 import org.lafabrique_epita.domain.repositories.PlayListMovieRepository;
+import org.lafabrique_epita.domain.services.IPlaylistMovieService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class PlaylistMovieServiceImpl implements IPlaylistMovieService {
 
     private final PlayListMovieRepository playListMovieRepository;
@@ -16,7 +20,7 @@ public class PlaylistMovieServiceImpl implements IPlaylistMovieService {
 
 
     @Override
-    public void save(PlayListMovieEntity playListMovieEntity) {
+    public void save(PlayListMovieEntity playListMovieEntity) throws PlayListMovieException {
         this.playListMovieRepository.save(playListMovieEntity);
     }
 

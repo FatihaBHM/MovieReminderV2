@@ -1,7 +1,5 @@
 package org.lafabrique_epita.exposition.api.media;
 
-import io.swagger.v3.oas.annotations.OpenAPI31;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,12 +8,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.lafabrique_epita.application.service.media.MovieServiceImpl;
-import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceImpl;
+import org.lafabrique_epita.application.service.media.PlaylistMovieServiceImpl;
 import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieID;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.enums.StatusEnum;
+import org.lafabrique_epita.domain.exceptions.PlayListMovieException;
 import org.lafabrique_epita.exposition.dto.movie_post.MoviePostDto;
 import org.lafabrique_epita.exposition.dto.movie_post.MoviePostDtoMapper;
 import org.lafabrique_epita.exposition.dto.movie_post.MoviePostDtoResponseMapper;
@@ -48,7 +47,8 @@ public class MovieController {
             )),
     })
     @PostMapping("/movies")
-    public ResponseEntity<MoviePostResponseDto> getFrontMovie(@Valid @RequestBody MoviePostDto moviePostDto, Authentication authentication) {
+    public ResponseEntity<MoviePostResponseDto> getFrontMovie(@Valid @RequestBody MoviePostDto moviePostDto, Authentication authentication)
+            throws PlayListMovieException {
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         MovieEntity movie = MoviePostDtoMapper.convertToMovieEntity(moviePostDto);
@@ -80,7 +80,8 @@ public class MovieController {
             @PathVariable Long id,
             @RequestParam Integer favorite,
             Authentication authentication
-    ) {
+    )
+            throws PlayListMovieException {
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         PlayListMovieID playListMovieID = new PlayListMovieID(id, userEntity.getId());
@@ -96,6 +97,7 @@ public class MovieController {
         return ResponseEntity.ok(favoriteResponse);
     }
 
-    public record Favorite(boolean favorite) {}
+    public record Favorite(boolean favorite) {
+    }
 
 }

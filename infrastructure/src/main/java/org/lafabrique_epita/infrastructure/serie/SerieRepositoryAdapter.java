@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SerieRepositoryAdapter implements SerieRepository {
 
-    private final MovieJPARepository movieJPARepository;
+    private final SerieJPARepository serieJPARepository;
 
-    public SerieRepositoryAdapter(MovieJPARepository movieJPARepository) {
-        this.movieJPARepository = movieJPARepository;
+    public SerieRepositoryAdapter(SerieJPARepository serieJPARepository) {
+        this.serieJPARepository = serieJPARepository;
     }
 }
