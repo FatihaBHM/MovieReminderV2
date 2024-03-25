@@ -8,6 +8,7 @@ import org.lafabrique_epita.domain.repositories.PlayListMovieRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
@@ -25,7 +26,7 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
     }
 
     @Override
-    public PlayListMovieEntity findByMovieIdAndUserId(PlayListMovieID playListMovieID) {
+    public Optional<PlayListMovieEntity> findByMovieIdAndUserId(PlayListMovieID playListMovieID) {
         return this.playListMovieJPARepository.findByMovieIdAndUserId(playListMovieID.getMovieId(), playListMovieID.getUserId());
     }
 

@@ -32,63 +32,76 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
     }
 
 
-@Override
-public MoviePostResponseDto save(MoviePostDto moviePostDto, UserEntity user) throws MovieException {
+    @Override
+    public MoviePostResponseDto save(MoviePostDto moviePostDto, UserEntity user) throws MovieException {
 
-    // vérifier si l'utilisateur n'a pas déjà ajouté ce film à sa liste
-    Optional<MovieEntity> movieEntity = this.movieRepository.findByIdTmdb(moviePostDto.idTmdb());
-    MovieEntity movie;
-    if (movieEntity.isPresent()) {
-        movie = movieEntity.get();
-        boolean existsByMovieIdAndUserId = this.playListMovieRepository.existsByMovieIdAndUserId(movie.getId(), user.getId());
-        if (existsByMovieIdAndUserId) {
-            throw new MovieException("Movie already exists in the playlist", HttpStatus.CONFLICT);
+        // vérifier si l'utilisateur n'a pas déjà ajouté ce film à sa liste
+        Optional<MovieEntity> movieEntity = this.movieRepository.findByIdTmdb(moviePostDto.idTmdb());
+        MovieEntity movie;
+        if (movieEntity.isPresent()) {
+            movie = movieEntity.get();
+            boolean existsByMovieIdAndUserId = this.playListMovieRepository.existsByMovieIdAndUserId(movie.getId(), user.getId());
+            if (existsByMovieIdAndUserId) {
+                throw new MovieException("Movie already exists in the playlist", HttpStatus.CONFLICT);
+            }
+        } else {
+            movie = MoviePostDtoMapper.convertToMovieEntity(moviePostDto);
+            movie = this.movieRepository.save(movie);
         }
-    } else {
-        movie = MoviePostDtoMapper.convertToMovieEntity(moviePostDto);
-        movie = this.movieRepository.save(movie);
+
+        PlayListMovieEntity playListMovieEntity = createAndSavePlayListMovieEntity(movie, user);
+        return MoviePostDtoResponseMapper.convertToMovieDto(playListMovieEntity.getMovie());
     }
 
-    PlayListMovieEntity playListMovieEntity = createAndSavePlayListMovieEntity(movie, user);
-    return MoviePostDtoResponseMapper.convertToMovieDto(playListMovieEntity.getMovie());
-}
+    private PlayListMovieEntity createAndSavePlayListMovieEntity(MovieEntity movie, UserEntity user) {
+        PlayListMovieID playListMovieID = new PlayListMovieID(movie.getId(), user.getId());
+        PlayListMovieEntity playListMovieEntity = new PlayListMovieEntity();
+        playListMovieEntity.setId(playListMovieID);
+        playListMovieEntity.setMovie(movie);
+        playListMovieEntity.setUser(user);
+        playListMovieEntity.setStatus(StatusEnum.A_REGARDER);
 
-private PlayListMovieEntity createAndSavePlayListMovieEntity(MovieEntity movie, UserEntity user) {
-    PlayListMovieID playListMovieID = new PlayListMovieID(movie.getId(), user.getId());
-    PlayListMovieEntity playListMovieEntity = new PlayListMovieEntity();
-    playListMovieEntity.setId(playListMovieID);
-    playListMovieEntity.setMovie(movie);
-    playListMovieEntity.setUser(user);
-    playListMovieEntity.setStatus(StatusEnum.A_REGARDER);
-
-    return this.playListMovieRepository.save(playListMovieEntity);
-}
+        return this.playListMovieRepository.save(playListMovieEntity);
+    }
 
     @Override
     public MoviePostResponseDto findByUserAndByMovie(Long movieId, Long userId) {
         PlayListMovieID playListMovieID = new PlayListMovieID(movieId, userId);
-        PlayListMovieEntity playListMovieEntity = this.playListMovieRepository.findByMovieIdAndUserId(playListMovieID);
-        if (playListMovieEntity != null) {
-            return MoviePostDtoResponseMapper.convertToMovieDto(playListMovieEntity.getMovie());
-        }
-        return null;
+        Optional<PlayListMovieEntity> playListMovieEntity = this.playListMovieRepository.findByMovieIdAndUserId(playListMovieID);
+        return playListMovieEntity.map(listMovieEntity -> MoviePostDtoResponseMapper.convertToMovieDto(listMovieEntity.getMovie())).orElse(null);
     }
 
     @Override
-    public boolean setFavorite(Long idMovie, Integer favorite, Long idUser) throws MovieException {
+    public boolean updateFavorite(Long idMovie, Integer favorite, Long idUser) throws MovieException {
         MoviePostResponseDto playListMovieDto = this.findByUserAndByMovie(idMovie, idUser);
 
         if (playListMovieDto == null) {
-            throw new MovieException("Movie not found");
+            throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
         }
 
         PlayListMovieID playListMovieID = new PlayListMovieID(idMovie, idUser);
-        PlayListMovieEntity playListMovieEntity = this.playListMovieRepository.findByMovieIdAndUserId(playListMovieID);
+        Optional<PlayListMovieEntity> playListMovieEntity = this.playListMovieRepository.findByMovieIdAndUserId(playListMovieID);
 
-        playListMovieEntity.setFavorite(favorite == 1);
+        if (playListMovieEntity.isEmpty()) {
+            throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
+        }
 
-        PlayListMovieEntity m = this.playListMovieRepository.save(playListMovieEntity);
+        playListMovieEntity.get().setFavorite(favorite == 1);
+
+        PlayListMovieEntity m = this.playListMovieRepository.save(playListMovieEntity.get());
         return m.isFavorite();
+    }
+
+    public void updateStatus(Long movieId, StatusEnum status, Long userId) throws MovieException {
+        PlayListMovieID playListMovieID = new PlayListMovieID(movieId, userId);
+        Optional<PlayListMovieEntity> playListMovieEntity = this.playListMovieRepository.findByMovieIdAndUserId(playListMovieID);
+
+        if (playListMovieEntity.isPresent()) {
+            playListMovieEntity.get().setStatus(status);
+            this.playListMovieRepository.save(playListMovieEntity.get());
+            return;
+        }
+        throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
     }
 
     @Override

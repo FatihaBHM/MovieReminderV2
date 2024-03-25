@@ -8,9 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PlayListMovieJPARepositoryPort extends JpaRepository<PlayListMovieEntity, Long> {
-    PlayListMovieEntity findByMovieIdAndUserId(Long movieId, Long userId);
+    Optional<PlayListMovieEntity> findByMovieIdAndUserId(Long movieId, Long userId);
 
     PlayListMovieEntity findByUserIdAndFavoriteTrue(Long userId);
 
