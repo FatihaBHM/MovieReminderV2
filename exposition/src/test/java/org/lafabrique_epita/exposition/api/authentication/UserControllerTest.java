@@ -47,14 +47,14 @@ public class UserControllerTest {
     @Test
     public void testSave() throws UserException {
         // Arrange
-        RegisterDto registerDto = new RegisterDto("pseudo", "utilisateur@gmail.fr", "Motdepasse2024@");
+        RegisterDto registerDto = new RegisterDto("pseudo", "utilisateur@gmail.com", "Motdepasse2024@");
 
         UserEntity userEntity = new UserEntity();
         userEntity.setPseudo("pseudo");
-        userEntity.setEmail("utilisateur@gmail.fr");
+        userEntity.setEmail("utilisateur@gmail.com");
         userEntity.setPassword("Motdepasse2024@");
 
-        when(userService.save(any(UserEntity.class))).thenReturn(1L);
+        when(userService.save(any(RegisterDto.class))).thenReturn(1L);
 
         // Act
         // Uncomment the following line
@@ -70,14 +70,14 @@ public class UserControllerTest {
     @Test
     void testSaveThrowsException() throws UserException {
         // Arrange
-        RegisterDto registerDto = new RegisterDto("pseudo", "utilisateur@gmail.fr", "Motdepasse2024@");
+        RegisterDto registerDto = new RegisterDto("pseudo", "utilisateur@gmail.me", "Motdepasse2024@");
 
         UserEntity userEntity = new UserEntity();
         userEntity.setPseudo("pseudo");
-        userEntity.setEmail("utilisateur@gmail.fr");
+        userEntity.setEmail("utilisateur@gmail.me");
         userEntity.setPassword("Motdepasse2024@");
 
-        when(userService.save(any(UserEntity.class))).thenThrow(new UserException("Email already exists", HttpStatus.UNAUTHORIZED));
+        when(userService.save(any(RegisterDto.class))).thenThrow(new UserException("Email already exists", HttpStatus.UNAUTHORIZED));
 
         // Act and Assert
         Exception exception = assertThrows(UserException.class, () -> {

@@ -16,4 +16,6 @@ public interface PlayListMovieJPARepository extends JpaRepository<PlayListMovieE
 
     @Query("SELECT movie FROM PlayListMovieEntity WHERE user = :user")
     List<MovieEntity> findMoviesByUserId(@PathVariable UserEntity user);
+
+    boolean existsByMovieIdAndUserId(Long movieId, Long userId);
 }

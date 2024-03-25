@@ -20,8 +20,8 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
 
 
     @Override
-    public void save(PlayListMovieEntity playListMovieEntity) {
-        this.playListMovieJPARepository.save(playListMovieEntity);
+    public PlayListMovieEntity save(PlayListMovieEntity playListMovieEntity) {
+       return this.playListMovieJPARepository.save(playListMovieEntity);
     }
 
     @Override
@@ -40,12 +40,9 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
         return this.playListMovieJPARepository.findMoviesByUserId(user);
     }
 
-
-
-  /*  @Override
-    public List<MovieEntity> findAllMoviesByUser(PlayListMovieID playListMovieID) {
-        return this.playListMovieJPARepository.findAll(playListMovieID.getUserId());
-    } */
-
+    @Override
+    public boolean existsByMovieIdAndUserId(Long movieId, Long userId) {
+        return this.playListMovieJPARepository.existsByMovieIdAndUserId(movieId, userId)    ;
+    }
 
 }

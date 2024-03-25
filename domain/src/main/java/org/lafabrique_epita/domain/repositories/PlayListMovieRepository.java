@@ -8,11 +8,13 @@ import org.lafabrique_epita.domain.entities.UserEntity;
 import java.util.List;
 
 public interface PlayListMovieRepository {
-    void save(PlayListMovieEntity playListMovieEntity);
+    PlayListMovieEntity save(PlayListMovieEntity playListMovieEntity);
 
     PlayListMovieEntity findByMovieIdAndUserId(PlayListMovieID playListMovieID);
 
     PlayListMovieEntity findByUserIdAndFavoriteTrue(Long userId);
 
     List<MovieEntity> findMoviesByUserId(UserEntity user);
+
+    boolean existsByMovieIdAndUserId(Long movieId, Long userId);
 }

@@ -1,22 +1,17 @@
 package org.lafabrique_epita.exposition.exception;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.http.HttpStatus;
 
 public record ErrorMessage(
-        @Schema(
-                description = "HTTP status code",
-                example = "400"
-        )
         Integer status,
-
-        @Schema(
-                description = "Error message",
-                example = """
-                        {
-                            "id_tmdb": "ne doit pas être nul"
-                        }
-                        """
-        )
         Object errorMessage
 ) {
+    public static String format(HttpStatus status, String errorMessage) {
+        return String.format("""
+                {
+                    "status": %s,
+                    "errorMessage": %s
+                }
+                """, status, errorMessage);
+    }
 }

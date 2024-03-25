@@ -4,11 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.lafabrique_epita.application.dto.authentication.*;
+import org.lafabrique_epita.application.dto.authentication.AuthenticationDto;
+import org.lafabrique_epita.application.dto.authentication.RegisterDto;
+import org.lafabrique_epita.application.dto.authentication.ResponseAuthenticationDto;
+import org.lafabrique_epita.application.dto.authentication.ResponseAuthenticationUserDto;
+import org.lafabrique_epita.application.service.user.UserServiceImpl;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.exceptions.UserException;
 import org.lafabrique_epita.exposition.configuration.JwtService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +20,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.lafabrique_epita.application.service.user.UserServiceImpl;
 
 import java.util.Map;
 
@@ -41,13 +43,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<Long> save(@Valid @RequestBody RegisterDto registerDto) throws UserException {
-        UserEntity user = RegisterDtoMapper.convertToUserEntity(registerDto);
-
-        if (userService.findByEmail(user.getEmail())) {
-            throw new UserException("Email already exists", HttpStatus.BAD_REQUEST);
-        }
-
-        Long id = userService.save(user);
+        Long id = userService.save(registerDto);
         return ResponseEntity.ok(id);
     }
 

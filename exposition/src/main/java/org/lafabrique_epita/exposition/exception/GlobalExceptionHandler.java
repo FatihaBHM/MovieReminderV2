@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.domain.exceptions.MovieReminderException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ReflectionUtils;
@@ -26,7 +25,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleException(DataIntegrityViolationException exception) {
-//        System.out.println(exception.getMessage());
         Map<String, ?> m = Map.of("status", 400, "errorMessage", exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
