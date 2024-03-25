@@ -30,16 +30,8 @@ public class GlobalExceptionHandler {
             String responseBody = mapper.writeValueAsString(m);
             return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(responseBody);
 
-        } catch (JsonProcessingException e) {
-            String resp = new StringBuilder()
-                    .append("{\n")
-                    .append("    \"status\": 400,\n")
-                    .append("    \"errorMessage\": \"")
-                    .append(exception.getMessage())
-                    .append("\"\n")
-                    .append("}")
-                    .toString();
-            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(resp);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).build();
         }
     }
 
@@ -57,19 +49,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception exception) {
+        return getStringResponseEntity(exception);
+    }
+
+    private ResponseEntity<String> getStringResponseEntity(Exception exception) {
         Map<String, ?> m = Map.of("status", 500, "errorMessage", exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
             return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(responseBody);
 
-        } catch (JsonProcessingException e) {
-            String resp = new StringBuilder()
-                    .append("{\n")
-                    .append("    \"status\": 500,\n")
-                    .append("    \"errorMessage\": \"Internal server error\"\n")
-                    .append("}")
-                    .toString();
-            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(resp);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).build();
         }
     }
 
@@ -80,27 +70,14 @@ public class GlobalExceptionHandler {
             String responseBody = mapper.writeValueAsString(m);
             return ResponseEntity.status(exception.getHttpStatus()).contentType(MediaType.APPLICATION_JSON).body(responseBody);
 
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).build();
         }
     }
 
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<String> handleException(IllegalStateException exception) {
-        Map<String, ?> m = Map.of("status", 500, "errorMessage", exception.getMessage());
-        try {
-            String responseBody = mapper.writeValueAsString(m);
-            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(responseBody);
-
-        } catch (JsonProcessingException e) {
-            String resp = new StringBuilder()
-                    .append("{\n")
-                    .append("    \"status\": 500,\n")
-                    .append("    \"errorMessage\": \"Internal server error\"\n")
-                    .append("}")
-                    .toString();
-            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(resp);
-        }
+        return getStringResponseEntity(exception);
     }
 
 

@@ -22,7 +22,7 @@ public class PlayListMovieEntity {
     @EmbeddedId
     private PlayListMovieID id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @MapsId("movieId")
     @JoinColumn(name = "movie_id")
     private MovieEntity movie;

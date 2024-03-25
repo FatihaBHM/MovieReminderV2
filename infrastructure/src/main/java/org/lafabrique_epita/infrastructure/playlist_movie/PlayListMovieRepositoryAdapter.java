@@ -46,4 +46,9 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
         return this.playListMovieJPARepository.existsByMovieIdAndUserId(movieId, userId)    ;
     }
 
+    @Override
+    public void delete(PlayListMovieEntity playListMovieEntity) {
+        this.playListMovieJPARepository.delete(playListMovieEntity);
+    }
+
 }
