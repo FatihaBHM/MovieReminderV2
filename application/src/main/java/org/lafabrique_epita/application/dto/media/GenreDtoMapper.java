@@ -1,20 +1,20 @@
-package org.lafabrique_epita.application.dto.movie_post;
+package org.lafabrique_epita.application.dto.media;
 
 import org.lafabrique_epita.domain.entities.GenreEntity;
 
-public class GenreMoviePostDtoMapper {
-    private GenreMoviePostDtoMapper() {
+public class GenreDtoMapper {
+    private GenreDtoMapper() {
     }
 
-    public static GenreEntity convertToGenreEntity(GenreMovieDto genreMovieDto) {
+    public static GenreEntity convertToEntity(GenreDto genreMovieDto) {
         GenreEntity genre = new GenreEntity();
         genre.setIdTmdb(genreMovieDto.id());
         genre.setName(genreMovieDto.name());
         return genre;
     }
 
-    public static GenreMovieDto convertToGenreDto(GenreEntity genreEntity) {
-        return new GenreMovieDto(
+    public static GenreDto convertToDto(GenreEntity genreEntity) {
+        return new GenreDto(
                 genreEntity.getIdTmdb(),
                 genreEntity.getName()
         );

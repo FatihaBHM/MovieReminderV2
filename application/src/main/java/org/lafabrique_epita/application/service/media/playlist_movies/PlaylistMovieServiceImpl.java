@@ -1,7 +1,7 @@
 package org.lafabrique_epita.application.service.media.playlist_movies;
 
-import org.lafabrique_epita.application.dto.movie_get.MovieGetResponseDTO;
-import org.lafabrique_epita.application.dto.movie_get.MovieGetResponseDtoMapper;
+import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDTO;
+import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDtoMapper;
 import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieID;

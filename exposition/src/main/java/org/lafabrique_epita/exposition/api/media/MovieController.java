@@ -1,7 +1,5 @@
 package org.lafabrique_epita.exposition.api.media;
 
-import io.swagger.v3.oas.annotations.OpenAPI31;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,12 +7,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.lafabrique_epita.application.dto.movie_get.MovieGetResponseDTO;
-import org.lafabrique_epita.application.dto.movie_post.MoviePostDto;
-import org.lafabrique_epita.application.dto.movie_post.MoviePostDtoMapper;
-import org.lafabrique_epita.application.dto.movie_post.MoviePostDtoResponseMapper;
-import org.lafabrique_epita.application.dto.movie_post.MoviePostResponseDto;
-import org.lafabrique_epita.application.service.media.MovieServiceImpl;
+import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDTO;
+import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDto;
+import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDtoMapper;
+import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDtoResponseMapper;
+import org.lafabrique_epita.application.dto.media.movie_post.MoviePostResponseDto;
+import org.lafabrique_epita.application.service.media.movie.MovieServiceImpl;
 import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceImpl;
 import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieEntity;

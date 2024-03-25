@@ -1,4 +1,4 @@
-package org.lafabrique_epita.application.dto.movie_post;
+package org.lafabrique_epita.application.dto.media.movie_post;
 
 import org.lafabrique_epita.domain.entities.GenreEntity;
 import org.lafabrique_epita.domain.entities.MovieEntity;
