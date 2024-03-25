@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.lafabrique_epita.application.dto.authentication.*;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.exposition.configuration.JwtService;
 
-import org.lafabrique_epita.exposition.dto.authentication.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
