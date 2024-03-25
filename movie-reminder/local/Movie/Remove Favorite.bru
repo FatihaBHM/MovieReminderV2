@@ -7,9 +7,13 @@ meta {
 get {
   url: {{local_url}}/movies/2?favorite=0
   body: none
-  auth: none
+  auth: bearer
 }
 
 query {
   favorite: 0
+}
+
+auth:bearer {
+  token: {{token}}
 }
