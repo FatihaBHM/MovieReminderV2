@@ -105,6 +105,17 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
     }
 
     @Override
+    public void delete(Long movieId, int i, Long userId) throws MovieException {
+        PlayListMovieID playListMovieID = new PlayListMovieID(movieId, userId);
+        Optional<PlayListMovieEntity> playListMovieEntity = this.playListMovieRepository.findByMovieIdAndUserId(playListMovieID);
+        if (playListMovieEntity.isPresent()) {
+            this.playListMovieRepository.delete(playListMovieEntity.get());
+        } else {
+            throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Override
     public List<MovieGetResponseDTO> findAllMoviesByUser(UserEntity user) {
         List<MovieEntity> playlists = playListMovieRepository.findMoviesByUserId(user);
 

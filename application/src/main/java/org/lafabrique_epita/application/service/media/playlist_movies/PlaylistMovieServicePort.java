@@ -20,4 +20,6 @@ public interface PlaylistMovieServicePort {
     boolean updateFavorite(Long idMovie, Integer favorite, Long idUser) throws MovieException;
 
     void updateStatus(Long movieId, StatusEnum status, Long userId) throws MovieException;
+
+    void delete(Long movieId, int i, Long userId) throws MovieException;
 }

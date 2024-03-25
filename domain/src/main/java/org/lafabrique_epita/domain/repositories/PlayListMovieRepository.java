@@ -18,4 +18,6 @@ public interface PlayListMovieRepository {
     List<MovieEntity> findMoviesByUserId(UserEntity user);
 
     boolean existsByMovieIdAndUserId(Long movieId, Long userId);
+
+    void delete(PlayListMovieEntity playListMovieEntity);
 }

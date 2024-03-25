@@ -163,4 +163,23 @@ public class MovieController {
 
         return ResponseEntity.ok(playListMovies);
     }
+
+    // DELETE /movies/{id}
+    @Operation(summary = "Supprimer un film de la playlist de l'utilisateur connecté")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Film supprimé de la playlist"),
+            @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
+                    mediaType = "application/json",
+                    examples = @ExampleObject(value = "{\"errorMessage\":\"Movie not found\",\"status\":404}"),
+                    schema = @Schema(implementation = ErrorMessage.class)
+            ))
+    })
+    @DeleteMapping("/movies/{id}")
+    public ResponseEntity<ErrorMessage> deleteMovie(@PathVariable Long id, Authentication authentication) throws MovieException {
+        UserEntity userEntity = (UserEntity) authentication.getPrincipal();
+
+        playlistMovieService.delete(id, 0, userEntity.getId());
+
+        return ResponseEntity.ok(new ErrorMessage(200, "Movie deleted"));
+    }
 }
