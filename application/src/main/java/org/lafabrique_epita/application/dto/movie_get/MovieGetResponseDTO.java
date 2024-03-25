@@ -1,23 +1,24 @@
-package org.lafabrique_epita.exposition.dto.movie_post;
+package org.lafabrique_epita.application.dto.movie_get;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.lafabrique_epita.application.dto.movie_post.CommentDto;
+import org.lafabrique_epita.application.dto.movie_post.GenreMovieDto;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public record MoviePostDto(
+public record MovieGetResponseDTO(
+        Long id,
 
         @JsonProperty("id_tmdb")
-        @NotNull
-        @PositiveOrZero
         Long idTmdb,
 
         @NotNull
         @NotBlank
         String title,
 
-        @PositiveOrZero
         Integer duration,
 
         String overview,
@@ -30,7 +31,10 @@ public record MoviePostDto(
         List<GenreMovieDto> genres,
 
         @JsonProperty("release_date")
-        LocalDate releaseDate
+        LocalDate releaseDate,
+
+        List<CommentDto> comments
 
 ) {
+
 }

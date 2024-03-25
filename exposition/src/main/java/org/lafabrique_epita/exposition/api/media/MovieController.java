@@ -1,6 +1,7 @@
 package org.lafabrique_epita.exposition.api.media;
 
 import jakarta.validation.Valid;
+import org.lafabrique_epita.application.dto.movie_get.MovieGetResponseDTO;
 import org.lafabrique_epita.application.service.media.MovieServiceImpl;
 import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceImpl;
 import org.lafabrique_epita.domain.entities.MovieEntity;
@@ -8,6 +9,7 @@ import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieID;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.enums.StatusEnum;
+import org.lafabrique_epita.exposition.dto.movie_get.MovieGetResponseDtoMapper;
 import org.lafabrique_epita.exposition.dto.movie_post.MoviePostDto;
 import org.lafabrique_epita.exposition.dto.movie_post.MoviePostDtoMapper;
 import org.lafabrique_epita.exposition.dto.movie_post.MoviePostDtoResponseMapper;
@@ -16,6 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
 @RestController
 //@RequestMapping("/movies")
 public class MovieController {
@@ -23,6 +29,7 @@ public class MovieController {
     private final MovieServiceImpl movieService;
 
     private final PlaylistMovieServiceImpl playlistMovieService;
+
 
 
     public MovieController(MovieServiceImpl movieService, PlaylistMovieServiceImpl playlistMovieService) {
@@ -67,7 +74,6 @@ public class MovieController {
         playlistMovieService.save(playListMovieEntity);
 
 
-
         Favorite favoriteResponse = new Favorite(playListMovieEntity.isFavorite());
 
         return ResponseEntity.ok(favoriteResponse);
@@ -75,4 +81,16 @@ public class MovieController {
 
     public record Favorite(boolean favorite) {}
 
+    @GetMapping("/movies")
+    public ResponseEntity<List<MovieGetResponseDTO>> getAllMoviesByUser(Authentication authentication) {
+
+        UserEntity userEntity =  (UserEntity) authentication.getPrincipal();
+
+        //Récupérer la liste de films du user dans le service
+        List<MovieGetResponseDTO> playListMovies = playlistMovieService.findAllMoviesByUser(userEntity);
+
+        //convertir en movieDTO
+        //List<FilmEntity> allFilmsPublicAndByUser = filmServicePort.getAllFilmsPublicAndByUser(userDetails.getUsername());
+         return ResponseEntity.ok(playListMovies);
+    }
 }

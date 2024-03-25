@@ -1,0 +1,18 @@
+meta {
+  name: login2
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{local_url}}/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "utilisateur@gmail.fr",
+    "password": "Motdepasse2024@"
+  }
+}

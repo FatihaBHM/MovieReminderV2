@@ -3,7 +3,7 @@ package org.lafabrique_epita.exposition.dto.movie_post;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record GenreMoviePostDto(
+public record GenreMovieDto(
         /*
         Request => idTmdb
         Response => idTmdb

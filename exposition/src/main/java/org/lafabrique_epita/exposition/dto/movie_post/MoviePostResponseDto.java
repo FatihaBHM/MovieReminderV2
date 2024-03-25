@@ -26,7 +26,7 @@ public record MoviePostResponseDto(
 
         Float score,
 
-        List<GenreMoviePostDto> genres,
+        List<GenreMovieDto> genres,
 
         @JsonProperty("release_date")
         LocalDate releaseDate,
