@@ -5,11 +5,15 @@ meta {
 }
 
 get {
-  url: {{local_url}}/movies/2?favorite=1
+  url: {{local_url}}/movies/2?favorite=0
   body: none
-  auth: none
+  auth: bearer
 }
 
 query {
-  favorite: 1
+  favorite: 0
+}
+
+auth:bearer {
+  token: {{token}}
 }

@@ -9,5 +9,7 @@ import java.util.Optional;
 public interface IUserJpaRepositoryPort extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByEmail(String email);
 
+    Optional<UserEntity> findById(Long id);
+
     Optional<UserEntity> findByEmailAndPassword(String email, String password);
 }

@@ -1,0 +1,19 @@
+meta {
+  name: register2
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{local_url}}/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "pseudo",
+    "email": "utilisateur2@gmail.fr",
+    "password": "Motdepasse2024@"
+  }
+}

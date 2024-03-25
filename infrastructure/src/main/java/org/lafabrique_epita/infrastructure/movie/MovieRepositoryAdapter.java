@@ -5,6 +5,7 @@ import org.lafabrique_epita.domain.repositories.MovieRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class MovieRepositoryAdapter implements MovieRepository {
@@ -25,5 +26,15 @@ public class MovieRepositoryAdapter implements MovieRepository {
     @Override
     public List<MovieEntity> findAll() {
         return movieJPARepository.findAll();
+    }
+
+    @Override
+    public Optional<MovieEntity> findById(Long id) {
+        return movieJPARepository.findById(id);
+    }
+
+    @Override
+    public Optional<MovieEntity> findByIdTmdb(Long idTmdb) {
+        return movieJPARepository.findByIdTmdb(idTmdb);
     }
 }

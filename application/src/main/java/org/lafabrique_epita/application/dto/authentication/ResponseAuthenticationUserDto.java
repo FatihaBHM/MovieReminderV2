@@ -1,4 +1,4 @@
-package org.lafabrique_epita.exposition.dto.authentication;
+package org.lafabrique_epita.application.dto.authentication;
 
 public record ResponseAuthenticationUserDto(
         String username,

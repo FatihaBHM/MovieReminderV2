@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.lafabrique_epita.domain.exceptions.MovieReminderException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleException(DataIntegrityViolationException exception) {
-//        System.out.println(exception.getMessage());
         Map<String, ?> m = Map.of("status", 400, "errorMessage", exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
@@ -70,6 +70,18 @@ public class GlobalExceptionHandler {
                     .append("}")
                     .toString();
             return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(resp);
+        }
+    }
+
+    @ExceptionHandler(MovieReminderException.class)
+    public ResponseEntity<String> handleException(MovieReminderException exception) {
+        Map<String, ?> m = Map.of("status", exception.getHttpStatus().value(), "errorMessage", exception.getMessage());
+        try {
+            String responseBody = mapper.writeValueAsString(m);
+            return ResponseEntity.status(exception.getHttpStatus()).contentType(MediaType.APPLICATION_JSON).body(responseBody);
+
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).build();
         }
     }
 

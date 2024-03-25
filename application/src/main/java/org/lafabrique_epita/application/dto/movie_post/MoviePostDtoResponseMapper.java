@@ -1,4 +1,4 @@
-package org.lafabrique_epita.exposition.dto.movie_post;
+package org.lafabrique_epita.application.dto.movie_post;
 
 import org.lafabrique_epita.domain.entities.CommentEntity;
 import org.lafabrique_epita.domain.entities.GenreEntity;
@@ -29,8 +29,8 @@ public class MoviePostDtoResponseMapper {
         );
     }
 
-    private static GenreMoviePostDto convertToGenreDto(GenreEntity genreEntity) {
-        return new GenreMoviePostDto(
+    private static GenreMovieDto convertToGenreDto(GenreEntity genreEntity) {
+        return new GenreMovieDto(
                 genreEntity.getIdTmdb(),
                 genreEntity.getName()
         );
