@@ -20,8 +20,8 @@ public class SwaggerConfig {
                         .title("La Fabrique Epita API")
                         .version("1.0")
                         .contact(new Contact()
-                                .email("samuel.michaux@gmail.com")
-                                .name("Samuel Michaux"))
+                                .email("fatiha.benou-halima@epita.fr")
+                                .name("Fatiha Benou-halima"))
                 )
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                 .components(

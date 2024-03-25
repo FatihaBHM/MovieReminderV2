@@ -2,11 +2,7 @@ package org.lafabrique_epita.exposition.api.authentication;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.exposition.configuration.JwtService;
@@ -24,6 +20,7 @@ import org.lafabrique_epita.application.service.user.UserServiceImpl;
 
 import java.util.Map;
 
+@Tag(name = "User", description = "The user API")
 @RestController
 public class UserController {
 
@@ -50,19 +47,15 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthenticationDto authenticationDto) {
-//        System.out.println(authenticationDto);
         final Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationDto.email(), authenticationDto.password())
         );
-//        System.out.println(authenticate.isAuthenticated());
         if (authenticate.isAuthenticated()) {
             UserEntity userEntity = (UserEntity) authenticate.getPrincipal();
             ResponseAuthenticationUserDto user = new ResponseAuthenticationUserDto(userEntity.getPseudo(), userEntity.getEmail());
             ResponseAuthenticationDto response = new ResponseAuthenticationDto(jwtService.generateToken(userEntity.getEmail()).get("bearer"),user);
             return new ResponseEntity<>(response, HttpStatus.OK);
-//            return ResponseEntity.ok(response);
         }
-//        System.out.println("coucou, je suis sam");
         return errors(HttpStatus.UNAUTHORIZED, "Unauthorized");
     }
 
