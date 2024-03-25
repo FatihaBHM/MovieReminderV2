@@ -72,15 +72,19 @@ public class MovieController {
             @ApiResponse(responseCode = "200", description = "Movie added to the favorite list"),
             @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(
                     mediaType = "application/json",
+                    examples = @ExampleObject(value = "{\"errorMessage\":\"Favorite must be 0 or 1(0 => remove, 1 => add)\",\"status\":400}"),
                     schema = @Schema(implementation = ErrorMessage.class)
             )),
     })
     @GetMapping("/movies/{id}")
     public ResponseEntity<Favorite> getFrontMovie(
             @PathVariable Long id,
-            @RequestParam Integer favorite,
+            @RequestParam(defaultValue = "0") Integer favorite,
             Authentication authentication
     ) throws MovieException {
+        if (favorite < 0 || favorite > 1) {
+            throw new MovieException("Favorite must be 0 or 1(0 => remove, 1 => add)", HttpStatus.BAD_REQUEST);
+        }
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         boolean fav = playlistMovieService.setFavorite(id, favorite, userEntity.getId());
