@@ -34,7 +34,6 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
 
     @Override
     public MoviePostResponseDto save(MoviePostDto moviePostDto, UserEntity user) throws MovieException {
-
         // vérifier si l'utilisateur n'a pas déjà ajouté ce film à sa liste
         Optional<MovieEntity> movieEntity = this.movieRepository.findByIdTmdb(moviePostDto.idTmdb());
         MovieEntity movie;
@@ -113,6 +112,15 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
         } else {
             throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Override
+    public MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) throws MovieException {
+        Optional<MovieEntity> movieEntity = this.movieRepository.findByIdTmdb(idTmdb);
+        if (movieEntity.isPresent()) {
+            return MovieGetResponseDtoMapper.convertToMovieDto(movieEntity.get());
+        }
+        throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
     }
 
     @Override

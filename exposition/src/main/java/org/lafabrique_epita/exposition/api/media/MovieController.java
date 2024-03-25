@@ -11,7 +11,9 @@ import jakarta.validation.Valid;
 import org.lafabrique_epita.application.dto.movie_get.MovieGetResponseDTO;
 import org.lafabrique_epita.application.dto.movie_post.MoviePostDto;
 import org.lafabrique_epita.application.dto.movie_post.MoviePostResponseDto;
+import org.lafabrique_epita.application.service.media.MovieServicePort;
 import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceAdapter;
+import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.MovieException;
@@ -30,8 +32,11 @@ public class MovieController {
 
     private final PlaylistMovieServiceAdapter playlistMovieService;
 
-    public MovieController(PlaylistMovieServiceAdapter playlistMovieService) {
+    private final MovieServicePort movieService;
+
+    public MovieController(PlaylistMovieServiceAdapter playlistMovieService, MovieServicePort movieService) {
         this.playlistMovieService = playlistMovieService;
+        this.movieService = movieService;
     }
 
     @Operation(summary = "Ajouter un film à la playlist de l'utilisateur connecté")
@@ -83,7 +88,7 @@ public class MovieController {
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
     })
-    @GetMapping("/movies/{id}")
+    @PatchMapping("/movies/{id}")
     public ResponseEntity<Return> getFrontMovie(
             @PathVariable Long id,
             @RequestParam(required = false) Integer favorite,
@@ -181,5 +186,26 @@ public class MovieController {
         playlistMovieService.delete(id, 0, userEntity.getId());
 
         return ResponseEntity.ok(new ErrorMessage(200, "Movie deleted"));
+    }
+
+    // GET /movies/{idTmdb}
+    @Operation(summary = "Obtenir un film par son id TMDB")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Film trouvé",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieGetResponseDTO.class))
+            ),
+            @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
+                    mediaType = "application/json",
+                    examples = @ExampleObject(value = "{\"errorMessage\":\"Movie not found\",\"status\":404}"),
+                    schema = @Schema(implementation = ErrorMessage.class)
+            ))
+    })
+    @GetMapping("/movies/{idTmdb}")
+    public ResponseEntity<MovieGetResponseDTO> getMovieByIdTmdb(@PathVariable Long idTmdb) throws MovieException {
+        MovieGetResponseDTO movie = movieService.findMovieByIdTmdb(idTmdb);
+        if (movie == null) {
+            throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(movie);
     }
 }
