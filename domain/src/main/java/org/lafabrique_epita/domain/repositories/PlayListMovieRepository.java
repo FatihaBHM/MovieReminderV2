@@ -14,7 +14,5 @@ public interface PlayListMovieRepository {
 
     PlayListMovieEntity findByUserIdAndFavoriteTrue(Long userId);
 
-    //List<MovieEntity> findAllMoviesByUser(PlayListMovieID playListMovieID);
-
     List<MovieEntity> findMoviesByUserId(UserEntity user);
 }

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.lafabrique_epita.application.dto.authentication.*;
 import org.lafabrique_epita.domain.entities.UserEntity;
+import org.lafabrique_epita.domain.exceptions.UserException;
 import org.lafabrique_epita.exposition.configuration.JwtService;
 
 import org.springframework.http.HttpStatus;
@@ -39,8 +40,13 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<Long> save(@Valid @RequestBody RegisterDto registerDto) {
+    public ResponseEntity<Long> save(@Valid @RequestBody RegisterDto registerDto) throws UserException {
         UserEntity user = RegisterDtoMapper.convertToUserEntity(registerDto);
+
+        if (userService.findByEmail(user.getEmail())) {
+            throw new UserException("Email already exists", HttpStatus.BAD_REQUEST);
+        }
+
         Long id = userService.save(user);
         return ResponseEntity.ok(id);
     }

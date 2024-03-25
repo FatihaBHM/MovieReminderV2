@@ -23,4 +23,9 @@ public class UserServiceImpl implements IUserService{
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+
+    @Override
+    public boolean findByEmail(String email) {
+        return this.userRepository.findByEmail(email).isPresent();
+    }
 }

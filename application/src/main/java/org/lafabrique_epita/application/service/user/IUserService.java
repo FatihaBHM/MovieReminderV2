@@ -6,4 +6,6 @@ public interface IUserService {
 
     // Long car c'est le type de l'id
     Long save(UserEntity user);
+
+    boolean findByEmail(String email);
 }
