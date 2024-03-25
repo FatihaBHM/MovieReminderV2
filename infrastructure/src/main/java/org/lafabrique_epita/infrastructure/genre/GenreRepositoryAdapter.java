@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class GenreRepositoryAdapter implements GenreRepository {
 
-    private final GenreJPARepository genreJPARepository;
+    private final GenreJPARepositoryPort genreJPARepository;
 
-    public GenreRepositoryAdapter(GenreJPARepository genreJPARepository) {
+    public GenreRepositoryAdapter(GenreJPARepositoryPort genreJPARepository) {
         this.genreJPARepository = genreJPARepository;
     }
 }

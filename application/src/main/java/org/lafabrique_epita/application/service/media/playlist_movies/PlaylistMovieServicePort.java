@@ -4,11 +4,12 @@ import org.lafabrique_epita.application.dto.movie_get.MovieGetResponseDTO;
 import org.lafabrique_epita.application.dto.movie_post.MoviePostDto;
 import org.lafabrique_epita.application.dto.movie_post.MoviePostResponseDto;
 import org.lafabrique_epita.domain.entities.UserEntity;
+import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.MovieException;
 
 import java.util.List;
 
-public interface IPlaylistMovieService {
+public interface PlaylistMovieServicePort {
     MoviePostResponseDto save(MoviePostDto moviePostDto, UserEntity user) throws MovieException;
 
     List<MovieGetResponseDTO> findAllMoviesByUser(UserEntity user);
@@ -16,5 +17,7 @@ public interface IPlaylistMovieService {
 
     MoviePostResponseDto findByUserAndByMovie(Long movieId, Long userId);
 
-    boolean setFavorite(Long idMovie, Integer favorite, Long idUser) throws MovieException;
+    boolean updateFavorite(Long idMovie, Integer favorite, Long idUser) throws MovieException;
+
+    void updateStatus(Long movieId, StatusEnum status, Long userId) throws MovieException;
 }

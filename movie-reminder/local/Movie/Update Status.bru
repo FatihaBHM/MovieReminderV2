@@ -1,0 +1,19 @@
+meta {
+  name: Update Status
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{local_url}}/movies/6?favorite=3
+  body: none
+  auth: bearer
+}
+
+query {
+  favorite: 3
+}
+
+auth:bearer {
+  token: {{token}}
+}

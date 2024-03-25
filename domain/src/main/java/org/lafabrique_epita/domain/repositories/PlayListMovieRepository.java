@@ -6,11 +6,12 @@ import org.lafabrique_epita.domain.entities.PlayListMovieID;
 import org.lafabrique_epita.domain.entities.UserEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PlayListMovieRepository {
     PlayListMovieEntity save(PlayListMovieEntity playListMovieEntity);
 
-    PlayListMovieEntity findByMovieIdAndUserId(PlayListMovieID playListMovieID);
+    Optional<PlayListMovieEntity> findByMovieIdAndUserId(PlayListMovieID playListMovieID);
 
     PlayListMovieEntity findByUserIdAndFavoriteTrue(Long userId);
 
