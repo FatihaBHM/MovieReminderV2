@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
 
-    private final PlayListMovieJPARepository playListMovieJPARepository;
+    private final PlayListMovieJPARepositoryPort playListMovieJPARepository;
 
-    public PlayListMovieRepositoryAdapter(PlayListMovieJPARepository playListMovieJPARepository) {
+    public PlayListMovieRepositoryAdapter(PlayListMovieJPARepositoryPort playListMovieJPARepository) {
         this.playListMovieJPARepository = playListMovieJPARepository;
     }
 

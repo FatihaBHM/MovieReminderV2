@@ -8,7 +8,7 @@ import org.lafabrique_epita.domain.exceptions.MovieException;
 
 import java.util.List;
 
-public interface IPlaylistMovieService {
+public interface PlaylistMovieServicePort {
     MoviePostResponseDto save(MoviePostDto moviePostDto, UserEntity user) throws MovieException;
 
     List<MovieGetResponseDTO> findAllMoviesByUser(UserEntity user);

@@ -8,7 +8,7 @@ import org.lafabrique_epita.application.dto.authentication.AuthenticationDto;
 import org.lafabrique_epita.application.dto.authentication.RegisterDto;
 import org.lafabrique_epita.application.dto.authentication.ResponseAuthenticationDto;
 import org.lafabrique_epita.application.dto.authentication.ResponseAuthenticationUserDto;
-import org.lafabrique_epita.application.service.user.UserServiceImpl;
+import org.lafabrique_epita.application.service.user.UserServiceAdapter;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.exceptions.UserException;
 import org.lafabrique_epita.exposition.configuration.JwtService;
@@ -27,13 +27,13 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserServiceAdapter userService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
     private final ObjectMapper mapper;
 
-    public UserController(UserServiceImpl userService, AuthenticationManager authenticationManager, JwtService jwtService, ObjectMapper mapper) {
+    public UserController(UserServiceAdapter userService, AuthenticationManager authenticationManager, JwtService jwtService, ObjectMapper mapper) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;

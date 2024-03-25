@@ -9,10 +9,10 @@ import java.util.List;
 
 @Service
 @Transactional
-public class MovieServiceImpl implements IMovieService {
+public class MovieServiceAdapter implements MovieServicePort {
     private final MovieRepository movieRepository;
 
-    public MovieServiceImpl(MovieRepository movieRepository) {
+    public MovieServiceAdapter(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 

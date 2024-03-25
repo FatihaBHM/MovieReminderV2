@@ -13,8 +13,8 @@ import jakarta.validation.Valid;
 import org.lafabrique_epita.application.dto.movie_get.MovieGetResponseDTO;
 import org.lafabrique_epita.application.dto.movie_post.MoviePostDto;
 import org.lafabrique_epita.application.dto.movie_post.MoviePostResponseDto;
-import org.lafabrique_epita.application.service.media.MovieServiceImpl;
-import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceImpl;
+import org.lafabrique_epita.application.service.media.MovieServiceAdapter;
+import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceAdapter;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.exceptions.MovieException;
 import org.lafabrique_epita.exposition.exception.ErrorMessage;
@@ -30,14 +30,14 @@ import java.util.List;
 //@RequestMapping("/movies")
 public class MovieController {
 
-    private final MovieServiceImpl movieService;
+    private final MovieServiceAdapter movieService;
 
-    private final PlaylistMovieServiceImpl playlistMovieService;
+    private final PlaylistMovieServiceAdapter playlistMovieService;
 
     private final ObjectMapper objectMapper;
 
 
-    public MovieController(MovieServiceImpl movieService, PlaylistMovieServiceImpl playlistMovieService, ObjectMapper objectMapper) {
+    public MovieController(MovieServiceAdapter movieService, PlaylistMovieServiceAdapter playlistMovieService, ObjectMapper objectMapper) {
         this.movieService = movieService;
         this.playlistMovieService = playlistMovieService;
         this.objectMapper = objectMapper;

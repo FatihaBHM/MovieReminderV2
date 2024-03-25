@@ -21,12 +21,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PlaylistMovieServiceImpl implements IPlaylistMovieService {
+public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
 
     private final PlayListMovieRepository playListMovieRepository;
     private final MovieRepository movieRepository;
 
-    public PlaylistMovieServiceImpl(PlayListMovieRepository playListMovieRepository, MovieRepository movieRepository) {
+    public PlaylistMovieServiceAdapter(PlayListMovieRepository playListMovieRepository, MovieRepository movieRepository) {
         this.playListMovieRepository = playListMovieRepository;
         this.movieRepository = movieRepository;
     }

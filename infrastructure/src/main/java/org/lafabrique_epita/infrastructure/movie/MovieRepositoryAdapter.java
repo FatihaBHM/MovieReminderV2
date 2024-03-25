@@ -10,9 +10,9 @@ import java.util.Optional;
 @Repository
 public class MovieRepositoryAdapter implements MovieRepository {
 
-    private final MovieJPARepository movieJPARepository;
+    private final MovieJPARepositoryPort movieJPARepository;
 
-    public MovieRepositoryAdapter(MovieJPARepository movieJPARepository) {
+    public MovieRepositoryAdapter(MovieJPARepositoryPort movieJPARepository) {
         this.movieJPARepository = movieJPARepository;
     }
 

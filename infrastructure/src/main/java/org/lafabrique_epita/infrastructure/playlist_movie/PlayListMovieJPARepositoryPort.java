@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-public interface PlayListMovieJPARepository extends JpaRepository<PlayListMovieEntity, Long> {
+public interface PlayListMovieJPARepositoryPort extends JpaRepository<PlayListMovieEntity, Long> {
     PlayListMovieEntity findByMovieIdAndUserId(Long movieId, Long userId);
 
     PlayListMovieEntity findByUserIdAndFavoriteTrue(Long userId);

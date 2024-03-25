@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface MovieJPARepository extends JpaRepository<MovieEntity, Long> {
+public interface MovieJPARepositoryPort extends JpaRepository<MovieEntity, Long> {
     Optional<MovieEntity> findByIdTmdb(Long idTmdb);
 }

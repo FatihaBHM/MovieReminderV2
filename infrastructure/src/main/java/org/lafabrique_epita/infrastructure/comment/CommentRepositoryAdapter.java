@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CommentRepositoryAdapter implements CommentRepository {
 
-    private final CommentJPARepository commentJpaRepository;
+    private final CommentJPARepositoryPort commentJpaRepository;
 
-    public CommentRepositoryAdapter(CommentJPARepository commentJpaRepository) {
+    public CommentRepositoryAdapter(CommentJPARepositoryPort commentJpaRepository) {
         this.commentJpaRepository = commentJpaRepository;
     }
 }
