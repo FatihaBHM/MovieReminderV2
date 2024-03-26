@@ -1,34 +1,40 @@
 package org.lafabrique_epita.application.service.media.playlist_movies;
 
+import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDTO;
 import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDtoMapper;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDto;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDtoMapper;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDtoResponseMapper;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostResponseDto;
-import org.lafabrique_epita.domain.entities.MovieEntity;
-import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
-import org.lafabrique_epita.domain.entities.PlayListMovieID;
-import org.lafabrique_epita.domain.entities.UserEntity;
+import org.lafabrique_epita.domain.entities.*;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.MovieException;
+import org.lafabrique_epita.domain.repositories.GenreRepository;
 import org.lafabrique_epita.domain.repositories.MovieRepository;
 import org.lafabrique_epita.domain.repositories.PlayListMovieRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
 
     private final PlayListMovieRepository playListMovieRepository;
     private final MovieRepository movieRepository;
+    private final GenreRepository genreRepository;
 
-    public PlaylistMovieServiceAdapter(PlayListMovieRepository playListMovieRepository, MovieRepository movieRepository) {
+    private static final String MOVIE_NOT_FOUND = "Movie not found";
+
+    public PlaylistMovieServiceAdapter(PlayListMovieRepository playListMovieRepository, MovieRepository movieRepository, GenreRepository genreRepository) {
         this.playListMovieRepository = playListMovieRepository;
         this.movieRepository = movieRepository;
+        this.genreRepository = genreRepository;
     }
 
 
@@ -45,6 +51,15 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
             }
         } else {
             movie = MoviePostDtoMapper.convertToMovieEntity(moviePostDto);
+            // vérifier si les genres existent déjà en base par leur 'name' et dans ce cas save le genre qui n'existe pas puis récupérer tous les genres pour les envoyer dans movie
+            List<String> genres = moviePostDto.genres().stream().map(GenreDto::name).toList();
+            List<GenreEntity> genreEntities = new ArrayList<>(genreRepository.findAllByName(genres));
+            for (GenreEntity genre : movie.getGenres()) {
+                if (genreEntities.stream().noneMatch(genreEntity -> genreEntity.getName().equals(genre.getName()))) {
+                    genreEntities.add(genreRepository.save(genre));
+                }
+            }
+            movie.setGenres(genreEntities);
             movie = this.movieRepository.save(movie);
         }
 
@@ -75,14 +90,14 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
         MoviePostResponseDto playListMovieDto = this.findByUserAndByMovie(idMovie, idUser);
 
         if (playListMovieDto == null) {
-            throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
+            throw new MovieException(MOVIE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
 
         PlayListMovieID playListMovieID = new PlayListMovieID(idMovie, idUser);
         Optional<PlayListMovieEntity> playListMovieEntity = this.playListMovieRepository.findByMovieIdAndUserId(playListMovieID);
 
         if (playListMovieEntity.isEmpty()) {
-            throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
+            throw new MovieException(MOVIE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
 
         playListMovieEntity.get().setFavorite(favorite == 1);
@@ -100,7 +115,7 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
             this.playListMovieRepository.save(playListMovieEntity.get());
             return;
         }
-        throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
+        throw new MovieException(MOVIE_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -109,8 +124,12 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
         Optional<PlayListMovieEntity> playListMovieEntity = this.playListMovieRepository.findByMovieIdAndUserId(playListMovieID);
         if (playListMovieEntity.isPresent()) {
             this.playListMovieRepository.delete(playListMovieEntity.get());
+            int count = this.playListMovieRepository.countByMovieId(movieId);
+            if (count == 0) {
+                this.movieRepository.deleteById(movieId);
+            }
         } else {
-            throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
+            throw new MovieException(MOVIE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -120,7 +139,7 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
         if (movieEntity.isPresent()) {
             return MovieGetResponseDtoMapper.convertToMovieDto(movieEntity.get());
         }
-        throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
+        throw new MovieException(MOVIE_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @Override

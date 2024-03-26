@@ -8,16 +8,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-
 import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDTO;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDto;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostResponseDto;
 import org.lafabrique_epita.application.service.media.MovieServicePort;
 import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceAdapter;
-import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.MovieException;
+import org.lafabrique_epita.exposition.api.media.response_class.Favorite;
+import org.lafabrique_epita.exposition.api.media.response_class.ResponseStatusAndFavorite;
+import org.lafabrique_epita.exposition.api.media.response_class.Status;
 import org.lafabrique_epita.exposition.exception.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,7 +92,7 @@ public class MovieController {
             ))
     })
     @PatchMapping("/movies/{id}")
-    public ResponseEntity<Return> getFrontMovie(
+    public ResponseEntity<ResponseStatusAndFavorite> getFrontMovie(
             @PathVariable Long id,
             @RequestParam(required = false) Integer favorite,
             @RequestParam(required = false) Integer status,
@@ -114,7 +115,7 @@ public class MovieController {
         }
     }
 
-    private ResponseEntity<Return> updateFavorite(Long id, Integer favorite, UserEntity userEntity) throws MovieException {
+    private ResponseEntity<ResponseStatusAndFavorite> updateFavorite(Long id, Integer favorite, UserEntity userEntity) throws MovieException {
         if (favorite < 0 || favorite > 1) {
             throw new MovieException("Favorite must be 0 or 1(0 => remove, 1 => add)", HttpStatus.BAD_REQUEST);
         }
@@ -124,7 +125,7 @@ public class MovieController {
         return ResponseEntity.ok(favoriteResponse);
     }
 
-    private ResponseEntity<Return> updateStatus(Long id, Integer status, UserEntity userEntity) throws MovieException {
+    private ResponseEntity<ResponseStatusAndFavorite> updateStatus(Long id, Integer status, UserEntity userEntity) throws MovieException {
         if (status < 0 || status > 3) {
             throw new MovieException("Status must be 0, 1, 2 or 3 (0 => A_REGARDER, 1 => EN_COURS, 2 => VU, 3 => ABANDON)", HttpStatus.BAD_REQUEST);
         }
@@ -144,16 +145,6 @@ public class MovieController {
         };
     }
 
-    interface Return {
-    }
-
-    public record Favorite(boolean favorite) implements Return {
-    }
-
-    public record Status(StatusEnum status) implements Return {
-    }
-
-
     @Operation(summary = "Obtenez tous les films de la playlist de l'utilisateur connecté")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Movies found",
@@ -171,7 +162,6 @@ public class MovieController {
         return ResponseEntity.ok(playListMovies);
     }
 
-    // DELETE /movies/{id}
     @Operation(summary = "Supprimer un film de la playlist de l'utilisateur connecté")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Film supprimé de la playlist"),
@@ -190,7 +180,6 @@ public class MovieController {
         return ResponseEntity.ok(new ErrorMessage(200, "Movie deleted"));
     }
 
-    // GET /movies/{idTmdb}
     @Operation(summary = "Obtenir un film par son id TMDB")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Film trouvé",

@@ -5,7 +5,6 @@ import jakarta.validation.Valid;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostDto;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostDtoMapper;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostResponseDto;
-import org.lafabrique_epita.application.service.media.serie.ISerieService;
 import org.lafabrique_epita.application.service.media.serie.SerieServiceImpl;
 import org.lafabrique_epita.domain.entities.PlayListTvEntity;
 import org.lafabrique_epita.domain.entities.PlayListTvID;

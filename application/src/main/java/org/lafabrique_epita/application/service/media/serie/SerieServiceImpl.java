@@ -1,8 +1,6 @@
 package org.lafabrique_epita.application.service.media.serie;
 
 import jakarta.transaction.Transactional;
-import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
-import org.lafabrique_epita.domain.entities.PlayListTvEntity;
 import org.lafabrique_epita.domain.entities.SerieEntity;
 import org.lafabrique_epita.domain.repositories.SerieRepository;
 import org.springframework.stereotype.Service;

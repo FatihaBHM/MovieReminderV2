@@ -1,17 +1,15 @@
 package org.lafabrique_epita.infrastructure.serie;
 
-import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.lafabrique_epita.domain.entities.SerieEntity;
-import org.lafabrique_epita.infrastructure.movie.MovieJPARepository;
 import org.lafabrique_epita.domain.repositories.SerieRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class SerieRepositoryAdapter implements SerieRepository {
 
-    private final SerieJPARepository serieJPARepository;
+    private final SerieJPARepositoryPort serieJPARepository;
 
-    public SerieRepositoryAdapter(SerieJPARepository serieJPARepository) {
+    public SerieRepositoryAdapter(SerieJPARepositoryPort serieJPARepository) {
         this.serieJPARepository = serieJPARepository;
     }
     @Override

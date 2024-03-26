@@ -24,7 +24,7 @@ public class SeriePostDtoMapper {
         serie.setScore(seriePostDto.score());
         List<GenreEntity> genres = seriePostDto.genres()
                 .stream()
-                .map(genre -> new GenreEntity(null, genre.id() , genre.name(), null, null))
+                .map(genre -> new GenreEntity(null, genre.id() , genre.name()))
                 .toList();
         serie.setGenres(genres);
 
