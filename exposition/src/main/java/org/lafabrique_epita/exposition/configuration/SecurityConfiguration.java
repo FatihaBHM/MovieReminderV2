@@ -35,22 +35,17 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable) // Réactiver en Production
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Réactiver en Production suivant les cas
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/api/v1/login").permitAll()
+                        .requestMatchers("/api/v1/register").permitAll()
                         .requestMatchers(SWAGGGER_WHITELIST).permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exception -> exception
-//                                .authenticationEntryPoint( (req, resp, excep) -> {
-//                                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//                                    resp.setContentType("application/json");
-//                                    resp.getWriter().write("{\"errors\": \"Not Found\"}");
-//                                })
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setContentType("application/json;charset=UTF-8");
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_UNAUTHORIZED, "errorMessage", authException.getMessage());
+                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_UNAUTHORIZED, "errorMessage", "Non autorisé");
                             response.getWriter().write(new ObjectMapper().writeValueAsString(errors));
                         }).accessDeniedHandler((request, response, accessDeniedException) -> {
                             response.setContentType("application/json;charset=UTF-8");

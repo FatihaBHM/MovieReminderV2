@@ -17,6 +17,7 @@ import org.lafabrique_epita.application.dto.authentication.ResponseAuthenticatio
 import org.lafabrique_epita.application.service.user.UserServiceAdapter;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.exceptions.UserException;
+import org.lafabrique_epita.exposition.api.ApiControllerBase;
 import org.lafabrique_epita.exposition.configuration.JwtService;
 import org.lafabrique_epita.exposition.exception.ErrorMessage;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ import java.util.Map;
 
 @Tag(name = "User", description = "The user API")
 @RestController
-public class UserController {
+public class UserController extends ApiControllerBase {
 
     private final UserServiceAdapter userService;
     private final AuthenticationManager authenticationManager;

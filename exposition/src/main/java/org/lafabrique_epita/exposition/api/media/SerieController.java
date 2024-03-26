@@ -10,6 +10,7 @@ import org.lafabrique_epita.domain.entities.PlayListTvEntity;
 import org.lafabrique_epita.domain.entities.PlayListTvID;
 import org.lafabrique_epita.domain.entities.SerieEntity;
 import org.lafabrique_epita.domain.entities.UserEntity;
+import org.lafabrique_epita.exposition.api.ApiControllerBase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Serie", description = "The Serie API")
 @RestController
-public class SerieController {
+public class SerieController extends ApiControllerBase {
 
     private final SerieServiceImpl serieService;
 

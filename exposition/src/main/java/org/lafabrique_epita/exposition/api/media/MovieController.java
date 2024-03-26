@@ -16,6 +16,7 @@ import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMo
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.MovieException;
+import org.lafabrique_epita.exposition.api.ApiControllerBase;
 import org.lafabrique_epita.exposition.api.media.response_class.Favorite;
 import org.lafabrique_epita.exposition.api.media.response_class.ResponseStatusAndFavorite;
 import org.lafabrique_epita.exposition.api.media.response_class.Status;
@@ -29,8 +30,7 @@ import java.util.List;
 
 @Tag(name = "Movie", description = "The movie API")
 @RestController
-//@RequestMapping("/movies")
-public class MovieController {
+public class MovieController extends ApiControllerBase {
 
     private final PlaylistMovieServiceAdapter playlistMovieService;
 
