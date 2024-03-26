@@ -8,6 +8,7 @@ import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDtoMapper;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDtoResponseMapper;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostResponseDto;
 import org.lafabrique_epita.domain.entities.*;
+import org.lafabrique_epita.domain.enums.MovieSort;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.MovieException;
 import org.lafabrique_epita.domain.repositories.GenreRepository;
@@ -18,8 +19,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -143,11 +147,18 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
     }
 
     @Override
-    public List<MovieGetResponseDTO> findAllMoviesByUser(UserEntity user) {
+    public List<MovieGetResponseDTO> findAllMoviesByUser(UserEntity user, MovieSort sort) {
         List<MovieEntity> playlists = playListMovieRepository.findMoviesByUserId(user);
 
+        Comparator<MovieEntity> comparator = Comparator.comparing(MovieEntity::getCreatedDate);
+        if (sort == MovieSort.CREATED_DATE_DESC) {
+            comparator = comparator.reversed();
+        }
+
         return playlists.stream()
-                .map(MovieGetResponseDtoMapper::convertToMovieDto).toList();
+                .sorted(comparator)
+                .map(MovieGetResponseDtoMapper::convertToMovieDto)
+                .toList();
     }
 
 }

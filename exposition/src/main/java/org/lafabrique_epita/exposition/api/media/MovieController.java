@@ -18,6 +18,7 @@ import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.MovieException;
 import org.lafabrique_epita.exposition.api.ApiControllerBase;
 import org.lafabrique_epita.exposition.api.media.response_class.Favorite;
+import org.lafabrique_epita.domain.enums.MovieSort;
 import org.lafabrique_epita.exposition.api.media.response_class.ResponseStatusAndFavorite;
 import org.lafabrique_epita.exposition.api.media.response_class.Status;
 import org.lafabrique_epita.exposition.exception.ErrorMessage;
@@ -56,8 +57,7 @@ public class MovieController extends ApiControllerBase {
             ))
     })
     @PostMapping("/movies")
-    public ResponseEntity<
-            MoviePostResponseDto> getFrontMovie(@Valid @RequestBody MoviePostDto moviePostDto, Authentication authentication) throws MovieException {
+    public ResponseEntity<MoviePostResponseDto> getFrontMovie(@Valid @RequestBody MoviePostDto moviePostDto, Authentication authentication) throws MovieException {
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         MoviePostResponseDto movieDTO = playlistMovieService.save(moviePostDto, userEntity);
@@ -152,12 +152,20 @@ public class MovieController extends ApiControllerBase {
             )
     })
     @GetMapping("/movies")
-    public ResponseEntity<List<MovieGetResponseDTO>> getAllMoviesByUser(Authentication authentication) {
+    public ResponseEntity<List<MovieGetResponseDTO>> getAllMoviesByUser(
+            @RequestParam(required = false) String sort,
+            Authentication authentication
+    ) {
 
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
+        MovieSort movieSort = MovieSort.CREATED_DATE_DESC;
+        if (sort != null && sort.equalsIgnoreCase("asc")) {
+            movieSort = MovieSort.CREATED_DATE_ASC;
+        }
+
         //Récupérer la liste de films du user dans le service
-        List<MovieGetResponseDTO> playListMovies = playlistMovieService.findAllMoviesByUser(userEntity);
+        List<MovieGetResponseDTO> playListMovies = playlistMovieService.findAllMoviesByUser(userEntity, movieSort);
 
         return ResponseEntity.ok(playListMovies);
     }

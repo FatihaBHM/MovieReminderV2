@@ -5,6 +5,7 @@ import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDTO;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDto;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostResponseDto;
 import org.lafabrique_epita.domain.entities.UserEntity;
+import org.lafabrique_epita.domain.enums.MovieSort;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.MovieException;
 
@@ -14,7 +15,7 @@ public interface PlaylistMovieServicePort {
 
     MoviePostResponseDto save(MoviePostDto moviePostDto, UserEntity user) throws MovieException;
 
-    List<MovieGetResponseDTO> findAllMoviesByUser(UserEntity user);
+    List<MovieGetResponseDTO> findAllMoviesByUser(UserEntity user, MovieSort sort);
 
 
     MoviePostResponseDto findByUserAndByMovie(Long movieId, Long userId);
