@@ -3,22 +3,20 @@ package org.lafabrique_epita.domain.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "movie")
-public class MovieEntity {
+public class MovieEntity extends MasterClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +27,10 @@ public class MovieEntity {
     @Column(nullable = false)
     private Long idTmdb;
 
-    @Column(nullable = true, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String overview;
 
-    private float score;
+    private Float score;
 
     private LocalDate releaseDate;
 
@@ -43,16 +41,9 @@ public class MovieEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "movie_comment", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    private List<CommentEntity> comments = List.of();
+    private List<CommentEntity> comments = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<GenreEntity> genres = List.of();
-
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDate;
-
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    private List<GenreEntity> genres = new ArrayList<>();
 }

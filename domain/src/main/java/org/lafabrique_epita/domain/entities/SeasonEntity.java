@@ -3,22 +3,20 @@ package org.lafabrique_epita.domain.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "season")
-public class SeasonEntity {
+public class SeasonEntity extends MasterClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +30,7 @@ public class SeasonEntity {
     @Column(nullable = false)
     private int idTmdb;
 
-    private String poster_path;
+    private String posterPath;
 
     private int seasonNumber;
 
@@ -42,12 +40,5 @@ public class SeasonEntity {
 
     @ManyToMany
     @JoinTable(name = "season_comment", joinColumns = @JoinColumn(name = "season_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    private List<CommentEntity> comments = List.of();
-
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDate;
-
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    private List<CommentEntity> comments = new ArrayList<>();
 }

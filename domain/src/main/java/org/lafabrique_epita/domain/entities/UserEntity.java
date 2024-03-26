@@ -3,26 +3,23 @@ package org.lafabrique_epita.domain.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.lafabrique_epita.domain.enums.RoleEnum;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "utilisateur")
-public class UserEntity implements UserDetails {
+public class UserEntity extends MasterClass implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,14 +37,6 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RoleEnum role = RoleEnum.USER;
-
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDate;
-
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
-
 
 
     // ↓ Configuration de Spring Security (UserDetails) ↓

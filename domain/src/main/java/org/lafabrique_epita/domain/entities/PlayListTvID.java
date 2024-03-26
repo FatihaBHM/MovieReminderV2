@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Embeddable
 public class PlayListTvID implements Serializable {
 
-    @Column(name = "tv_id")
+    @Column(name = "episode_id")
     private Long tvId;
 
     @Column(name = "user_id")
