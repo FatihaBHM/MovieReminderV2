@@ -8,9 +8,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.lafabrique_epita.application.dto.movie_get.MovieGetResponseDTO;
-import org.lafabrique_epita.application.dto.movie_post.MoviePostDto;
-import org.lafabrique_epita.application.dto.movie_post.MoviePostResponseDto;
+
+import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDTO;
+import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDto;
+import org.lafabrique_epita.application.dto.media.movie_post.MoviePostResponseDto;
 import org.lafabrique_epita.application.service.media.MovieServicePort;
 import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceAdapter;
 import org.lafabrique_epita.domain.entities.MovieEntity;
@@ -54,7 +55,8 @@ public class MovieController {
             ))
     })
     @PostMapping("/movies")
-    public ResponseEntity<MoviePostResponseDto> getFrontMovie(@Valid @RequestBody MoviePostDto moviePostDto, Authentication authentication) throws MovieException {
+    public ResponseEntity<
+            MoviePostResponseDto> getFrontMovie(@Valid @RequestBody MoviePostDto moviePostDto, Authentication authentication) throws MovieException {
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         MoviePostResponseDto movieDTO = playlistMovieService.save(moviePostDto, userEntity);

@@ -1,9 +1,9 @@
-package org.lafabrique_epita.application.dto.movie_post;
+package org.lafabrique_epita.application.dto.media;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record GenreMovieDto(
+public record GenreDto(
         /*
         Request => idTmdb
         Response => idTmdb
