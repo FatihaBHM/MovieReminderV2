@@ -20,8 +20,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "${MOVIE_PORT}:8080"
     depends_on:
       - database
     environment:
