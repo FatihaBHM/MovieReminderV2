@@ -1,6 +1,7 @@
 package org.lafabrique_epita.exposition.api.media;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -145,7 +146,9 @@ public class MovieController extends ApiControllerBase {
         };
     }
 
-    @Operation(summary = "Obtenez tous les films de la playlist de l'utilisateur connecté")
+    @Operation(summary = "Obtenez tous les films de la playlist de l'utilisateur connecté", parameters = {
+            @Parameter(name = "sort", description = "Sort movies by created date", example = "asc", schema = @Schema(implementation = String.class))
+    })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Movies found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieGetResponseDTO.class))
