@@ -9,7 +9,7 @@ public record ErrorMessage(
     public static String format(HttpStatus status, String errorMessage) {
         return String.format("""
                 {
-                    "status": %s,
+                    STATUS: %s,
                     "errorMessage": %s
                 }
                 """, status, errorMessage);

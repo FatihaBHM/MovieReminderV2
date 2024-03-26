@@ -31,12 +31,6 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
     }
 
     @Override
-    public PlayListMovieEntity findByUserIdAndFavoriteTrue(Long userId) {
-        // TODO: Implement this method
-        return null;
-    }
-
-    @Override
     public List<MovieEntity> findMoviesByUserId(UserEntity user) {
         return this.playListMovieJPARepository.findMoviesByUserId(user);
     }
@@ -49,6 +43,11 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
     @Override
     public void delete(PlayListMovieEntity playListMovieEntity) {
         this.playListMovieJPARepository.delete(playListMovieEntity);
+    }
+
+    @Override
+    public int countByMovieId(Long movieId) {
+        return this.playListMovieJPARepository.countByMovieId(movieId);
     }
 
 }

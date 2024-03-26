@@ -13,11 +13,11 @@ public interface PlayListMovieRepository {
 
     Optional<PlayListMovieEntity> findByMovieIdAndUserId(PlayListMovieID playListMovieID);
 
-    PlayListMovieEntity findByUserIdAndFavoriteTrue(Long userId);
-
     List<MovieEntity> findMoviesByUserId(UserEntity user);
 
     boolean existsByMovieIdAndUserId(Long movieId, Long userId);
 
     void delete(PlayListMovieEntity playListMovieEntity);
+
+    int countByMovieId(Long movieId);
 }

@@ -23,9 +23,12 @@ import java.util.Map;
 public class GlobalExceptionHandler {
     private final ObjectMapper mapper = new ObjectMapper();
 
+    private static final String STATUS = "status";
+    private static final String ERROR_MESSAGE = "error_message";
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleException(DataIntegrityViolationException exception) {
-        Map<String, ?> m = Map.of("status", 400, "errorMessage", exception.getMessage());
+        Map<String, ?> m = Map.of(STATUS, 400, ERROR_MESSAGE, exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
             return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(responseBody);
@@ -49,11 +52,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception exception) {
+        log.error("An error occurred", exception);
         return getStringResponseEntity(exception);
     }
 
     private ResponseEntity<String> getStringResponseEntity(Exception exception) {
-        Map<String, ?> m = Map.of("status", 500, "errorMessage", exception.getMessage());
+        Map<String, ?> m = Map.of(STATUS, 500, ERROR_MESSAGE, exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
             return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(responseBody);
@@ -65,7 +69,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MovieReminderException.class)
     public ResponseEntity<String> handleException(MovieReminderException exception) {
-        Map<String, ?> m = Map.of("status", exception.getHttpStatus().value(), "errorMessage", exception.getMessage());
+        Map<String, ?> m = Map.of(STATUS, exception.getHttpStatus().value(), ERROR_MESSAGE, exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
             return ResponseEntity.status(exception.getHttpStatus()).contentType(MediaType.APPLICATION_JSON).body(responseBody);
@@ -84,8 +88,7 @@ public class GlobalExceptionHandler {
     private Map<String, String> collectErrors(MethodArgumentNotValidException exception) {
         Map<String, String> errors = new HashMap<>();
         exception.getBindingResult().getAllErrors().forEach(error -> {
-            if (error instanceof FieldError) {
-                FieldError fieldError = (FieldError) error;
+            if (error instanceof FieldError fieldError) {
                 String fieldName = fieldError.getField();
 
                 Object target = exception.getBindingResult().getTarget();
@@ -107,8 +110,8 @@ public class GlobalExceptionHandler {
 
     private String prepareResponse(Map<String, String> errorMessage) {
         Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("errorMessage", errorMessage);
-        responseBody.put("status", 400);
+        responseBody.put(ERROR_MESSAGE, errorMessage);
+        responseBody.put(STATUS, 400);
 
         try {
             return mapper.writeValueAsString(responseBody);

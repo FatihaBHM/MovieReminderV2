@@ -86,7 +86,7 @@ public class UserController {
             )
     })
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationDto authenticationDto) {
+    public ResponseEntity<Object> login(@Valid @RequestBody AuthenticationDto authenticationDto) {
         final Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationDto.email(), authenticationDto.password())
         );
@@ -96,14 +96,14 @@ public class UserController {
             ResponseAuthenticationDto response = new ResponseAuthenticationDto(jwtService.generateToken(userEntity.getEmail()).get("bearer"), user);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        return errors(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        return errors();
     }
 
-    private ResponseEntity<?> errors(HttpStatus status, Object errorMessage) {
-        Map<String, ?> m = Map.of("status", status, "errorMessage", errorMessage);
+    private ResponseEntity<Object> errors() {
+        Map<String, ?> m = Map.of("status", HttpStatus.UNAUTHORIZED, "errorMessage", (Object) "Unauthorized");
         try {
             String responseBody = mapper.writeValueAsString(m);
-            return new ResponseEntity<>(responseBody, status);
+            return new ResponseEntity<>(responseBody, HttpStatus.UNAUTHORIZED);
 
         } catch (JsonProcessingException e) {
             return ResponseEntity.internalServerError().build();

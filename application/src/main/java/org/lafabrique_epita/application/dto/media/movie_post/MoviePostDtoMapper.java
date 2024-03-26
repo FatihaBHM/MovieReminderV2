@@ -1,8 +1,9 @@
-package org.lafabrique_epita.application.dto.movie_post;
+package org.lafabrique_epita.application.dto.media.movie_post;
 
 import org.lafabrique_epita.domain.entities.GenreEntity;
 import org.lafabrique_epita.domain.entities.MovieEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoviePostDtoMapper {
@@ -21,10 +22,11 @@ public class MoviePostDtoMapper {
         //créer une liste de GenreEntity en partant du genreDto
         List<GenreEntity> genres = moviePostDto.genres()
                 .stream()
-                .map(genre -> new GenreEntity(null, genre.id(), genre.name(), null, null))
+                .map(genre -> new GenreEntity(null, genre.id(), genre.name()))
                 .toList();
         movie.setGenres(genres);
         movie.setReleaseDate(moviePostDto.releaseDate());
+        movie.setComments(new ArrayList<>());
 
         return movie;
     }

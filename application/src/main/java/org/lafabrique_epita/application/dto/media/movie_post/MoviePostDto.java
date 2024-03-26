@@ -1,9 +1,10 @@
-package org.lafabrique_epita.application.dto.movie_post;
+package org.lafabrique_epita.application.dto.media.movie_post;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import org.lafabrique_epita.application.dto.media.GenreDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,7 +30,7 @@ public record MoviePostDto(
 
         Float score,
 
-        List<GenreMovieDto> genres,
+        List<GenreDto> genres,
 
         @JsonProperty("release_date")
         LocalDate releaseDate

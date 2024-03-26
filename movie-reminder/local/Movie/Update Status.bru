@@ -4,14 +4,14 @@ meta {
   seq: 5
 }
 
-get {
-  url: {{local_url}}/movies/3?status=1
+patch {
+  url: {{local_url}}/movies/4?status=0
   body: none
   auth: bearer
 }
 
 query {
-  status: 1
+  status: 0
 }
 
 auth:bearer {

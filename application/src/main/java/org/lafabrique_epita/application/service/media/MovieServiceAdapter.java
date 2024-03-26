@@ -1,5 +1,8 @@
 package org.lafabrique_epita.application.service.media;
 
+
+import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDTO;
+import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDtoMapper;
 import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.repositories.MovieRepository;
 import org.springframework.stereotype.Service;
@@ -22,5 +25,12 @@ public class MovieServiceAdapter implements MovieServicePort {
 
     public List<MovieEntity> getAll() {
         return movieRepository.findAll();
+    }
+
+    @Override
+    public MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) {
+        return this.movieRepository.findByIdTmdb(idTmdb)
+                .map(MovieGetResponseDtoMapper::convertToMovieDto)
+                .orElse(null);
     }
 }

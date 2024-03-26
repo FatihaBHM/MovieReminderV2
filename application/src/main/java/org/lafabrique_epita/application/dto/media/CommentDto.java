@@ -1,4 +1,4 @@
-package org.lafabrique_epita.application.dto.movie_post;
+package org.lafabrique_epita.application.dto.media;
 
 
 public record CommentDto(

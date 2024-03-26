@@ -29,12 +29,12 @@ public class MovieRepositoryAdapter implements MovieRepository {
     }
 
     @Override
-    public Optional<MovieEntity> findById(Long id) {
-        return movieJPARepository.findById(id);
+    public Optional<MovieEntity> findByIdTmdb(Long idTmdb) {
+        return movieJPARepository.findByIdTmdb(idTmdb);
     }
 
     @Override
-    public Optional<MovieEntity> findByIdTmdb(Long idTmdb) {
-        return movieJPARepository.findByIdTmdb(idTmdb);
+    public void deleteById(Long id) {
+        this.movieJPARepository.deleteById(id);
     }
 }
