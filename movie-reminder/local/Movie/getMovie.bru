@@ -1,12 +1,12 @@
 meta {
-  name: postMovies
+  name: getMovie
   type: http
-  seq: 1
+  seq: 7
 }
 
-post {
-  url: {{local_url}}/movies
-  body: json
+get {
+  url: {{local_url}}/movies/1542
+  body: none
   auth: bearer
 }
 

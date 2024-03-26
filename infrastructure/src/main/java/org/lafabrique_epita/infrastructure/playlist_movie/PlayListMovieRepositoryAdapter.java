@@ -8,24 +8,25 @@ import org.lafabrique_epita.domain.repositories.PlayListMovieRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
 
-    private final PlayListMovieJPARepository playListMovieJPARepository;
+    private final PlayListMovieJPARepositoryPort playListMovieJPARepository;
 
-    public PlayListMovieRepositoryAdapter(PlayListMovieJPARepository playListMovieJPARepository) {
+    public PlayListMovieRepositoryAdapter(PlayListMovieJPARepositoryPort playListMovieJPARepository) {
         this.playListMovieJPARepository = playListMovieJPARepository;
     }
 
 
     @Override
-    public void save(PlayListMovieEntity playListMovieEntity) {
-        this.playListMovieJPARepository.save(playListMovieEntity);
+    public PlayListMovieEntity save(PlayListMovieEntity playListMovieEntity) {
+       return this.playListMovieJPARepository.save(playListMovieEntity);
     }
 
     @Override
-    public PlayListMovieEntity findByMovieIdAndUserId(PlayListMovieID playListMovieID) {
+    public Optional<PlayListMovieEntity> findByMovieIdAndUserId(PlayListMovieID playListMovieID) {
         return this.playListMovieJPARepository.findByMovieIdAndUserId(playListMovieID.getMovieId(), playListMovieID.getUserId());
     }
 
@@ -40,12 +41,14 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
         return this.playListMovieJPARepository.findMoviesByUserId(user);
     }
 
+    @Override
+    public boolean existsByMovieIdAndUserId(Long movieId, Long userId) {
+        return this.playListMovieJPARepository.existsByMovieIdAndUserId(movieId, userId)    ;
+    }
 
-
-  /*  @Override
-    public List<MovieEntity> findAllMoviesByUser(PlayListMovieID playListMovieID) {
-        return this.playListMovieJPARepository.findAll(playListMovieID.getUserId());
-    } */
-
+    @Override
+    public void delete(PlayListMovieEntity playListMovieEntity) {
+        this.playListMovieJPARepository.delete(playListMovieEntity);
+    }
 
 }

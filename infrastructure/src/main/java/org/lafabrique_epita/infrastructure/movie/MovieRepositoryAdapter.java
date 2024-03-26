@@ -5,13 +5,14 @@ import org.lafabrique_epita.domain.repositories.MovieRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class MovieRepositoryAdapter implements MovieRepository {
 
-    private final MovieJPARepository movieJPARepository;
+    private final MovieJPARepositoryPort movieJPARepository;
 
-    public MovieRepositoryAdapter(MovieJPARepository movieJPARepository) {
+    public MovieRepositoryAdapter(MovieJPARepositoryPort movieJPARepository) {
         this.movieJPARepository = movieJPARepository;
     }
 
@@ -25,5 +26,15 @@ public class MovieRepositoryAdapter implements MovieRepository {
     @Override
     public List<MovieEntity> findAll() {
         return movieJPARepository.findAll();
+    }
+
+    @Override
+    public Optional<MovieEntity> findById(Long id) {
+        return movieJPARepository.findById(id);
+    }
+
+    @Override
+    public Optional<MovieEntity> findByIdTmdb(Long idTmdb) {
+        return movieJPARepository.findByIdTmdb(idTmdb);
     }
 }

@@ -1,14 +1,13 @@
 package org.lafabrique_epita.domain.exceptions;
 
-
 import org.springframework.http.HttpStatus;
 
-public class UserException extends MovieReminderException{
-    public UserException(String message) {
+public class MovieException extends MovieReminderException {
+    public MovieException(String message) {
         super(message, HttpStatus.BAD_REQUEST);
     }
 
-    public UserException(String message, HttpStatus httpStatus) {
+    public MovieException(String message, HttpStatus httpStatus) {
         super(message, httpStatus);
     }
 }

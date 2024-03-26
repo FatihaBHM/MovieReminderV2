@@ -1,17 +1,17 @@
 meta {
-  name: Add Favorite
+  name: Update Status
   type: http
-  seq: 2
+  seq: 5
 }
 
-get {
-  url: {{local_url}}/movies/3?favorite=1
+patch {
+  url: {{local_url}}/movies/4?status=0
   body: none
   auth: bearer
 }
 
 query {
-  favorite: 1
+  status: 0
 }
 
 auth:bearer {

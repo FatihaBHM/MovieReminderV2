@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EpisodeRepositoryAdapter implements EpisodeRepository {
 
-    private final EpisodeJPARepository episodeJPARepository;
+    private final EpisodeJPARepositoryPort episodeJPARepository;
 
-    public EpisodeRepositoryAdapter(EpisodeJPARepository commentJpaRepository) {
+    public EpisodeRepositoryAdapter(EpisodeJPARepositoryPort commentJpaRepository) {
         this.episodeJPARepository = commentJpaRepository;
     }
 }

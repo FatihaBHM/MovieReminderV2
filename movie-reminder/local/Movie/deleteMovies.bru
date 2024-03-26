@@ -1,0 +1,15 @@
+meta {
+  name: deleteMovies
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{local_url}}/movies/3
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
