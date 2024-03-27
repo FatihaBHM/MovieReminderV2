@@ -10,8 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-
-public record SeriePostDto (
+public record SeriePostDto(
 
 
         Long id,
@@ -36,13 +35,17 @@ public record SeriePostDto (
         String title,
 
         @PositiveOrZero
+        @JsonProperty("number_of_episodes")
         int numberOfEpisodes,
 
         @PositiveOrZero
+        @JsonProperty("number_of_seasons")
         int numberOfSeasons,
 
         float score,
 
-        List<GenreDto> genres
+        List<GenreDto> genres,
+
+        List<SeasonPostDto> seasons
 ) {
 }

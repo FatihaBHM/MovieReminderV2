@@ -2,6 +2,7 @@ package org.lafabrique_epita.application.service.media.playlist_series;
 
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
+import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDto;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDtoMapper;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostDto;
@@ -11,11 +12,13 @@ import org.lafabrique_epita.application.dto.media.serie_post.SeriePostResponseDt
 import org.lafabrique_epita.domain.entities.*;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.SerieException;
+import org.lafabrique_epita.domain.repositories.GenreRepository;
 import org.lafabrique_epita.domain.repositories.PlayListTvRepository;
 import org.lafabrique_epita.domain.repositories.SerieRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +27,12 @@ import java.util.Optional;
 public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
     private final PlayListTvRepository playListTvRepository;
     private final SerieRepository serieRepository;
+    private final GenreRepository genreRepository;
 
-
-    public PlaylistTvServiceAdapter(PlayListTvRepository playListTvRepository, SerieRepository serieRepository) {
+    public PlaylistTvServiceAdapter(PlayListTvRepository playListTvRepository, SerieRepository serieRepository, GenreRepository genreRepository) {
         this.playListTvRepository = playListTvRepository;
         this.serieRepository = serieRepository;
+        this.genreRepository = genreRepository;
     }
 
 
@@ -45,6 +49,18 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
             }
         } else {
             serie = SeriePostDtoMapper.convertToSerieEntity(seriePostDto);
+
+            // vérifier si les genres existent déjà en base par leur 'name' et dans ce cas save le genre
+            // qui n'existe pas puis récupérer tous les genres pour les envoyer dans serie
+            List<String> genres = seriePostDto.genres().stream().map(GenreDto::name).toList();
+            List<GenreEntity> genreEntities = new ArrayList<>(genreRepository.findAllByName(genres));
+            for (GenreEntity genre : serie.getGenres()) {
+                if (genreEntities.stream().noneMatch(genreEntity -> genreEntity.getName().equals(genre.getName()))) {
+                    genreEntities.add(genreRepository.save(genre));
+                }
+            }
+            serie.setGenres(genreEntities);
+
             serie = this.serieRepository.save(serie);
         }
 
@@ -65,6 +81,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
                         playListTv.setId(playListTvID);
                         playListTv.setUser(user);
                         playListTv.setStatus(StatusEnum.A_REGARDER);
+                        playListTv.setFavorite(false);
                         this.playListTvRepository.save(playListTv);
                     }
                 }

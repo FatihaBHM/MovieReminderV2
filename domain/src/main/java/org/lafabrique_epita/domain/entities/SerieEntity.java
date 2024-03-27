@@ -27,7 +27,7 @@ public class SerieEntity extends MasterClass {
     @Column(nullable = false, unique = true)
     private Long idTmdb;
 
-    @Column(nullable = true, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String overview;
 
     private String posterPath;
@@ -50,7 +50,7 @@ public class SerieEntity extends MasterClass {
     @JoinTable(name = "serie_comment", joinColumns = @JoinColumn(name = "serie_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private List<CommentEntity> comments = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "serie_genre", joinColumns = @JoinColumn(name = "serie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<GenreEntity> genres = new ArrayList<>();
 }
