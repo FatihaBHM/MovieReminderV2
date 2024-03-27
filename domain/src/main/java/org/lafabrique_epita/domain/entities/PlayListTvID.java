@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class PlayListTvID implements Serializable {
 
     @Column(name = "episode_id")
-    private Long tvId;
+    private Long episodeId;
 
     @Column(name = "user_id")
     private Long userId;

@@ -42,6 +42,8 @@ public record SeriePostResponseDto(
 
         List<GenreDto> genres,
 
-        List<CommentDto> comments
+        List<CommentDto> comments,
+
+        List<SeasonPostDto> seasons
 ) {
 }

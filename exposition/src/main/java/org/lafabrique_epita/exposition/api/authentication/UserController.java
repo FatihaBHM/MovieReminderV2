@@ -23,6 +23,7 @@ import org.lafabrique_epita.exposition.exception.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,20 +89,24 @@ public class UserController extends ApiControllerBase {
     })
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody AuthenticationDto authenticationDto) {
-        final Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authenticationDto.email(), authenticationDto.password())
-        );
-        if (authenticate.isAuthenticated()) {
-            UserEntity userEntity = (UserEntity) authenticate.getPrincipal();
-            ResponseAuthenticationUserDto user = new ResponseAuthenticationUserDto(userEntity.getPseudo(), userEntity.getEmail());
-            ResponseAuthenticationDto response = new ResponseAuthenticationDto(jwtService.generateToken(userEntity.getEmail()).get("bearer"), user);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+        try {
+            final Authentication authenticate = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationDto.email(), authenticationDto.password())
+            );
+            if (authenticate.isAuthenticated()) {
+                UserEntity userEntity = (UserEntity) authenticate.getPrincipal();
+                ResponseAuthenticationUserDto user = new ResponseAuthenticationUserDto(userEntity.getPseudo(), userEntity.getEmail());
+                ResponseAuthenticationDto response = new ResponseAuthenticationDto(jwtService.generateToken(userEntity.getEmail()).get("bearer"), user);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        } catch (BadCredentialsException e) {
+            return errors("Les informations d'identification sont incorrectes");
         }
-        return errors();
+        return errors("Erreur inconnue");
     }
 
-    private ResponseEntity<Object> errors() {
-        Map<String, ?> m = Map.of("status", HttpStatus.UNAUTHORIZED, "errorMessage", (Object) "Unauthorized");
+    private ResponseEntity<Object> errors(String message) {
+        Map<String, ?> m = Map.of("status", HttpStatus.UNAUTHORIZED.value(), "errorMessage", (Object) message);
         try {
             String responseBody = mapper.writeValueAsString(m);
             return new ResponseEntity<>(responseBody, HttpStatus.UNAUTHORIZED);

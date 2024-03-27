@@ -1,4 +1,4 @@
-package org.lafabrique_epita.application.service.media;
+package org.lafabrique_epita.application.service.media.movie;
 
 import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDTO;
 import org.lafabrique_epita.domain.entities.MovieEntity;
