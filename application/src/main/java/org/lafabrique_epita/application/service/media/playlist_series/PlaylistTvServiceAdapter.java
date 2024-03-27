@@ -2,6 +2,7 @@ package org.lafabrique_epita.application.service.media.playlist_series;
 
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDto;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDtoMapper;
@@ -12,9 +13,7 @@ import org.lafabrique_epita.application.dto.media.serie_post.SeriePostResponseDt
 import org.lafabrique_epita.domain.entities.*;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.SerieException;
-import org.lafabrique_epita.domain.repositories.GenreRepository;
-import org.lafabrique_epita.domain.repositories.PlayListTvRepository;
-import org.lafabrique_epita.domain.repositories.SerieRepository;
+import org.lafabrique_epita.domain.repositories.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +21,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @Transactional
 public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
     private final PlayListTvRepository playListTvRepository;
     private final SerieRepository serieRepository;
     private final GenreRepository genreRepository;
+    private final SeasonRepository seasonRepository;
+    private final EpisodeRepository episodeRepository;
 
-    public PlaylistTvServiceAdapter(PlayListTvRepository playListTvRepository, SerieRepository serieRepository, GenreRepository genreRepository) {
+    public PlaylistTvServiceAdapter(PlayListTvRepository playListTvRepository, SerieRepository serieRepository, GenreRepository genreRepository, SeasonRepository seasonRepository, EpisodeRepository episodeRepository) {
         this.playListTvRepository = playListTvRepository;
         this.serieRepository = serieRepository;
         this.genreRepository = genreRepository;
+        this.seasonRepository = seasonRepository;
+        this.episodeRepository = episodeRepository;
     }
 
 
@@ -61,6 +65,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
             }
             serie.setGenres(genreEntities);
 
+            log.error("Serie: {}", serie);
             serie = this.serieRepository.save(serie);
         }
 
@@ -74,9 +79,11 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
                 List<SeasonEntity> seasons = serie.getSeasons();
                 for (SeasonEntity season : seasons){
                     season.setSerie(serie);
+                    this.seasonRepository.save(season);
                     List<EpisodeEntity> episodes = season.getEpisodes();
                     for (EpisodeEntity episode : episodes) {
                         episode.setSeason(season);
+                        this.episodeRepository.save(episode);
                         PlayListTvID playListTvID = new PlayListTvID(episode.getId(), user.getId());
                         PlayListTvEntity playListTv = new PlayListTvEntity();
                         playListTv.setEpisode(episode);
@@ -87,6 +94,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
                         this.playListTvRepository.save(playListTv);
                     }
                 }
+
             }catch (Exception e) {
                 throw new SerieException("Un problème est survenu lors de l'enregistrement des épisodes dans la playlist TV", HttpStatus.CONFLICT);
             }
