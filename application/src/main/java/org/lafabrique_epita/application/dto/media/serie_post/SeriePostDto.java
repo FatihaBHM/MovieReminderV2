@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.lafabrique_epita.application.dto.media.GenreDto;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,6 +30,7 @@ public record SeriePostDto (
         String posterPath,
 
         @JsonProperty("last_air_date")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate lastAirDate,
 
         String title,

@@ -73,7 +73,7 @@ public class UserController extends ApiControllerBase {
         return ResponseEntity.ok(id);
     }
 
-    @Operation(summary = "login")
+    @Operation(summary = "Connectez-vous à l'application")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",

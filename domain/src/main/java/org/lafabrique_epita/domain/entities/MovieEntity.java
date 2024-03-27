@@ -24,7 +24,7 @@ public class MovieEntity extends MasterClass {
 
     private String backdropPath;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long idTmdb;
 
     @Column(columnDefinition = "TEXT")

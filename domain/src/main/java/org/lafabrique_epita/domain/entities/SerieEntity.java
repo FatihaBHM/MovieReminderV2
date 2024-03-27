@@ -24,7 +24,7 @@ public class SerieEntity extends MasterClass {
 
     private LocalDate firstAirDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long idTmdb;
 
     @Column(nullable = true, columnDefinition = "TEXT")

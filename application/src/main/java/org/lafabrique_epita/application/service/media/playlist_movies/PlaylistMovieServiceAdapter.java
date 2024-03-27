@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -33,7 +31,7 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
 
-    private static final String MOVIE_NOT_FOUND = "Movie not found";
+    private static final String MOVIE_NOT_FOUND = "Film introuvable";
 
     public PlaylistMovieServiceAdapter(PlayListMovieRepository playListMovieRepository, MovieRepository movieRepository, GenreRepository genreRepository) {
         this.playListMovieRepository = playListMovieRepository;

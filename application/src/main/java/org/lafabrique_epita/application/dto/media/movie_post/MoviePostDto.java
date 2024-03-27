@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.lafabrique_epita.application.dto.media.GenreDto;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,6 +34,7 @@ public record MoviePostDto(
         List<GenreDto> genres,
 
         @JsonProperty("release_date")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate releaseDate
 
 ) {
