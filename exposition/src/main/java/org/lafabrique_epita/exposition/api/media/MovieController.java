@@ -68,7 +68,13 @@ public class MovieController extends ApiControllerBase {
 
     // /movies/{id}?favorite=1 (0 => remove, 1 => add)
     // /movies/{id}?status=0 (0	A_REGARDER - 1 EN_COURS - 2 VU - 3 ABANDON)
-    @Operation(summary = "Ajouter ou supprimer un film de la liste des favoris ou modifier son statut")
+    @Operation(summary = "Ajouter ou supprimer un film de la liste des favoris ou modifier son statut",
+        parameters = {
+            @Parameter(name = "id", description = "Id du film", example = "1", schema = @Schema(implementation = Long.class)),
+            @Parameter(name = "favorite", description = "Ajouter ou supprimer un film de la liste des favoris(0=>retrait, 1=>ajout)", example = "1", schema = @Schema(implementation =
+                    Integer.class)),
+            @Parameter(name = "status", description = "Modifier le statut du film(0=>A_REGARDER, 1=>EN_COURS, 2=>VU, 3=>ABANDON)", example = "0", schema = @Schema(implementation = Integer.class))
+        })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Film ajouté à la liste des favoris ou statut modifié",
                     content = @Content(mediaType = "application/json",
@@ -88,7 +94,7 @@ public class MovieController extends ApiControllerBase {
             )),
             @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
                     mediaType = "application/json",
-                    examples = @ExampleObject(value = "{\"errorMessage\":\"Movie not found\",\"status\":404}"),
+                    examples = @ExampleObject(value = "{\"errorMessage\":\"Film introuvable\",\"status\":404}"),
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
     })
@@ -147,7 +153,8 @@ public class MovieController extends ApiControllerBase {
     }
 
     @Operation(summary = "Obtenez tous les films de la playlist de l'utilisateur connecté", parameters = {
-            @Parameter(name = "sort", description = "Sort movies by created date", example = "asc", schema = @Schema(implementation = String.class))
+            @Parameter(name = "sort", description = "Trier les films par date de création (asc). Si aucun paramète, descendant par défaut", example = "asc", schema = @Schema(implementation =
+                    String.class))
     })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Movies found",
@@ -178,7 +185,7 @@ public class MovieController extends ApiControllerBase {
             @ApiResponse(responseCode = "200", description = "Film supprimé de la playlist"),
             @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
                     mediaType = "application/json",
-                    examples = @ExampleObject(value = "{\"errorMessage\":\"Movie not found\",\"status\":404}"),
+                    examples = @ExampleObject(value = "{\"errorMessage\":\"Film introuvable\",\"status\":404}"),
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
     })
@@ -198,7 +205,7 @@ public class MovieController extends ApiControllerBase {
             ),
             @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
                     mediaType = "application/json",
-                    examples = @ExampleObject(value = "{\"errorMessage\":\"Movie not found\",\"status\":404}"),
+                    examples = @ExampleObject(value = "{\"errorMessage\":\"Film introuvable\",\"status\":404}"),
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
     })
@@ -206,7 +213,7 @@ public class MovieController extends ApiControllerBase {
     public ResponseEntity<MovieGetResponseDTO> getMovieByIdTmdb(@PathVariable Long idTmdb) throws MovieException {
         MovieGetResponseDTO movie = movieService.findMovieByIdTmdb(idTmdb);
         if (movie == null) {
-            throw new MovieException("Movie not found", HttpStatus.NOT_FOUND);
+            throw new MovieException("Film introuvable", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(movie);
     }

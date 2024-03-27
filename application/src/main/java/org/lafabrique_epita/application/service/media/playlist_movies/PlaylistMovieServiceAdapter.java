@@ -31,7 +31,7 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
 
-    private static final String MOVIE_NOT_FOUND = "Movie not found";
+    private static final String MOVIE_NOT_FOUND = "Film introuvable";
 
     public PlaylistMovieServiceAdapter(PlayListMovieRepository playListMovieRepository, MovieRepository movieRepository, GenreRepository genreRepository) {
         this.playListMovieRepository = playListMovieRepository;

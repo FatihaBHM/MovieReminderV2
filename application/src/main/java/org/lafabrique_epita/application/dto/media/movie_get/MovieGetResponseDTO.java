@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.lafabrique_epita.application.dto.media.CommentDto;
 import org.lafabrique_epita.application.dto.media.GenreDto;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,6 +32,7 @@ public record MovieGetResponseDTO(
         List<GenreDto> genres,
 
         @JsonProperty("release_date")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate releaseDate,
 
         List<CommentDto> comments
