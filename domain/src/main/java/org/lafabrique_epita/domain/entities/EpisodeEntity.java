@@ -20,7 +20,7 @@ public class EpisodeEntity extends MasterClass{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idEpisode;
+    private Long id;
 
     private LocalDate airDate;
 

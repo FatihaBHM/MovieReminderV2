@@ -43,7 +43,8 @@ public class SerieEntity extends MasterClass {
 
     private Float score;
 
-    private boolean favorite;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SeasonEntity> seasons = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "serie_comment", joinColumns = @JoinColumn(name = "serie_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))

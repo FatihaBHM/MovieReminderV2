@@ -38,6 +38,9 @@ public class SeasonEntity extends MasterClass {
     @JoinColumn(name = "serie_id")
     private SerieEntity serie;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "season", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EpisodeEntity> episodes = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(name = "season_comment", joinColumns = @JoinColumn(name = "season_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private List<CommentEntity> comments = new ArrayList<>();

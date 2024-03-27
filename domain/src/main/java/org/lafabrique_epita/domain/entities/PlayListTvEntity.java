@@ -19,7 +19,7 @@ public class PlayListTvEntity extends MasterClass {
     private PlayListTvID id;
 
     @ManyToOne(optional = false)
-    @MapsId("tvId")
+    @MapsId("episodeId")
     @JoinColumn(name = "episode_id")
     private EpisodeEntity episode;
 
@@ -29,6 +29,8 @@ public class PlayListTvEntity extends MasterClass {
     private UserEntity user;
 
     private int score;
+
+    private boolean favorite;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

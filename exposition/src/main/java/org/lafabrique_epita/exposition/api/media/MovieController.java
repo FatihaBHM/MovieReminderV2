@@ -12,7 +12,7 @@ import jakarta.validation.Valid;
 import org.lafabrique_epita.application.dto.media.movie_get.MovieGetResponseDTO;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostDto;
 import org.lafabrique_epita.application.dto.media.movie_post.MoviePostResponseDto;
-import org.lafabrique_epita.application.service.media.MovieServicePort;
+import org.lafabrique_epita.application.service.media.movie.MovieServicePort;
 import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceAdapter;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.enums.StatusEnum;

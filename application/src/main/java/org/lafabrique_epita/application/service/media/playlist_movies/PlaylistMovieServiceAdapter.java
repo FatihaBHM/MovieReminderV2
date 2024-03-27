@@ -26,7 +26,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
-
     private final PlayListMovieRepository playListMovieRepository;
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
