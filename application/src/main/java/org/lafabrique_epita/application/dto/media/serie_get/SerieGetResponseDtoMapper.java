@@ -2,9 +2,10 @@ package org.lafabrique_epita.application.dto.media.serie_get;
 
 import org.lafabrique_epita.application.dto.media.CommentDto;
 import org.lafabrique_epita.application.dto.media.GenreDto;
-import org.lafabrique_epita.domain.entities.CommentEntity;
-import org.lafabrique_epita.domain.entities.GenreEntity;
-import org.lafabrique_epita.domain.entities.SerieEntity;
+import org.lafabrique_epita.application.dto.media.serie_post.EpisodePostDto;
+import org.lafabrique_epita.application.dto.media.serie_post.SeasonPostDto;
+import org.lafabrique_epita.application.dto.media.serie_post.SeasonPostDtoMapper;
+import org.lafabrique_epita.domain.entities.*;
 
 public class SerieGetResponseDtoMapper {
 
@@ -21,7 +22,9 @@ public class SerieGetResponseDtoMapper {
                 serieEntity.getNumberOfSeasons(),
                 serieEntity.getScore(),
                 serieEntity.getComments().stream().map(SerieGetResponseDtoMapper::convertToCommentDto).toList(),
-                serieEntity.getGenres().stream().map(SerieGetResponseDtoMapper::convertToGenreDto).toList()
+                serieEntity.getGenres().stream().map(SerieGetResponseDtoMapper::convertToGenreDto).toList(),
+                serieEntity.getSeasons().stream().map(SeasonPostDtoMapper::convertToDto).toList()
+
         );
     }
 
@@ -39,5 +42,7 @@ public class SerieGetResponseDtoMapper {
                 genreEntity.getName()
         );
     }
+
+
 
 }

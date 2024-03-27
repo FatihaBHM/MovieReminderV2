@@ -34,7 +34,8 @@ public class SeasonEntity extends MasterClass {
 
     private int seasonNumber;
 
-    @ManyToOne(optional = false)
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "serie_id")
     private SerieEntity serie;
 

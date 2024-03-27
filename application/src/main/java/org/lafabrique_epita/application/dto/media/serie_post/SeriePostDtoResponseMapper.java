@@ -27,7 +27,9 @@ public class SeriePostDtoResponseMapper {
                         .toList(),
                 serieEntity.getComments().stream()
                         .map(CommentDtoMapper::convertToDto)
-                        .toList()
+                        .toList(),
+                serieEntity.getSeasons().stream()
+                        .map(SeasonPostDtoMapper::convertToDto).toList()
         );
     }
 

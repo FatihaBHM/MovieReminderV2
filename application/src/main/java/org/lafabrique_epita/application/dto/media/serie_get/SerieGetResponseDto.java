@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.lafabrique_epita.application.dto.media.CommentDto;
 import org.lafabrique_epita.application.dto.media.GenreDto;
+import org.lafabrique_epita.application.dto.media.serie_post.SeasonPostDto;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -37,7 +39,9 @@ public record SerieGetResponseDto(
 
         List<CommentDto> comments,
 
-        List<GenreDto> genres
+        List<GenreDto> genres,
+
+        List<SeasonPostDto> seasons
 
 
 ) {

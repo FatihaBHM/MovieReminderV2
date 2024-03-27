@@ -41,7 +41,7 @@ public class EpisodeEntity extends MasterClass{
 
     private String imagePath;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "season_id")
     private SeasonEntity season;
 

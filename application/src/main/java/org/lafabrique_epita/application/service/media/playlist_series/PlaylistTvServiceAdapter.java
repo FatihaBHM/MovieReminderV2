@@ -73,8 +73,10 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
         try{
                 List<SeasonEntity> seasons = serie.getSeasons();
                 for (SeasonEntity season : seasons){
+                    season.setSerie(serie);
                     List<EpisodeEntity> episodes = season.getEpisodes();
                     for (EpisodeEntity episode : episodes) {
+                        episode.setSeason(season);
                         PlayListTvID playListTvID = new PlayListTvID(episode.getId(), user.getId());
                         PlayListTvEntity playListTv = new PlayListTvEntity();
                         playListTv.setEpisode(episode);
@@ -91,12 +93,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
 
         }
 
-//    @Override
-//    public SeriePostResponseDto findByUserAndBySerie(Long serieId, Long userId) {
-//        PlayListTvID playListTvID = new PlayListTvID(serieId, userId);
-//        Optional<PlayListTvEntity> playListTvEntity = this.playListTvRepository.findBySerieIdAndUserId(playListTvID);
-//        return playListTvEntity.map(listSerieEntity -> SeriePostDtoResponseMapper.convertToSerieDto(listSerieEntity.getSerie())).orElse(null);
-//    }
+
 
     @Override
     public boolean updateFavorite(Long episodeId, Integer favorite, Long userId) throws SerieException {
