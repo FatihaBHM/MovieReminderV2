@@ -27,7 +27,7 @@ public class SeasonEntity extends MasterClass {
     @Column(nullable = true, columnDefinition = "TEXT")
     private String overview;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private int idTmdb;
 
     private String posterPath;

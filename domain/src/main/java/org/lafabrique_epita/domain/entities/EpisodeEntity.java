@@ -32,7 +32,7 @@ public class EpisodeEntity extends MasterClass{
     @Column(nullable = true, columnDefinition = "TEXT")
     private String overview;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long idTmdb;
 
     private int duration;
