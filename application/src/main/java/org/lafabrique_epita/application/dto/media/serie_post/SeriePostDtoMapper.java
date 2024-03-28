@@ -23,19 +23,33 @@ public class SeriePostDtoMapper {
         serie.setNumberOfSeasons(seriePostDto.numberOfSeasons());
         serie.setScore(seriePostDto.score());
 
-        List<GenreEntity> genres = seriePostDto.genres()
-                .stream()
-                .map(genre -> new GenreEntity(null, genre.id() , genre.name()))
-                .toList();
+        List<GenreEntity> genres = getGenres(seriePostDto);
         serie.setGenres(genres);
 
-        List<SeasonEntity> seasons = seriePostDto.seasons()
-                .stream()
-                .map(SeasonPostDtoMapper::convertToSeasonEntity )
-                .toList();
+        List<SeasonEntity> seasons = getSeasons(seriePostDto);
         serie.setSeasons(seasons);
 
 
         return serie;
+    }
+
+    private static List<SeasonEntity> getSeasons(SeriePostDto seriePostDto) {
+        if (seriePostDto.seasons() == null) {
+            return List.of();
+        }
+        return seriePostDto.seasons()
+                .stream()
+                .map(SeasonPostDtoMapper::convertToSeasonEntity)
+                .toList();
+    }
+
+    private static List<GenreEntity> getGenres(SeriePostDto seriePostDto) {
+        if (seriePostDto.genres() == null) {
+            return List.of();
+        }
+        return seriePostDto.genres()
+                .stream()
+                .map(genre -> new GenreEntity(null, genre.id(), genre.name()))
+                .toList();
     }
 }

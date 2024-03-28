@@ -38,7 +38,6 @@ public class SerieController extends ApiControllerBase {
         this.serieService = serieService;
     }
 
-
     @Operation(summary = "Ajouter une série", description = "Ajouter une série à la playlist de l'utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Série ajoutée à la playlist de l'utilisateur",
@@ -70,10 +69,7 @@ public class SerieController extends ApiControllerBase {
 
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
-        //Récupérer la liste des series by user dans le service
-        List<SerieGetResponseDto> playListSeries = playlistTvService.findAllEpisodesByUser(userEntity);
-
-        return ResponseEntity.ok(playListSeries);
+        return ResponseEntity.ok(playlistTvService.findAllEpisodesByUser(userEntity));
     }
 
     @Operation(summary = "Supprimer une série de la liste des favoris", parameters = {
