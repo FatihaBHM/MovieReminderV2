@@ -16,24 +16,17 @@ public class SeasonPostDtoMapper {
         season.setIdTmdb(seasonPostDto.idTmdb());
         season.setPosterPath(seasonPostDto.posterPath());
         season.setSeasonNumber(seasonPostDto.seasonNumber());
-        List<EpisodeEntity> episodes = seasonPostDto.episodes()
-                .stream()
-                .map(EpisodePostDtoMapper::convertToEpisodeEntity)
-                .toList();
-        season.setEpisodes(episodes);
-
         return season;
 
     }
+
 
     public static SeasonPostDto convertToDto(SeasonEntity seasonEntity) {
         return new SeasonPostDto(
                 seasonEntity.getOverview(),
                 seasonEntity.getIdTmdb(),
                 seasonEntity.getPosterPath(),
-                seasonEntity.getSeasonNumber(),
-                seasonEntity.getEpisodes().stream()
-                        .map(EpisodePostDtoMapper::convertToDto).toList()
+                seasonEntity.getSeasonNumber()
         );
     }
 }

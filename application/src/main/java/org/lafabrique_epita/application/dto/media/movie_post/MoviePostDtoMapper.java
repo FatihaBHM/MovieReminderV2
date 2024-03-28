@@ -20,14 +20,21 @@ public class MoviePostDtoMapper {
         movie.setBackdropPath(moviePostDto.backdropPath());
         movie.setScore(moviePostDto.score());
         //créer une liste de GenreEntity en partant du genreDto
-        List<GenreEntity> genres = moviePostDto.genres()
-                .stream()
-                .map(genre -> new GenreEntity(null, genre.id(), genre.name()))
-                .toList();
+        List<GenreEntity> genres = getGenres(moviePostDto);
         movie.setGenres(genres);
         movie.setReleaseDate(moviePostDto.releaseDate());
         movie.setComments(new ArrayList<>());
 
         return movie;
+    }
+
+    private static List<GenreEntity> getGenres(MoviePostDto moviePostDto) {
+        if (moviePostDto.genres() == null) {
+            return List.of();
+        }
+        return moviePostDto.genres()
+                .stream()
+                .map(genre -> new GenreEntity(null, genre.id(), genre.name()))
+                .toList();
     }
 }

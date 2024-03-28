@@ -1,0 +1,36 @@
+- application
+  - src/main/java
+    - org.lafabrique_epita.application
+      - dto
+      - service
+- domain
+  - src/main/java
+    - org.lafabrique_epita.domain
+      - entities
+      - enums
+      - exceptions
+      - repositories
+    - resources
+- exposition
+  - src/main/java
+    - org.lafabrique_epita.exposition
+      - api
+        - authentication
+        - media
+      - configuration
+      - exception
+    - ExpositionApplication.java
+    - resources
+      - application.properties
+- infrastructure
+  - src/main/java
+    - org.lafabrique_epita.infrastructure
+      - comment
+      - episode
+      - genre
+      - movie
+      - playlist_movie
+      - playlist_tv
+      - season
+      - serie
+      - user

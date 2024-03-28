@@ -22,8 +22,6 @@ public record SeasonPostDto(
 
         @PositiveOrZero(message = "Le nombre d'épisodes doit être positif ou nul")
         @JsonProperty("season_number")
-        int seasonNumber,
-
-        List<EpisodePostDto> episodes
+        int seasonNumber
 ) {
 }

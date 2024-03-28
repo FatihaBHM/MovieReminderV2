@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.lafabrique_epita.application.dto.authentication.RegisterDto;
 import org.lafabrique_epita.application.service.user.UserServiceAdapter;
-import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.exceptions.UserException;
 import org.lafabrique_epita.exposition.configuration.JwtService;
 import org.mockito.InjectMocks;
@@ -49,11 +48,6 @@ class UserControllerTest {
         // Arrange
         RegisterDto registerDto = new RegisterDto("pseudo", "utilisateur@gmail.com", "Motdepasse2024@");
 
-        UserEntity userEntity = new UserEntity();
-        userEntity.setPseudo("pseudo");
-        userEntity.setEmail("utilisateur@gmail.com");
-        userEntity.setPassword("Motdepasse2024@");
-
         when(userService.save(any(RegisterDto.class))).thenReturn(1L);
 
         // Act
@@ -70,12 +64,7 @@ class UserControllerTest {
     @Test
     void testSaveThrowsException() throws UserException {
         // Arrange
-        RegisterDto registerDto = new RegisterDto("pseudo", "utilisateur@gmail.me", "Motdepasse2024@");
-
-        UserEntity userEntity = new UserEntity();
-        userEntity.setPseudo("pseudo");
-        userEntity.setEmail("utilisateur@gmail.me");
-        userEntity.setPassword("Motdepasse2024@");
+        RegisterDto registerDto = new RegisterDto("pseudo", "utilisateur@gmail.com", "Motdepasse2024@");
 
         when(userService.save(any(RegisterDto.class))).thenThrow(new UserException("Email already exists", HttpStatus.UNAUTHORIZED));
 
