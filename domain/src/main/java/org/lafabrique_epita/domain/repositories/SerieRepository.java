@@ -12,4 +12,8 @@ public interface SerieRepository {
     Optional<SerieEntity> findByIdTmdb(Long aLong);
 
     List<SerieEntity> findAll();
+
+    Optional<SerieEntity> findById(Long serieId);
+
+    void delete(SerieEntity serie);
 }

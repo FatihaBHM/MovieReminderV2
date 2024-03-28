@@ -20,7 +20,7 @@ public interface PlaylistTvServicePort {
 
     void updateStatus(Long episodeId, StatusEnum status, Long userId) throws SerieException;
 
-    void delete(Long episodeId, int i, Long userId) throws SerieException;
+//    void delete(Long episodeId, int i, Long userId) throws SerieException;
 
     SerieGetResponseDto findSerieByIdTmdb(Long idTmdb) throws SerieException;
 

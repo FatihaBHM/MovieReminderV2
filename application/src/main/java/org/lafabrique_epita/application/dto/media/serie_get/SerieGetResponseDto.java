@@ -29,10 +29,10 @@ public record SerieGetResponseDto(
         @NotBlank
         String title,
 
-        @JsonProperty("number_of_episode")
+        @JsonProperty("number_of_episodes")
         int numberOfEpisodes,
 
-        @JsonProperty("number_of_episode")
+        @JsonProperty("number_of_seasons")
         int numberOfSeasons,
 
         Float score,

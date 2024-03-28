@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -130,16 +131,6 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
     }
 
     @Override
-    public void delete(Long episodeId, int i, Long userId) throws SerieException {
-        Optional<PlayListTvEntity> playListTvEntity = this.playListTvRepository.findByEpisodeIdAndUserId(episodeId, userId);
-        if (playListTvEntity.isPresent()) {
-            this.playListTvRepository.delete(playListTvEntity.get());
-        } else {
-            throw new SerieException("Serie not found", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @Override
     public SerieGetResponseDto findSerieByIdTmdb(Long idTmdb) throws SerieException {
         Optional<SerieEntity> serieEntity = this.serieRepository.findByIdTmdb(idTmdb);
         if (serieEntity.isPresent()) {
@@ -150,10 +141,18 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
 
     @Override
     public List<SerieGetResponseDto> findAllEpisodesByUser(UserEntity user) {
-        List<SerieEntity> playlists = playListTvRepository.findEpisodesByUserId(user);
+        List<EpisodeEntity> playlists = playListTvRepository.findEpisodesByUserId(user);
 
-        return playlists.stream()
-                .map(SerieGetResponseDtoMapper::convertToSerieDto).toList();
+        // transformer la liste d'EpisodeEntity en liste de SerieEntity
+        // puis transformer la liste de SerieEntity en liste de SerieGetResponseDto
+        List<SerieEntity> serieEntities = playlists.stream()
+                .map(episodeEntity -> episodeEntity.getSeason().getSerie())
+                .distinct() // pour éliminer les doublons
+                .toList();
+
+        return serieEntities.stream()
+                .map(SerieGetResponseDtoMapper::convertToSerieDto)
+                .toList();
     }
 
 
