@@ -25,11 +25,11 @@ public class SeasonEntity extends MasterClass {
     private String overview;
 
     @Column(nullable = false, unique = true)
-    private int idTmdb;
+    private Long idTmdb;
 
     private String posterPath;
 
-    private int seasonNumber;
+    private Integer seasonNumber;
 
 
     @ManyToOne(optional = false)

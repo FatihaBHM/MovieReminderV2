@@ -7,7 +7,7 @@ public class EpisodePostDtoMapper {
     private EpisodePostDtoMapper() {
     }
 
-    public static EpisodeEntity convertToEpisodeEntity(EpisodePostDto episodePostDto) {
+    public static EpisodeEntity convertToEntity(EpisodePostDto episodePostDto) {
         EpisodeEntity episode = new EpisodeEntity();
         episode.setAirDate(episodePostDto.airDate());
         episode.setEpisodeNumber(episodePostDto.episodeNumber());

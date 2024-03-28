@@ -5,6 +5,7 @@ import org.lafabrique_epita.domain.repositories.EpisodeRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class EpisodeRepositoryAdapter implements EpisodeRepository {
@@ -23,5 +24,10 @@ public class EpisodeRepositoryAdapter implements EpisodeRepository {
     @Override
     public List<EpisodeEntity> saveAll(List<EpisodeEntity> episodeEntity) {
         return this.episodeJPARepository.saveAll(episodeEntity);
+    }
+
+    @Override
+    public Optional<EpisodeEntity> findByIdTmdb(Long idTmdb) {
+        return this.episodeJPARepository.findByIdTmdb(idTmdb);
     }
 }
