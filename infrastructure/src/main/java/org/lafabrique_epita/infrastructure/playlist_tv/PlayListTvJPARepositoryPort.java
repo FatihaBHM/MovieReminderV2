@@ -15,7 +15,7 @@ public interface PlayListTvJPARepositoryPort extends JpaRepository<PlayListTvEnt
     PlayListTvEntity findByUserIdAndFavoriteTrue(Long userId);
 
     @Query("SELECT episode FROM PlayListTvEntity WHERE user = :user")
-    List<SerieEntity> findEpisodesByUserId(@PathVariable UserEntity user);
+    List<EpisodeEntity> findEpisodesByUserId(@PathVariable UserEntity user);
 
     boolean existsByEpisodeIdAndUserId(Long serieId, Long userId);
 

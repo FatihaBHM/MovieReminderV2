@@ -37,7 +37,7 @@ public class PlayListTvRepositoryAdapter implements PlayListTvRepository {
         return this.playListTvJPARepository.findByUserIdAndFavoriteTrue(userId);
     }
     @Override
-    public List<SerieEntity> findEpisodesByUserId(UserEntity user) {
+    public List<EpisodeEntity> findEpisodesByUserId(UserEntity user) {
         return this.playListTvJPARepository.findEpisodesByUserId(user);
     }
 

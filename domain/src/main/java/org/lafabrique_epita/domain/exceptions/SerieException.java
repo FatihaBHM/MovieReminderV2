@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 public class SerieException extends MovieReminderException{
 
     public SerieException(String message) {
-        super(message);
+        super(message, HttpStatus.BAD_REQUEST);
     }
 
     public SerieException(String message, HttpStatus httpStatus) {

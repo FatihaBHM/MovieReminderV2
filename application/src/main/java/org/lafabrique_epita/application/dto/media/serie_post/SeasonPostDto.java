@@ -13,6 +13,7 @@ public record SeasonPostDto(
         @JsonProperty("poster_path")
         String posterPath,
 
+        @JsonProperty("season_number")
         int seasonNumber,
 
         List<EpisodePostDto> episodes

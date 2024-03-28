@@ -1,10 +1,7 @@
 package org.lafabrique_epita.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -43,6 +40,7 @@ public class SerieEntity extends MasterClass {
 
     private Float score;
 
+    @ToString.Exclude
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "serie", orphanRemoval = true)
     private List<SeasonEntity> seasons = new ArrayList<>();
 

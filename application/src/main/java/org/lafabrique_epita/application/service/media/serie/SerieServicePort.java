@@ -12,4 +12,6 @@ public interface SerieServicePort {
     List<SerieEntity> getAll();
 
     SerieGetResponseDto findSerieByIdTmdb(Long idTmdb) throws SerieException;
+
+    void delete(Long serieId, Long userId) throws SerieException;
 }

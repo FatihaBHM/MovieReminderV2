@@ -16,6 +16,7 @@ public class SerieRepositoryAdapter implements SerieRepository {
     public SerieRepositoryAdapter(SerieJPARepositoryPort serieJPARepository) {
         this.serieJPARepository = serieJPARepository;
     }
+
     @Override
     public SerieEntity save(SerieEntity serie) {
         //save comment
@@ -25,11 +26,21 @@ public class SerieRepositoryAdapter implements SerieRepository {
 
     @Override
     public Optional<SerieEntity> findByIdTmdb(Long aLong) {
-        return Optional.empty();
+        return this.serieJPARepository.findByIdTmdb(aLong);
     }
 
     @Override
     public List<SerieEntity> findAll() {
-        return null;
+        return this.serieJPARepository.findAll();
+    }
+
+    @Override
+    public Optional<SerieEntity> findById(Long serieId) {
+        return this.serieJPARepository.findById(serieId);
+    }
+
+    @Override
+    public void delete(SerieEntity serie) {
+        this.serieJPARepository.delete(serie);
     }
 }

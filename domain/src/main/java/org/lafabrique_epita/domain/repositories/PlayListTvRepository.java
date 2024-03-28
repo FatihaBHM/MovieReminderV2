@@ -19,7 +19,7 @@ public interface PlayListTvRepository {
 
     Optional<PlayListTvEntity> findByEpisodeIdAndUserId(Long episodeId, Long userId);
 
-    List<SerieEntity> findEpisodesByUserId(UserEntity user);
+    List<EpisodeEntity> findEpisodesByUserId(UserEntity user);
 
     boolean existsByEpisodeIdAndUserId(Long episodeId, Long userId);
 
