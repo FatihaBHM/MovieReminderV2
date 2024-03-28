@@ -15,7 +15,7 @@ public record SeasonPostDto(
         @NotNull(message = "L'id TMDB ne doit pas être nul")
         @NotBlank(message = "L'id TMDB ne doit pas être vide")
         @Positive(message = "L'id TMDB doit être positif")
-        int idTmdb,
+        Long idTmdb,
 
         @JsonProperty("poster_path")
         String posterPath,

@@ -6,12 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDto;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDtoMapper;
-import org.lafabrique_epita.application.dto.media.serie_post.SeriePostDto;
-import org.lafabrique_epita.application.dto.media.serie_post.SeriePostDtoMapper;
-import org.lafabrique_epita.application.dto.media.serie_post.SeriePostDtoResponseMapper;
-import org.lafabrique_epita.application.dto.media.serie_post.SeriePostResponseDto;
+import org.lafabrique_epita.application.dto.media.serie_post.*;
 import org.lafabrique_epita.domain.entities.*;
 import org.lafabrique_epita.domain.enums.StatusEnum;
+import org.lafabrique_epita.domain.exceptions.EpisodeException;
 import org.lafabrique_epita.domain.exceptions.SerieException;
 import org.lafabrique_epita.domain.repositories.*;
 import org.springframework.http.HttpStatus;
@@ -71,6 +69,25 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
 
         createAndSavePlayListTvEntity(serie, user);
         return SeriePostDtoResponseMapper.convertToSerieDto(serie);
+    }
+
+    @Override
+    public EpisodePostDto save(EpisodeEntity episodeEntity, UserEntity user) throws EpisodeException {
+        PlayListTvEntity playListTvEntity = new PlayListTvEntity();
+        playListTvEntity.setEpisode(episodeEntity);
+        playListTvEntity.setUser(user);
+        playListTvEntity.setFavorite(false);
+        playListTvEntity.setStatus(StatusEnum.A_REGARDER);
+        playListTvEntity.setScore(0);
+
+        PlayListTvID playListTvID = new PlayListTvID();
+        playListTvID.setEpisodeId(episodeEntity.getId());
+        playListTvID.setUserId(user.getId());
+
+        playListTvEntity.setId(playListTvID);
+
+        PlayListTvEntity pl = this.playListTvRepository.save(playListTvEntity);
+        return EpisodePostDtoMapper.convertToDto(pl.getEpisode());
     }
 
     @SneakyThrows
