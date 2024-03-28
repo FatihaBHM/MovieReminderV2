@@ -77,22 +77,10 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
     private void createAndSavePlayListTvEntity(SerieEntity serie, UserEntity user) {
         try {
             List<SeasonEntity> seasons = serie.getSeasons();
+
             for (SeasonEntity season : seasons) {
                 season.setSerie(serie);
                 this.seasonRepository.save(season);
-                List<EpisodeEntity> episodes = season.getEpisodes();
-                for (EpisodeEntity episode : episodes) {
-                    episode.setSeason(season);
-                    this.episodeRepository.save(episode);
-                    PlayListTvID playListTvID = new PlayListTvID(episode.getId(), user.getId());
-                    PlayListTvEntity playListTv = new PlayListTvEntity();
-                    playListTv.setEpisode(episode);
-                    playListTv.setId(playListTvID);
-                    playListTv.setUser(user);
-                    playListTv.setStatus(StatusEnum.A_REGARDER);
-                    playListTv.setFavorite(false);
-                    this.playListTvRepository.save(playListTv);
-                }
             }
 
         } catch (Exception e) {
