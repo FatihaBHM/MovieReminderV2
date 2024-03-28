@@ -3,6 +3,7 @@ package org.lafabrique_epita.application.dto.media.movie_post;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,15 +14,15 @@ import java.util.List;
 public record MoviePostDto(
 
         @JsonProperty("id_tmdb")
-        @NotNull
-        @PositiveOrZero
+        @NotNull(message = "L'id TMDB ne doit pas être nul")
+        @Positive(message = "L'id TMDB doit être positif")
         Long idTmdb,
 
-        @NotNull
-        @NotBlank
+        @NotNull(message = "Le titre ne doit pas être nul")
+        @NotBlank(message = "Le titre ne doit pas être vide")
         String title,
 
-        @PositiveOrZero
+        @PositiveOrZero(message = "La durée doit être positive ou nulle")
         Integer duration,
 
         String overview,

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@Tag(name = "User", description = "The user API")
+@Tag(name = "User", description = "L'API utilisateur")
 @RestController
 public class UserController extends ApiControllerBase {
 

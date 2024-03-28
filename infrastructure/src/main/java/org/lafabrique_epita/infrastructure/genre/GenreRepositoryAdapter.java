@@ -27,7 +27,7 @@ public class GenreRepositoryAdapter implements GenreRepository {
 
     @Override
     public GenreEntity save(GenreEntity genreEntity) {
-        log.warn("Genre {} not found in database, creating it", genreEntity);
+        log.warn("Genre {} introuvable dans la base de données, création", genreEntity);
         return this.genreJPARepository.save(genreEntity);
     }
 }

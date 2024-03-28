@@ -1,8 +1,6 @@
 package org.lafabrique_epita.application.dto.media.serie_post;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import org.lafabrique_epita.application.dto.media.CommentDto;
 import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,8 +15,6 @@ public record SeriePostResponseDto(
         LocalDate firstAirDate,
 
         @JsonProperty("id_tmdb")
-        @NotNull
-        @PositiveOrZero
         Long idTmdb,
 
         String overview,
@@ -32,10 +28,8 @@ public record SeriePostResponseDto(
 
         String title,
 
-        @PositiveOrZero
         int numberOfEpisodes,
 
-        @PositiveOrZero
         int numberOfSeasons,
 
         float score,

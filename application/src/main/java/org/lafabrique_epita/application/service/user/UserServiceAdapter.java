@@ -25,7 +25,7 @@ public class UserServiceAdapter implements UserServicePort {
     @Override
     public Long save(RegisterDto registerDto) throws UserException {
         if (this.userRepository.findByEmail(registerDto.email()).isPresent()) {
-            throw new UserException("Email already exists", HttpStatus.BAD_REQUEST);
+            throw new UserException("l'email existe déjà", HttpStatus.BAD_REQUEST);
         }
 
         UserEntity user = RegisterDtoMapper.convertToUserEntity(registerDto);

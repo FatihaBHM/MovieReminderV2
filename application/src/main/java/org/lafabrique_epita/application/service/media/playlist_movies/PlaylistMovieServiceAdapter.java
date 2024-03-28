@@ -48,7 +48,7 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
             movie = movieEntity.get();
             boolean existsByMovieIdAndUserId = this.playListMovieRepository.existsByMovieIdAndUserId(movie.getId(), user.getId());
             if (existsByMovieIdAndUserId) {
-                throw new MovieException("Movie already exists in the playlist", HttpStatus.CONFLICT);
+                throw new MovieException("Le film existe déjà dans la playlist", HttpStatus.CONFLICT);
             }
         } else {
             movie = MoviePostDtoMapper.convertToMovieEntity(moviePostDto);

@@ -58,12 +58,12 @@ public class JwtFilter extends OncePerRequestFilter {
         }catch (ExpiredJwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
-            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_UNAUTHORIZED, "errorMessage", "JWT expired");
+            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_UNAUTHORIZED, "errorMessage", "JWT expiré");
             response.getWriter().write(objectMapper.writeValueAsString(errors));
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType("application/json");
-            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_BAD_REQUEST, "errorMessage", "Invalid JWT");
+            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_BAD_REQUEST, "errorMessage", "JWT invalide");
             response.getWriter().write(objectMapper.writeValueAsString(errors));
         }
     }

@@ -4,7 +4,6 @@ import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieID;
 import org.lafabrique_epita.domain.entities.UserEntity;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;

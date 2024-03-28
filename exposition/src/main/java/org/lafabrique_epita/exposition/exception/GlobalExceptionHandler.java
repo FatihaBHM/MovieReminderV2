@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = collectErrors(exception);
 
         String jsonErrors = prepareResponse(errors);
-        if (jsonErrors.equals("Internal server error")) {
+        if (jsonErrors.equals("Erreur interne du serveur")) {
             return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(jsonErrors);
         }
         return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(jsonErrors);
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception exception) {
-        log.error("An error occurred", exception);
+        log.error("Une erreur s'est produite", exception);
         return getStringResponseEntity(exception);
     }
 
@@ -116,7 +116,7 @@ public class GlobalExceptionHandler {
         try {
             return mapper.writeValueAsString(responseBody);
         } catch (JsonProcessingException e) {
-            return "Internal server error";
+            return "Erreur interne du serveur";
         }
     }
 }

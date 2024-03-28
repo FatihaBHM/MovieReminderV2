@@ -1,10 +1,11 @@
 package org.lafabrique_epita.application.dto.authentication;
 
-import lombok.RequiredArgsConstructor;
 import org.lafabrique_epita.domain.entities.UserEntity;
 
-@RequiredArgsConstructor
 public class RegisterDtoMapper {
+
+    private RegisterDtoMapper() {
+    }
 
     public static UserEntity convertToUserEntity(RegisterDto registerDto) {
         UserEntity user = new UserEntity();
