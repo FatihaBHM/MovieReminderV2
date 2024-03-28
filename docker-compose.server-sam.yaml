@@ -28,6 +28,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION: ${JWT_EXPIRATION}
+      SHOW_SQL: ${SHOW_SQL}
+      FORMAT_SHOW_SQL: ${FORMAT_SHOW_SQL}
     networks:
       - movieNetwork
 
