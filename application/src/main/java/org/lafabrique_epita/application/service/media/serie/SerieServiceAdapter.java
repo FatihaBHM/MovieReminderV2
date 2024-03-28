@@ -44,7 +44,7 @@ public class SerieServiceAdapter implements SerieServicePort {
     @Override
     public void delete(Long serieId, Long userId) throws SerieException {
         SerieEntity serie = this.serieRepository.findById(serieId)
-                .orElseThrow(() -> new SerieException("Serie not found"));
+                .orElseThrow(() -> new SerieException("Série introuvable"));
 
         try {
             List<EpisodeEntity> episodes = serie.getSeasons().stream()
@@ -54,8 +54,8 @@ public class SerieServiceAdapter implements SerieServicePort {
                     .map(episode -> playlistTvService.findByEpisodeIdAndUserId(episode.getId(), userId))
                     .forEach(playlistTvEntity -> playlistTvEntity.ifPresent(playlistTvService::delete));
         } catch (Exception e) {
-            log.error("Error while deleting episodes from playlist", e);
-            throw new SerieException("Error while deleting episodes from playlist");
+            log.error("Erreur lors de la suppression d'épisodes de la playlist", e);
+            throw new SerieException("Erreur lors de la suppression d'épisodes de la playlist");
         }
 
         try {

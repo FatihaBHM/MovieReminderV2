@@ -15,11 +15,11 @@ import org.lafabrique_epita.application.dto.media.movie_post.MoviePostResponseDt
 import org.lafabrique_epita.application.service.media.movie.MovieServicePort;
 import org.lafabrique_epita.application.service.media.playlist_movies.PlaylistMovieServiceAdapter;
 import org.lafabrique_epita.domain.entities.UserEntity;
+import org.lafabrique_epita.domain.enums.MovieSort;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.MovieException;
 import org.lafabrique_epita.exposition.api.ApiControllerBase;
 import org.lafabrique_epita.exposition.api.media.response_class.Favorite;
-import org.lafabrique_epita.domain.enums.MovieSort;
 import org.lafabrique_epita.exposition.api.media.response_class.ResponseStatusAndFavorite;
 import org.lafabrique_epita.exposition.api.media.response_class.Status;
 import org.lafabrique_epita.exposition.exception.ErrorMessage;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Movie", description = "The movie API")
+@Tag(name = "Movie", description = "L'API du film")
 @RestController
 public class MovieController extends ApiControllerBase {
 
@@ -108,11 +108,11 @@ public class MovieController extends ApiControllerBase {
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         if (favorite == null && status == null) {
-            throw new MovieException("Favorite or status must be provided", HttpStatus.BAD_REQUEST);
+            throw new MovieException("Le favori ou le statut doit être fourni", HttpStatus.BAD_REQUEST);
         }
 
         if (favorite != null && status != null) {
-            throw new MovieException("Favorite and status cannot be provided at the same time", HttpStatus.BAD_REQUEST);
+            throw new MovieException("Le favori et le statut ne peuvent pas être fournis en même temps", HttpStatus.BAD_REQUEST);
         }
 
         if (favorite != null) {
@@ -124,7 +124,7 @@ public class MovieController extends ApiControllerBase {
 
     private ResponseEntity<ResponseStatusAndFavorite> updateFavorite(Long id, Integer favorite, UserEntity userEntity) throws MovieException {
         if (favorite < 0 || favorite > 1) {
-            throw new MovieException("Favorite must be 0 or 1(0 => remove, 1 => add)", HttpStatus.BAD_REQUEST);
+            throw new MovieException("Le favori doit être 0 ou 1 (0 => supprimer, 1 => ajouter)", HttpStatus.BAD_REQUEST);
         }
         boolean fav = playlistMovieService.updateFavorite(id, favorite, userEntity.getId());
         Favorite favoriteResponse = new Favorite(fav);
@@ -134,7 +134,7 @@ public class MovieController extends ApiControllerBase {
 
     private ResponseEntity<ResponseStatusAndFavorite> updateStatus(Long id, Integer status, UserEntity userEntity) throws MovieException {
         if (status < 0 || status > 3) {
-            throw new MovieException("Status must be 0, 1, 2 or 3 (0 => A_REGARDER, 1 => EN_COURS, 2 => VU, 3 => ABANDON)", HttpStatus.BAD_REQUEST);
+            throw new MovieException("Le statut doit être 0, 1, 2 ou 3 (0 => A_REGARDER, 1 => EN_COURS, 2 => VU, 3 => ABANDON)", HttpStatus.BAD_REQUEST);
         }
         StatusEnum statusEnum = statusToString(status);
         playlistMovieService.updateStatus(id, statusEnum, userEntity.getId());
@@ -195,7 +195,7 @@ public class MovieController extends ApiControllerBase {
 
         playlistMovieService.delete(id, 0, userEntity.getId());
 
-        return ResponseEntity.ok(new ErrorMessage(200, "Movie deleted"));
+        return ResponseEntity.ok(new ErrorMessage(200, "Film supprimé"));
     }
 
     @Operation(summary = "Obtenir un film par son id TMDB")

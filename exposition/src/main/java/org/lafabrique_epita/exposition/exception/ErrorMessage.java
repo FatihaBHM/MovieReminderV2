@@ -10,7 +10,7 @@ public record ErrorMessage(
         return String.format("""
                 {
                     STATUS: %s,
-                    "errorMessage": %s
+                    "error_message": %s
                 }
                 """, status, errorMessage);
     }

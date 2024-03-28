@@ -2,12 +2,15 @@ package org.lafabrique_epita.application.dto.media.serie_get;
 
 import org.lafabrique_epita.application.dto.media.CommentDto;
 import org.lafabrique_epita.application.dto.media.GenreDto;
-import org.lafabrique_epita.application.dto.media.serie_post.EpisodePostDto;
-import org.lafabrique_epita.application.dto.media.serie_post.SeasonPostDto;
 import org.lafabrique_epita.application.dto.media.serie_post.SeasonPostDtoMapper;
-import org.lafabrique_epita.domain.entities.*;
+import org.lafabrique_epita.domain.entities.CommentEntity;
+import org.lafabrique_epita.domain.entities.GenreEntity;
+import org.lafabrique_epita.domain.entities.SerieEntity;
 
 public class SerieGetResponseDtoMapper {
+
+    private SerieGetResponseDtoMapper() {
+    }
 
     public static SerieGetResponseDto convertToSerieDto(SerieEntity serieEntity) {
         return new SerieGetResponseDto(

@@ -1,6 +1,8 @@
 package org.lafabrique_epita.infrastructure.playlist_tv;
 
-import org.lafabrique_epita.domain.entities.*;
+import org.lafabrique_epita.domain.entities.EpisodeEntity;
+import org.lafabrique_epita.domain.entities.PlayListTvEntity;
+import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.repositories.PlayListTvRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,21 +23,11 @@ public class PlayListTvRepositoryAdapter implements PlayListTvRepository {
         return this.playListTvJPARepository.save(playListTvEntity);
     }
 
-//    @Override
-//    public boolean existsBySerieIdAndUserId(Long id, Long id1) {
-//        return false;
-//    }
-
     @Override
     public Optional<PlayListTvEntity> findByEpisodeIdAndUserId(Long episodeId, Long userId) {
         return this.playListTvJPARepository.findByEpisodeIdAndUserId(episodeId, userId);
     }
 
-    @Override
-    public PlayListTvEntity findByUserIdAndFavoriteTrue(Long userId) {
-        // TODO: Implement this method
-        return this.playListTvJPARepository.findByUserIdAndFavoriteTrue(userId);
-    }
     @Override
     public List<EpisodeEntity> findEpisodesByUserId(UserEntity user) {
         return this.playListTvJPARepository.findEpisodesByUserId(user);

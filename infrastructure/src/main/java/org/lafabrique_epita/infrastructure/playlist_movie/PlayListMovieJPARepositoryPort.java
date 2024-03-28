@@ -3,7 +3,6 @@ package org.lafabrique_epita.infrastructure.playlist_movie;
 import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.lafabrique_epita.domain.entities.UserEntity;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.PathVariable;

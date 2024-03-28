@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UserControllerTest {
+class UserControllerTest {
 
     @Mock
     private UserServiceAdapter userService;
@@ -45,7 +45,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testSave() throws UserException {
+    void testSave() throws UserException {
         // Arrange
         RegisterDto registerDto = new RegisterDto("pseudo", "utilisateur@gmail.com", "Motdepasse2024@");
 
@@ -80,9 +80,7 @@ public class UserControllerTest {
         when(userService.save(any(RegisterDto.class))).thenThrow(new UserException("Email already exists", HttpStatus.UNAUTHORIZED));
 
         // Act and Assert
-        Exception exception = assertThrows(UserException.class, () -> {
-            userController.save(registerDto);
-        });
+        Exception exception = assertThrows(UserException.class, () -> userController.save(registerDto));
 
         String expectedMessage = "Email already exists";
         String actualMessage = exception.getMessage();

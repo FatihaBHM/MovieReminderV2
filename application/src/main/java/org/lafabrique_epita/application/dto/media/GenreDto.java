@@ -10,7 +10,7 @@ public record GenreDto(
          */
         Long id,
 
-        @NotNull
-        @NotBlank
+        @NotNull(message = "Le nom ne doit pas être nul")
+        @NotBlank(message = "Le nom ne doit pas être vide")
         String name
 ) {}

@@ -1,6 +1,5 @@
 package org.lafabrique_epita.exposition.api.media;
 
-import ch.qos.logback.core.status.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,10 +11,9 @@ import jakarta.validation.Valid;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDto;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostDto;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostResponseDto;
-import org.lafabrique_epita.application.service.media.serie.SerieServicePort;
 import org.lafabrique_epita.application.service.media.playlist_series.PlaylistTvServiceAdapter;
+import org.lafabrique_epita.application.service.media.serie.SerieServicePort;
 import org.lafabrique_epita.domain.entities.UserEntity;
-import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.SerieException;
 import org.lafabrique_epita.exposition.api.ApiControllerBase;
 import org.lafabrique_epita.exposition.exception.ErrorMessage;
@@ -26,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Serie", description = "The Serie API")
+@Tag(name = "Serie", description = "L'API Série")
 @RestController
 public class SerieController extends ApiControllerBase {
 
@@ -41,13 +39,13 @@ public class SerieController extends ApiControllerBase {
     }
 
 
-    @Operation(summary = "Ajouter une série à la liste des favoris")
+    @Operation(summary = "Ajouter une série", description = "Ajouter une série à la playlist de l'utilisateur")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Serie ajoutée à la liste des favoris",
+            @ApiResponse(responseCode = "200", description = "Série ajoutée à la playlist de l'utilisateur",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = SeriePostResponseDto.class))
             ),
-            @ApiResponse(responseCode = "400", description = "Demande invalide de changement de favori", content = @Content(
+            @ApiResponse(responseCode = "400", description = "Série non ajouté à la playlist", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
@@ -60,7 +58,6 @@ public class SerieController extends ApiControllerBase {
        return ResponseEntity.ok(serieDto);
    }
 
-    //GET/series
     @Operation(summary = "Récupérer la liste des séries ajoutées par l'utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Liste des séries ajoutées par l'utilisateur",
@@ -79,16 +76,15 @@ public class SerieController extends ApiControllerBase {
         return ResponseEntity.ok(playListSeries);
     }
 
-    //DELETE/series/{id}
     @Operation(summary = "Supprimer une série de la liste des favoris", parameters = {
             @Parameter(name = "id", description = "Id de la série", example = "1", schema = @Schema(implementation = Long.class))
     })
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Serie supprimée de la liste des favoris",
+            @ApiResponse(responseCode = "200", description = "Série supprimée de la liste des favoris",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorMessage.class))
             ),
-            @ApiResponse(responseCode = "404", description = "Serie introuvable", content = @Content(
+            @ApiResponse(responseCode = "404", description = "Série introuvable", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
@@ -99,10 +95,9 @@ public class SerieController extends ApiControllerBase {
 
         serieService.delete(id, userEntity.getId());
 
-        return ResponseEntity.ok(new ErrorMessage(200, "Serie deleted"));
+        return ResponseEntity.ok(new ErrorMessage(200, "Série supprimée"));
     }
 
-    // GET/series/{idTmdb}
     @Operation(summary = "Récupérer une série par son idTmdb", parameters = {
             @Parameter(name = "idTmdb", description = "Id de la série sur TMDB", example = "1", schema = @Schema(implementation = Long.class))
     })
@@ -120,7 +115,7 @@ public class SerieController extends ApiControllerBase {
     public ResponseEntity<SerieGetResponseDto> getSerieByIdTmdb(@PathVariable Long idTmdb) throws SerieException {
         SerieGetResponseDto serie = serieService.findSerieByIdTmdb(idTmdb);
         if (serie == null) {
-            throw new SerieException("Serie not found", HttpStatus.NOT_FOUND);
+            throw new SerieException("Série introuvable", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(serie);
     }

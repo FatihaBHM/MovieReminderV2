@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -50,7 +49,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
             serie = serieEntity.get();
             boolean existsBySerieIdAndUserId = this.playListTvRepository.existsByEpisodeIdAndUserId(serie.getId(), user.getId());
             if (existsBySerieIdAndUserId) {
-                throw new SerieException("Serie already exists in the playlist", HttpStatus.CONFLICT);
+                throw new SerieException("La série existe déjà dans la playlist", HttpStatus.CONFLICT);
             }
         } else {
             serie = SeriePostDtoMapper.convertToSerieEntity(seriePostDto);
@@ -66,7 +65,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
             }
             serie.setGenres(genreEntities);
 
-            log.error("Serie: {}", serie);
+            log.error("Série: {}", serie);
             serie = this.serieRepository.save(serie);
         }
 
@@ -74,34 +73,33 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
         return SeriePostDtoResponseMapper.convertToSerieDto(serie);
     }
 
-        @SneakyThrows
-        private void createAndSavePlayListTvEntity(SerieEntity serie, UserEntity user) {
-        try{
-                List<SeasonEntity> seasons = serie.getSeasons();
-                for (SeasonEntity season : seasons){
-                    season.setSerie(serie);
-                    this.seasonRepository.save(season);
-                    List<EpisodeEntity> episodes = season.getEpisodes();
-                    for (EpisodeEntity episode : episodes) {
-                        episode.setSeason(season);
-                        this.episodeRepository.save(episode);
-                        PlayListTvID playListTvID = new PlayListTvID(episode.getId(), user.getId());
-                        PlayListTvEntity playListTv = new PlayListTvEntity();
-                        playListTv.setEpisode(episode);
-                        playListTv.setId(playListTvID);
-                        playListTv.setUser(user);
-                        playListTv.setStatus(StatusEnum.A_REGARDER);
-                        playListTv.setFavorite(false);
-                        this.playListTvRepository.save(playListTv);
-                    }
+    @SneakyThrows
+    private void createAndSavePlayListTvEntity(SerieEntity serie, UserEntity user) {
+        try {
+            List<SeasonEntity> seasons = serie.getSeasons();
+            for (SeasonEntity season : seasons) {
+                season.setSerie(serie);
+                this.seasonRepository.save(season);
+                List<EpisodeEntity> episodes = season.getEpisodes();
+                for (EpisodeEntity episode : episodes) {
+                    episode.setSeason(season);
+                    this.episodeRepository.save(episode);
+                    PlayListTvID playListTvID = new PlayListTvID(episode.getId(), user.getId());
+                    PlayListTvEntity playListTv = new PlayListTvEntity();
+                    playListTv.setEpisode(episode);
+                    playListTv.setId(playListTvID);
+                    playListTv.setUser(user);
+                    playListTv.setStatus(StatusEnum.A_REGARDER);
+                    playListTv.setFavorite(false);
+                    this.playListTvRepository.save(playListTv);
                 }
-
-            }catch (Exception e) {
-                throw new SerieException("Un problème est survenu lors de l'enregistrement des épisodes dans la playlist TV", HttpStatus.CONFLICT);
             }
 
+        } catch (Exception e) {
+            throw new SerieException("Un problème est survenu lors de l'enregistrement des épisodes dans la playlist TV", HttpStatus.CONFLICT);
         }
 
+    }
 
 
     @Override
@@ -109,7 +107,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
         Optional<PlayListTvEntity> playListTvEntity = this.playListTvRepository.findByEpisodeIdAndUserId(episodeId, userId);
 
         if (playListTvEntity.isEmpty()) {
-            throw new SerieException("Episode not found", HttpStatus.NOT_FOUND);
+            throw new SerieException("Épisode introuvable", HttpStatus.NOT_FOUND);
         }
 
         playListTvEntity.get().setFavorite(favorite == 1);
@@ -127,16 +125,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
             this.playListTvRepository.save(playListTvEntity.get());
             return;
         }
-        throw new SerieException("Serie not found", HttpStatus.NOT_FOUND);
-    }
-
-    @Override
-    public SerieGetResponseDto findSerieByIdTmdb(Long idTmdb) throws SerieException {
-        Optional<SerieEntity> serieEntity = this.serieRepository.findByIdTmdb(idTmdb);
-        if (serieEntity.isPresent()) {
-                return SerieGetResponseDtoMapper.convertToSerieDto(serieEntity.get());
-        }
-        throw new SerieException("Serie not found", HttpStatus.NOT_FOUND);
+        throw new SerieException("Série introuvable", HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -154,7 +143,6 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
                 .map(SerieGetResponseDtoMapper::convertToSerieDto)
                 .toList();
     }
-
 
 
 }

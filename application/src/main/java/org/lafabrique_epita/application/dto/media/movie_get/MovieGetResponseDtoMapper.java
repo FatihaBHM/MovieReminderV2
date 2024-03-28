@@ -8,6 +8,9 @@ import org.lafabrique_epita.domain.entities.MovieEntity;
 
 public class MovieGetResponseDtoMapper {
 
+    private MovieGetResponseDtoMapper() {
+    }
+
     public static MovieGetResponseDTO convertToMovieDto(MovieEntity movieEntity) {
         return new MovieGetResponseDTO(
                 movieEntity.getId(),

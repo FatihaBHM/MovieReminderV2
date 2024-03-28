@@ -5,7 +5,6 @@ import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieID;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.repositories.PlayListMovieRepository;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
