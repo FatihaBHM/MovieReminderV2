@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class PlayListTvID implements Serializable {
+public class PlayListEpisodeID implements Serializable {
 
     @Column(name = "episode_id")
     private Long episodeId;
