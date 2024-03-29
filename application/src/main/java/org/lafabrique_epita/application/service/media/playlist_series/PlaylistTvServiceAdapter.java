@@ -137,8 +137,8 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
 
         List<EpisodeGetResponseDto> episodeDtos = playlists.stream()
                 .map(episodeEntity -> {
-                    PlayListEpisodeEntity playListEpisodeEntity = playListTvRepository.findByEpisodeIdAndUserId(episodeEntity.getId(), user.getId()).orElse(null);
-                    return EpisodeGetResponseMapper.convertToDto(episodeEntity, playListEpisodeEntity.isFavorite(), playListEpisodeEntity.getStatus());
+                    Optional<PlayListEpisodeEntity> playListEpisodeEntity = playListTvRepository.findByEpisodeIdAndUserId(episodeEntity.getId(), user.getId());
+                    return playListEpisodeEntity.map(listEpisodeEntity -> EpisodeGetResponseMapper.convertToDto(episodeEntity, listEpisodeEntity.isFavorite(), listEpisodeEntity.getStatus())).orElseGet(() -> EpisodeGetResponseMapper.convertToDto(episodeEntity, false, StatusEnum.A_REGARDER));
                 })
                 .toList();
 
@@ -149,7 +149,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
                 .distinct() // pour éliminer les doublons
                 .toList();
 
-        List<SerieGetResponseDto> serieDtos = serieEntities.stream()
+        return serieEntities.stream()
                 .map(serieEntity -> {
                     SerieGetResponseDto serieDto = SerieGetResponseDtoMapper.convertToSerieDto(serieEntity);
                     List<SeasonGetResponseDto> seasonDtos = serieDto.seasons();
@@ -162,8 +162,6 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
                     return serieDto;
                 })
                 .toList();
-
-        return serieDtos;
     }
 
 
