@@ -48,12 +48,12 @@ public class MovieController extends ApiControllerBase {
             @ApiResponse(responseCode = "200", description = "Film ajouté à la playlist"),
             @ApiResponse(responseCode = "400", description = "Bad request", content = @Content(
                     mediaType = "application/json",
-                    examples = @ExampleObject(value = "{ \"status\": 400, \"errorMessage\": {\"title\": \"ne doit pas être vide\"} }"),
+                    examples = @ExampleObject(value = "{ \"status\": 400, \"error_message\": {\"title\": \"ne doit pas être vide\"} }"),
                     schema = @Schema(implementation = ErrorMessage.class)
             )),
             @ApiResponse(responseCode = "409", description = "Conflict", content = @Content(
                     mediaType = "application/json",
-                    examples = @ExampleObject(value = "{ \"status\": 409, \"errorMessage\": \"Movie already exists in the playlist\" }"),
+                    examples = @ExampleObject(value = "{ \"status\": 409, \"error_message\": \"Movie already exists in the playlist\" }"),
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
     })
@@ -87,14 +87,14 @@ public class MovieController extends ApiControllerBase {
             @ApiResponse(responseCode = "400", description = "Demande invalide de changement de favori ou de statut", content = @Content(
                     mediaType = "application/json",
                     examples = {
-                            @ExampleObject(name = "Favoris invalide", value = "{\"errorMessage\":\"Favorite must be 0 or 1 (0 => remove, 1 => add)\",\"status\":400}"),
-                            @ExampleObject(name = "Statut invalide", value = "{\"errorMessage\":\"Status must be 0, 1, 2 or 3 (0 => A_REGARDER, 1 => EN_COURS, 2 => VU, 3 => ABANDON)\",\"status\":400}")
+                            @ExampleObject(name = "Favoris invalide", value = "{\"error_message\":\"Favorite must be 0 or 1 (0 => remove, 1 => add)\",\"status\":400}"),
+                            @ExampleObject(name = "Statut invalide", value = "{\"error_message\":\"Status must be 0, 1, 2 or 3 (0 => A_REGARDER, 1 => EN_COURS, 2 => VU, 3 => ABANDON)\",\"status\":400}")
                     },
                     schema = @Schema(implementation = ErrorMessage.class)
             )),
             @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
                     mediaType = "application/json",
-                    examples = @ExampleObject(value = "{\"errorMessage\":\"Film introuvable\",\"status\":404}"),
+                    examples = @ExampleObject(value = "{\"error_message\":\"Film introuvable\",\"status\":404}"),
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
     })
@@ -185,7 +185,7 @@ public class MovieController extends ApiControllerBase {
             @ApiResponse(responseCode = "200", description = "Film supprimé de la playlist"),
             @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
                     mediaType = "application/json",
-                    examples = @ExampleObject(value = "{\"errorMessage\":\"Film introuvable\",\"status\":404}"),
+                    examples = @ExampleObject(value = "{\"error_message\":\"Film introuvable\",\"status\":404}"),
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
     })
@@ -205,7 +205,7 @@ public class MovieController extends ApiControllerBase {
             ),
             @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
                     mediaType = "application/json",
-                    examples = @ExampleObject(value = "{\"errorMessage\":\"Film introuvable\",\"status\":404}"),
+                    examples = @ExampleObject(value = "{\"error_message\":\"Film introuvable\",\"status\":404}"),
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
     })

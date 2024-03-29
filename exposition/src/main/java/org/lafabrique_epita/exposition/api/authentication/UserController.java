@@ -65,7 +65,7 @@ public class UserController extends ApiControllerBase {
                     description = "Mauvaise demande",
                     content = @Content(schema = @Schema(implementation = ErrorMessage.class),
                             mediaType = "application/json",
-                            examples = @ExampleObject(value = "{ \"status\": 400, \"errorMessage\": {\"email\": \"ne doit pas être vide\"} }"))
+                            examples = @ExampleObject(value = "{ \"status\": 400, \"error_message\": {\"email\": \"ne doit pas être vide\"} }"))
             )
     })
     @PostMapping("/register")
@@ -106,7 +106,7 @@ public class UserController extends ApiControllerBase {
     }
 
     private ResponseEntity<Object> errors(String message) {
-        Map<String, ?> m = Map.of("status", HttpStatus.UNAUTHORIZED.value(), "errorMessage", (Object) message);
+        Map<String, ?> m = Map.of("status", HttpStatus.UNAUTHORIZED.value(), "error_message", (Object) message);
         try {
             String responseBody = mapper.writeValueAsString(m);
             return new ResponseEntity<>(responseBody, HttpStatus.UNAUTHORIZED);

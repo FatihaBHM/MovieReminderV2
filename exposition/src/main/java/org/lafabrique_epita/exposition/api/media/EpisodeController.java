@@ -67,14 +67,14 @@ public class EpisodeController extends ApiControllerBase {
             @ApiResponse(responseCode = "400", description = "Demande invalide de changement de favori ou de statut", content = @Content(
                     mediaType = "application/json",
                     examples = {
-                            @ExampleObject(name = "Favoris invalide", value = "{\"errorMessage\":\"Favorite must be 0 or 1 (0 => remove, 1 => add)\",\"status\":400}"),
-                            @ExampleObject(name = "Statut invalide", value = "{\"errorMessage\":\"Status must be 0, 1, 2 or 3 (0 => A_REGARDER, 1 => EN_COURS, 2 => VU, 3 => ABANDON)\",\"status\":400}")
+                            @ExampleObject(name = "Favoris invalide", value = "{\"error_message\":\"Favorite must be 0 or 1 (0 => remove, 1 => add)\",\"status\":400}"),
+                            @ExampleObject(name = "Statut invalide", value = "{\"error_message\":\"Status must be 0, 1, 2 or 3 (0 => A_REGARDER, 1 => EN_COURS, 2 => VU, 3 => ABANDON)\",\"status\":400}")
                     },
                     schema = @Schema(implementation = ErrorMessage.class)
             )),
             @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
                     mediaType = "application/json",
-                    examples = @ExampleObject(value = "{\"errorMessage\":\"Film introuvable\",\"status\":404}"),
+                    examples = @ExampleObject(value = "{\"error_message\":\"Film introuvable\",\"status\":404}"),
                     schema = @Schema(implementation = ErrorMessage.class)
             ))
     })

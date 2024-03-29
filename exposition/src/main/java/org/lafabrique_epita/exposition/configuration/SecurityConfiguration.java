@@ -51,12 +51,12 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setContentType("application/json;charset=UTF-8");
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_UNAUTHORIZED, "errorMessage", "Non autorisé");
+                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_UNAUTHORIZED, "error_message", "Non autorisé");
                             response.getWriter().write(new ObjectMapper().writeValueAsString(errors));
                         }).accessDeniedHandler((request, response, accessDeniedException) -> {
                             response.setContentType("application/json;charset=UTF-8");
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_FORBIDDEN, "errorMessage", "Accès interdit");
+                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_FORBIDDEN, "error_message", "Accès interdit");
                             response.getWriter().write(new ObjectMapper().writeValueAsString(errors));
                         }))
                 .build();
