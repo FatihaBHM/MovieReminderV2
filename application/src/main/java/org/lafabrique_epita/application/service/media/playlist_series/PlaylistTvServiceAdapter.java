@@ -11,11 +11,15 @@ import org.lafabrique_epita.domain.entities.*;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.EpisodeException;
 import org.lafabrique_epita.domain.exceptions.SerieException;
-import org.lafabrique_epita.domain.repositories.*;
+import org.lafabrique_epita.domain.repositories.GenreRepository;
+import org.lafabrique_epita.domain.repositories.PlayListTvRepository;
+import org.lafabrique_epita.domain.repositories.SeasonRepository;
+import org.lafabrique_epita.domain.repositories.SerieRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -135,9 +139,11 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
     public List<SerieGetResponseDto> findAllEpisodesByUser(UserEntity user) {
         List<EpisodeEntity> playlists = playListTvRepository.findEpisodesByUserId(user);
 
+        Comparator<EpisodeEntity> comparator = Comparator.comparing(EpisodeEntity::getCreatedDate).reversed();
         // transformer la liste d'EpisodeEntity en liste de SerieEntity
         // puis transformer la liste de SerieEntity en liste de SerieGetResponseDto
         List<SerieEntity> serieEntities = playlists.stream()
+                .sorted(comparator)
                 .map(episodeEntity -> episodeEntity.getSeason().getSerie())
                 .distinct() // pour éliminer les doublons
                 .toList();
