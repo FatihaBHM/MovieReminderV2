@@ -27,14 +27,12 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
     private final SerieRepository serieRepository;
     private final GenreRepository genreRepository;
     private final SeasonRepository seasonRepository;
-    private final EpisodeRepository episodeRepository;
 
-    public PlaylistTvServiceAdapter(PlayListTvRepository playListTvRepository, SerieRepository serieRepository, GenreRepository genreRepository, SeasonRepository seasonRepository, EpisodeRepository episodeRepository) {
+    public PlaylistTvServiceAdapter(PlayListTvRepository playListTvRepository, SerieRepository serieRepository, GenreRepository genreRepository, SeasonRepository seasonRepository) {
         this.playListTvRepository = playListTvRepository;
         this.serieRepository = serieRepository;
         this.genreRepository = genreRepository;
         this.seasonRepository = seasonRepository;
-        this.episodeRepository = episodeRepository;
     }
 
 
@@ -67,31 +65,31 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
             serie = this.serieRepository.save(serie);
         }
 
-        createAndSavePlayListTvEntity(serie, user);
+        createAndSavePlayListTvEntity(serie);
         return SeriePostDtoResponseMapper.convertToSerieDto(serie);
     }
 
     @Override
     public EpisodePostDto save(EpisodeEntity episodeEntity, UserEntity user) throws EpisodeException {
-        PlayListTvEntity playListTvEntity = new PlayListTvEntity();
-        playListTvEntity.setEpisode(episodeEntity);
-        playListTvEntity.setUser(user);
-        playListTvEntity.setFavorite(false);
-        playListTvEntity.setStatus(StatusEnum.A_REGARDER);
-        playListTvEntity.setScore(0);
+        PlayListEpisodeEntity playListEpisodeEntity = new PlayListEpisodeEntity();
+        playListEpisodeEntity.setEpisode(episodeEntity);
+        playListEpisodeEntity.setUser(user);
+        playListEpisodeEntity.setFavorite(false);
+        playListEpisodeEntity.setStatus(StatusEnum.A_REGARDER);
+        playListEpisodeEntity.setScore(0);
 
-        PlayListTvID playListTvID = new PlayListTvID();
-        playListTvID.setEpisodeId(episodeEntity.getId());
-        playListTvID.setUserId(user.getId());
+        PlayListEpisodeID playListEpisodeID = new PlayListEpisodeID();
+        playListEpisodeID.setEpisodeId(episodeEntity.getId());
+        playListEpisodeID.setUserId(user.getId());
 
-        playListTvEntity.setId(playListTvID);
+        playListEpisodeEntity.setId(playListEpisodeID);
 
-        PlayListTvEntity pl = this.playListTvRepository.save(playListTvEntity);
+        PlayListEpisodeEntity pl = this.playListTvRepository.save(playListEpisodeEntity);
         return EpisodePostDtoMapper.convertToDto(pl.getEpisode());
     }
 
     @SneakyThrows
-    private void createAndSavePlayListTvEntity(SerieEntity serie, UserEntity user) {
+    private void createAndSavePlayListTvEntity(SerieEntity serie) {
         try {
             List<SeasonEntity> seasons = serie.getSeasons();
 
@@ -109,7 +107,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
 
     @Override
     public boolean updateFavorite(Long episodeId, Integer favorite, Long userId) throws SerieException {
-        Optional<PlayListTvEntity> playListTvEntity = this.playListTvRepository.findByEpisodeIdAndUserId(episodeId, userId);
+        Optional<PlayListEpisodeEntity> playListTvEntity = this.playListTvRepository.findByEpisodeIdAndUserId(episodeId, userId);
 
         if (playListTvEntity.isEmpty()) {
             throw new SerieException("Épisode introuvable", HttpStatus.NOT_FOUND);
@@ -117,13 +115,13 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
 
         playListTvEntity.get().setFavorite(favorite == 1);
 
-        PlayListTvEntity s = this.playListTvRepository.save(playListTvEntity.get());
+        PlayListEpisodeEntity s = this.playListTvRepository.save(playListTvEntity.get());
         return s.isFavorite();
 
     }
 
     public void updateStatus(Long episodeId, StatusEnum status, Long userId) throws SerieException {
-        Optional<PlayListTvEntity> playListTvEntity = this.playListTvRepository.findByEpisodeIdAndUserId(episodeId, userId);
+        Optional<PlayListEpisodeEntity> playListTvEntity = this.playListTvRepository.findByEpisodeIdAndUserId(episodeId, userId);
 
         if (playListTvEntity.isPresent()) {
             playListTvEntity.get().setStatus(status);

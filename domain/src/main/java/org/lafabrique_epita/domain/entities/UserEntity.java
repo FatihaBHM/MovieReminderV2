@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "utilisateur")
-public class UserEntity extends MasterClass implements UserDetails{
+public class UserEntity extends MasterClass implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class UserEntity extends MasterClass implements UserDetails{
     @Column(nullable = false)
     private String pseudo;
 
-    @Column(nullable = false, unique= true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)

@@ -1,5 +1,6 @@
 package org.lafabrique_epita.application.service.media.serie;
 
+import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.application.dto.media.serie_post.EpisodePostDto;
 import org.lafabrique_epita.application.dto.media.serie_post.EpisodePostDtoMapper;
 import org.lafabrique_epita.domain.entities.EpisodeEntity;
@@ -8,10 +9,15 @@ import org.lafabrique_epita.domain.exceptions.SerieException;
 import org.lafabrique_epita.domain.repositories.EpisodeRepository;
 import org.lafabrique_epita.domain.repositories.SeasonRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
+@Transactional
 public class EpisodeServiceAdapter implements EpisodeServicePort {
 
 
@@ -24,24 +30,29 @@ public class EpisodeServiceAdapter implements EpisodeServicePort {
     }
 
     @Override
-    public EpisodeEntity save(EpisodePostDto episodePostDto, Long idTmdbSeason) throws SerieException {
+    public List<EpisodeEntity> saveAll(List<EpisodePostDto> episodePostDtos, Long idTmdbSeason) throws SerieException {
         // on récupère une DTO et on la convertit en entité
-        EpisodeEntity episode = EpisodePostDtoMapper.convertToEntity(episodePostDto);
+        List<EpisodeEntity> episodes = episodePostDtos.stream().map(EpisodePostDtoMapper::convertToEntity).toList();
 
+        List<EpisodeEntity> finalEpisodes = new ArrayList<>();
         // On doit vérifier si l'épisode existe déjà dans la base de données
-        Optional<EpisodeEntity> episodeEntity = this.episodeRepository.findByIdTmdb(episode.getIdTmdb());
+        for (EpisodeEntity episode : episodes) {
+            Optional<EpisodeEntity> episodeEntity = this.episodeRepository.findByIdTmdb(episode.getIdTmdb());
+            // Si oui, on retourne l'épisode
+            if (episodeEntity.isPresent()) {
+                finalEpisodes.add(episodeEntity.get());
+                continue;
+            }
 
-        // Si oui, on retourne l'épisode
-        if (episodeEntity.isPresent()) {
-           return episodeEntity.get();
+            // Sinon, on crée un nouvel épisode et on le retourne
+            Optional<SeasonEntity> seasonEntity = this.seasonRepository.findByIdTmdb(idTmdbSeason);
+            if (seasonEntity.isEmpty()) {
+                throw new SerieException("Saison introuvable");
+            }
+            episode.setSeason(seasonEntity.get());
+            finalEpisodes.add(episode);
         }
 
-        // Sinon, on crée un nouvel épisode et on le retourne
-        Optional<SeasonEntity> seasonEntity = this.seasonRepository.findByIdTmdb(idTmdbSeason);
-        if (seasonEntity.isEmpty()) {
-            throw new SerieException("Saison introuvable");
-        }
-        episode.setSeason(seasonEntity.get());
-        return this.episodeRepository.save(episode);
+        return this.episodeRepository.saveAll(finalEpisodes);
     }
 }

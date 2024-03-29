@@ -8,6 +8,7 @@ import org.lafabrique_epita.domain.exceptions.MovieReminderException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,20 +22,19 @@ import java.util.Map;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    private final ObjectMapper mapper = new ObjectMapper();
-
     private static final String STATUS = "status";
     private static final String ERROR_MESSAGE = "error_message";
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleException(DataIntegrityViolationException exception) {
         Map<String, ?> m = Map.of(STATUS, 400, ERROR_MESSAGE, exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
-            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(responseBody);
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_PROBLEM_JSON).body(responseBody);
 
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).build();
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_PROBLEM_JSON).build();
         }
     }
 
@@ -45,14 +45,19 @@ public class GlobalExceptionHandler {
 
         String jsonErrors = prepareResponse(errors);
         if (jsonErrors.equals("Erreur interne du serveur")) {
-            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(jsonErrors);
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_PROBLEM_JSON).body(jsonErrors);
         }
-        return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(jsonErrors);
+        return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_PROBLEM_JSON).body(jsonErrors);
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Throwable.class)
     public ResponseEntity<String> handleException(Exception exception) {
         log.error("Une erreur s'est produite", exception);
+        return getStringResponseEntity(exception);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> handleException(HttpMessageNotReadableException exception) {
         return getStringResponseEntity(exception);
     }
 
@@ -60,10 +65,10 @@ public class GlobalExceptionHandler {
         Map<String, ?> m = Map.of(STATUS, 500, ERROR_MESSAGE, exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
-            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(responseBody);
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_PROBLEM_JSON).body(responseBody);
 
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).build();
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_PROBLEM_JSON).build();
         }
     }
 
@@ -72,10 +77,10 @@ public class GlobalExceptionHandler {
         Map<String, ?> m = Map.of(STATUS, exception.getHttpStatus().value(), ERROR_MESSAGE, exception.getMessage());
         try {
             String responseBody = mapper.writeValueAsString(m);
-            return ResponseEntity.status(exception.getHttpStatus()).contentType(MediaType.APPLICATION_JSON).body(responseBody);
+            return ResponseEntity.status(exception.getHttpStatus()).contentType(MediaType.APPLICATION_PROBLEM_JSON).body(responseBody);
 
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).build();
+            return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_PROBLEM_JSON).build();
         }
     }
 

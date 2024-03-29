@@ -22,7 +22,7 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
 
     @Override
     public PlayListMovieEntity save(PlayListMovieEntity playListMovieEntity) {
-       return this.playListMovieJPARepository.save(playListMovieEntity);
+        return this.playListMovieJPARepository.save(playListMovieEntity);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
 
     @Override
     public boolean existsByMovieIdAndUserId(Long movieId, Long userId) {
-        return this.playListMovieJPARepository.existsByMovieIdAndUserId(movieId, userId)    ;
+        return this.playListMovieJPARepository.existsByMovieIdAndUserId(movieId, userId);
     }
 
     @Override

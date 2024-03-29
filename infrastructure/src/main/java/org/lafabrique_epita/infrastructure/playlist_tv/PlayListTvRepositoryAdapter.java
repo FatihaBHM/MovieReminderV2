@@ -1,7 +1,7 @@
 package org.lafabrique_epita.infrastructure.playlist_tv;
 
 import org.lafabrique_epita.domain.entities.EpisodeEntity;
-import org.lafabrique_epita.domain.entities.PlayListTvEntity;
+import org.lafabrique_epita.domain.entities.PlayListEpisodeEntity;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.repositories.PlayListTvRepository;
 import org.springframework.stereotype.Repository;
@@ -19,12 +19,12 @@ public class PlayListTvRepositoryAdapter implements PlayListTvRepository {
     }
 
     @Override
-    public PlayListTvEntity save(PlayListTvEntity playListTvEntity) {
-        return this.playListTvJPARepository.save(playListTvEntity);
+    public PlayListEpisodeEntity save(PlayListEpisodeEntity playListEpisodeEntity) {
+        return this.playListTvJPARepository.save(playListEpisodeEntity);
     }
 
     @Override
-    public Optional<PlayListTvEntity> findByEpisodeIdAndUserId(Long episodeId, Long userId) {
+    public Optional<PlayListEpisodeEntity> findByEpisodeIdAndUserId(Long episodeId, Long userId) {
         return this.playListTvJPARepository.findByEpisodeIdAndUserId(episodeId, userId);
     }
 
@@ -35,11 +35,12 @@ public class PlayListTvRepositoryAdapter implements PlayListTvRepository {
 
     @Override
     public boolean existsByEpisodeIdAndUserId(Long serieId, Long userId) {
-        return this.playListTvJPARepository.existsByEpisodeIdAndUserId(serieId, userId)    ;
+        return this.playListTvJPARepository.existsByEpisodeIdAndUserId(serieId, userId);
     }
+
     @Override
-    public void delete(PlayListTvEntity playListTvEntity) {
-        this.playListTvJPARepository.delete(playListTvEntity);
+    public void delete(PlayListEpisodeEntity playListEpisodeEntity) {
+        this.playListTvJPARepository.delete(playListEpisodeEntity);
     }
 
 }

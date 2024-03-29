@@ -51,11 +51,11 @@ public class SerieController extends ApiControllerBase {
     })
     @PostMapping("/series")
     public ResponseEntity<SeriePostResponseDto> getFrontSerie(@Valid @RequestBody SeriePostDto seriePostDto, Authentication authentication) throws SerieException {
-       UserEntity userEntity = (UserEntity) authentication.getPrincipal();
+        UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
-       SeriePostResponseDto serieDto = playlistTvService.save(seriePostDto, userEntity);
-       return ResponseEntity.ok(serieDto);
-   }
+        SeriePostResponseDto serieDto = playlistTvService.save(seriePostDto, userEntity);
+        return ResponseEntity.ok(serieDto);
+    }
 
     @Operation(summary = "Récupérer la liste des séries ajoutées par l'utilisateur")
     @ApiResponses(value = {

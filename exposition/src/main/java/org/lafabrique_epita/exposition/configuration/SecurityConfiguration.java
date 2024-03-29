@@ -23,6 +23,12 @@ import java.util.Map;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
+    private static final String[] SWAGGGER_WHITELIST = {
+            "/swagger-ui/**",
+            "/api-docs/**",
+            "/swagger-resources/**",
+            "/swagger-resources"
+    };
     private final JwtFilter jwtFilter;
 
     public SecurityConfiguration(JwtFilter jwtFilter) {
@@ -45,23 +51,16 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setContentType("application/json;charset=UTF-8");
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_UNAUTHORIZED, "errorMessage", "Non autorisé");
+                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_UNAUTHORIZED, "error_message", "Non autorisé");
                             response.getWriter().write(new ObjectMapper().writeValueAsString(errors));
                         }).accessDeniedHandler((request, response, accessDeniedException) -> {
                             response.setContentType("application/json;charset=UTF-8");
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_FORBIDDEN, "errorMessage", "Accès interdit");
+                            Map<String, ?> errors = Map.of("status", HttpServletResponse.SC_FORBIDDEN, "error_message", "Accès interdit");
                             response.getWriter().write(new ObjectMapper().writeValueAsString(errors));
                         }))
                 .build();
     }
-
-    private static final String[] SWAGGGER_WHITELIST = {
-            "/swagger-ui/**",
-            "/api-docs/**",
-            "/swagger-resources/**",
-            "/swagger-resources"
-    };
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

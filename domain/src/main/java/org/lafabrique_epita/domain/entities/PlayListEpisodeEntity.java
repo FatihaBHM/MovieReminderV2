@@ -12,11 +12,11 @@ import org.lafabrique_epita.domain.enums.StatusEnum;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "playlist_tv")
-public class PlayListTvEntity extends MasterClass {
+@Table(name = "playlist_episode")
+public class PlayListEpisodeEntity extends MasterClass {
 
     @EmbeddedId
-    private PlayListTvID id;
+    private PlayListEpisodeID id;
 
     @ManyToOne(optional = false)
     @MapsId("episodeId")

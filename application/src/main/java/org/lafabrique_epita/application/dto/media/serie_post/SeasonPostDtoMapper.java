@@ -1,16 +1,13 @@
 package org.lafabrique_epita.application.dto.media.serie_post;
 
-import org.lafabrique_epita.domain.entities.EpisodeEntity;
 import org.lafabrique_epita.domain.entities.SeasonEntity;
-
-import java.util.List;
 
 public class SeasonPostDtoMapper {
 
     private SeasonPostDtoMapper() {
     }
 
-    public  static SeasonEntity convertToSeasonEntity(SeasonPostDto seasonPostDto) {
+    public static SeasonEntity convertToSeasonEntity(SeasonPostDto seasonPostDto) {
         SeasonEntity season = new SeasonEntity();
         season.setOverview(seasonPostDto.overview());
         season.setIdTmdb(seasonPostDto.idTmdb());

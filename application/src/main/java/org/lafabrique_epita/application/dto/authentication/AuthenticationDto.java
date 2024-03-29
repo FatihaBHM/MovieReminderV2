@@ -10,9 +10,9 @@ public record AuthenticationDto(
 
 
         @Schema(description = "L'adresse email de l'utilisateur", example = "utilisateur@gmail.fr")
-        @Email (message = "L'adresse email doit être valide")
-        @NotNull (message = "L'adresse email ne doit pas être nulle")
-        @NotBlank (message = "L'adresse email ne doit pas être vide")
+        @Email(message = "L'adresse email doit être valide")
+        @NotNull(message = "L'adresse email ne doit pas être nulle")
+        @NotBlank(message = "L'adresse email ne doit pas être vide")
         String email,
 
         @Schema(description = "Le mot de passe de l'utilisateur - (regex: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!\\-_]).{8,}$)", example = "Motdepasse2024@")

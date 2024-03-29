@@ -1,4 +1,13 @@
 package org.lafabrique_epita.exposition.api.media.response_class;
 
-public record Favorite(boolean favorite) implements ResponseStatusAndFavorite {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record Favorite(
+        @JsonProperty("media_id")
+        Long mediaId,
+
+        @JsonProperty("favorite")
+        boolean favorite
+)
+        implements ResponseStatusAndFavorite {
 }

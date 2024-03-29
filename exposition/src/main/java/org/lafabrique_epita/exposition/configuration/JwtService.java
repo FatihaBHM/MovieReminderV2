@@ -18,16 +18,13 @@ import java.util.Map;
 @Slf4j
 @Service
 public class JwtService {
+    private final UserDetailsService userDetailsService;
     @Value("${jwt.secret}")
     private String secret;
-
-//    @Value("#{${jwt.expiration} * 60 * 1000}")
+    //    @Value("#{${jwt.expiration} * 60 * 1000}")
     @Value("${jwt.expiration}")
     private Long tokenExpiration;
-
     private SecretKey key;
-
-    private final UserDetailsService userDetailsService;
 
 
     public JwtService(UserDetailsService userDetailsService) {
