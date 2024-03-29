@@ -3,12 +3,12 @@ services:
   database:
     image: postgres
     container_name: movie-database
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
-
+      TZ: "Europe/Paris"
     networks:
       - movieNetwork
     volumes:
@@ -22,6 +22,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - database
+    restart: unless-stopped
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
@@ -30,6 +31,8 @@ services:
       JWT_EXPIRATION: ${JWT_EXPIRATION}
       SHOW_SQL: ${SHOW_SQL}
       FORMAT_SHOW_SQL: ${FORMAT_SHOW_SQL}
+      TZ: "Europe/Paris"
+
     networks:
       - movieNetwork
 
@@ -38,7 +41,8 @@ services:
     container_name: movie-reminder-cloudflare
     command: tunnel run
     environment:
-      - TUNNEL_TOKEN=$TUNNEL_TOKEN
+      TUNNEL_TOKEN: $TUNNEL_TOKEN
+      TZ: "Europe/Paris"
     restart: unless-stopped
     networks:
       - movieNetwork
@@ -50,6 +54,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     ports:
       - 8888:8080
+    restart: unless-stopped
+    environment:
+      TZ: "Europe/Paris"
     networks:
       - movieNetwork
 networks:
