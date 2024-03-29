@@ -4,8 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.application.dto.media.GenreDto;
-import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDto;
-import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDtoMapper;
+import org.lafabrique_epita.application.dto.media.serie_get.*;
 import org.lafabrique_epita.application.dto.media.serie_post.*;
 import org.lafabrique_epita.domain.entities.*;
 import org.lafabrique_epita.domain.enums.StatusEnum;
@@ -18,10 +17,7 @@ import org.lafabrique_epita.domain.repositories.SerieRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -139,9 +135,14 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
     public List<SerieGetResponseDto> findAllEpisodesByUser(UserEntity user) {
         List<EpisodeEntity> playlists = playListTvRepository.findEpisodesByUserId(user);
 
+        List<EpisodeGetResponseDto> episodeDtos = playlists.stream()
+                .map(episodeEntity -> {
+                    Optional<PlayListEpisodeEntity> playListEpisodeEntity = playListTvRepository.findByEpisodeIdAndUserId(episodeEntity.getId(), user.getId());
+                    return playListEpisodeEntity.map(listEpisodeEntity -> EpisodeGetResponseMapper.convertToDto(episodeEntity, listEpisodeEntity.isFavorite(), listEpisodeEntity.getStatus())).orElseGet(() -> EpisodeGetResponseMapper.convertToDto(episodeEntity, false, StatusEnum.A_REGARDER));
+                })
+                .toList();
+
         Comparator<EpisodeEntity> comparator = Comparator.comparing(EpisodeEntity::getCreatedDate).reversed();
-        // transformer la liste d'EpisodeEntity en liste de SerieEntity
-        // puis transformer la liste de SerieEntity en liste de SerieGetResponseDto
         List<SerieEntity> serieEntities = playlists.stream()
                 .sorted(comparator)
                 .map(episodeEntity -> episodeEntity.getSeason().getSerie())
@@ -149,7 +150,17 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
                 .toList();
 
         return serieEntities.stream()
-                .map(SerieGetResponseDtoMapper::convertToSerieDto)
+                .map(serieEntity -> {
+                    SerieGetResponseDto serieDto = SerieGetResponseDtoMapper.convertToSerieDto(serieEntity);
+                    List<SeasonGetResponseDto> seasonDtos = serieDto.seasons();
+                    for (SeasonGetResponseDto seasonDto : seasonDtos) {
+                        List<EpisodeGetResponseDto> seasonEpisodes = episodeDtos.stream()
+                                .filter(episodeDto -> Objects.equals(episodeDto.getSeasonNumber(), seasonDto.getSeasonNumber()))
+                                .toList();
+                        seasonDto.setEpisodes(seasonEpisodes);
+                    }
+                    return serieDto;
+                })
                 .toList();
     }
 
