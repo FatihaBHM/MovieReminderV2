@@ -12,8 +12,7 @@ public class SeasonGetResponseMapper {
                 seasonEntity.getOverview(),
                 seasonEntity.getIdTmdb(),
                 seasonEntity.getPosterPath(),
-                seasonEntity.getSeasonNumber(),
-                seasonEntity.getEpisodes().stream().map(EpisodeGetResponseMapper::convertToDto).toList()
+                seasonEntity.getSeasonNumber()
         );
     }
 }

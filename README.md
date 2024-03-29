@@ -20,7 +20,8 @@ POSTGRES_URL=localhost
 POSTGRES_PORT=5432
 JWT_SECRET=mettre_une_cle_secrete
 JWT_EXPIRATION=1440
-MOVIE_PORT=8080
+SHOW_SQL=true
+FORMAT_SHOW_SQL=true
 ```
 
 `JWT_EXPIRATION` est en minutes.
@@ -46,21 +47,26 @@ Puis dans le Public Hostanme, ajouter le nom de domaine que vous souhaitez utili
 
 Pour lancer l'application avec Docker, il suffit de lancer la commande suivante à la racine du projet :
 
+> Attention, si vous utilisez le fichier `docker-compose.server-sam.yml` et le normal, il faut ajouter `--build` car il faut construire l'image du projet Spring Boot.
+> Il ne sert à rien de mettre `--build` dans le seul cas ou vous utilisez le fichier `docker-compose.dev.yaml`.
+
 ```shell
-docker-compose up
+docker-compose up --build
 ```
 
 ou
 
 ```shell
-docker-compose up -d # pour lancer en arrière-plan
+docker-compose up -d --build # pour lancer en arrière-plan
 ```
 
 ou
 
 ```shell
-docker-compose -f docker-compose.server-sam.yml up - d
+docker-compose -f docker-compose.server-sam.yml up - d --build
 ```
+
+> Attention, si vous utilisez le fichier `docker-compose.server-sam.yml` et le normal, il faut ajouter `--build` car il faut construire l'image du projet Spring Boot.
 
 ---
 
@@ -87,18 +93,6 @@ http://localhost:8080
 ## Forcer la reconstruction des images
 
 Pour forcer la reconstruction des images, il suffit de lancer la commande suivante à la racine du projet :
-
-```shell
-docker-compose up --build
-```
-
-ou
-
-```shell
-docker-compose up -d --build # pour lancer en arrière-plan
-```
-
-ou
 
 ```shell
 docker-compose up --build --force-recreate # pour forcer la reconstruction des images
