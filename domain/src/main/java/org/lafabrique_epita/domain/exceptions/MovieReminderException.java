@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class MovieReminderException extends Exception{
+public class MovieReminderException extends Exception {
 
     private final HttpStatus httpStatus;
 

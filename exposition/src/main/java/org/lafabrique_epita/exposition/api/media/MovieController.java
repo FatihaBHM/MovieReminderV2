@@ -69,12 +69,12 @@ public class MovieController extends ApiControllerBase {
     // /movies/{id}?favorite=1 (0 => remove, 1 => add)
     // /movies/{id}?status=0 (0	A_REGARDER - 1 EN_COURS - 2 VU - 3 ABANDON)
     @Operation(summary = "Ajouter ou supprimer un film de la liste des favoris ou modifier son statut",
-        parameters = {
-            @Parameter(name = "id", description = "Id du film", example = "1", schema = @Schema(implementation = Long.class)),
-            @Parameter(name = "favorite", description = "Ajouter ou supprimer un film de la liste des favoris (0=>retrait, 1=>ajout)", example = "1", schema = @Schema(implementation =
-                    Integer.class)),
-            @Parameter(name = "status", description = "Modifier le statut du film (0=>A_REGARDER, 1=>EN_COURS, 2=>VU, 3=>ABANDON)", example = "0", schema = @Schema(implementation = Integer.class))
-        })
+            parameters = {
+                    @Parameter(name = "id", description = "Id du film", example = "1", schema = @Schema(implementation = Long.class)),
+                    @Parameter(name = "favorite", description = "Ajouter ou supprimer un film de la liste des favoris (0=>retrait, 1=>ajout)", example = "1", schema = @Schema(implementation =
+                            Integer.class)),
+                    @Parameter(name = "status", description = "Modifier le statut du film (0=>A_REGARDER, 1=>EN_COURS, 2=>VU, 3=>ABANDON)", example = "0", schema = @Schema(implementation = Integer.class))
+            })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Film ajouté à la liste des favoris ou statut modifié",
                     content = @Content(mediaType = "application/json",

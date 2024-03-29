@@ -21,7 +21,7 @@ public class RootRedirectionFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        log.info("Request URI: {} {}",request.getMethod() , request.getRequestURI());
+        log.info("Request URI: {} {}", request.getMethod(), request.getRequestURI());
 
         filterChain.doFilter(request, response);
     }

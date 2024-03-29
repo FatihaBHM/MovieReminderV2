@@ -21,10 +21,9 @@ import java.util.Map;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    private final ObjectMapper mapper = new ObjectMapper();
-
     private static final String STATUS = "status";
     private static final String ERROR_MESSAGE = "error_message";
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleException(DataIntegrityViolationException exception) {

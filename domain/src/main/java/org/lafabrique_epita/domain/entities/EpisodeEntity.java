@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "episode")
-public class EpisodeEntity extends MasterClass{
+public class EpisodeEntity extends MasterClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class EpisodeEntity extends MasterClass{
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = true, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String overview;
 
     @Column(nullable = false, unique = true)

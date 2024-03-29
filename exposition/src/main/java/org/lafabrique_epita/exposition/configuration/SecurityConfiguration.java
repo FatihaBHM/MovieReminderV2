@@ -23,6 +23,12 @@ import java.util.Map;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
+    private static final String[] SWAGGGER_WHITELIST = {
+            "/swagger-ui/**",
+            "/api-docs/**",
+            "/swagger-resources/**",
+            "/swagger-resources"
+    };
     private final JwtFilter jwtFilter;
 
     public SecurityConfiguration(JwtFilter jwtFilter) {
@@ -55,13 +61,6 @@ public class SecurityConfiguration {
                         }))
                 .build();
     }
-
-    private static final String[] SWAGGGER_WHITELIST = {
-            "/swagger-ui/**",
-            "/api-docs/**",
-            "/swagger-resources/**",
-            "/swagger-resources"
-    };
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

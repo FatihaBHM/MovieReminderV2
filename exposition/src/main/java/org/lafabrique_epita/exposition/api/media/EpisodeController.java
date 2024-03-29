@@ -42,7 +42,7 @@ public class EpisodeController extends ApiControllerBase {
     @Operation(summary = "Ajouter un épisode à la liste des favoris ou modifier le statut",
             parameters = {
                     @Parameter(name = "idTmdbSeason", description = "Id TMDB de la saison", example = "1154", schema = @Schema(implementation = Long.class)),
-                    @Parameter(name = "favorite", description = "Ajouter ou supprimer un épisode de la liste des favoris (0=>retrait, 1=>ajout)", example = "1", schema = @Schema(implementation =
+                    @Parameter(name = "favorite", description = "Ajouter ou supprimer un épisode de la liste des favoris (0=>retrait, 1=>ajout)", schema = @Schema(implementation =
                             Integer.class)),
                     @Parameter(name = "status", description = "Modifier le statut du épisode (0=>A_REGARDER, 1=>EN_COURS, 2=>VU, 3=>ABANDON)", example = "0", schema = @Schema(implementation =
                             Integer.class))

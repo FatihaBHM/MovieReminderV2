@@ -17,4 +17,5 @@ public record CommentDto(
         String description,
 
         float score
-) {}
+) {
+}

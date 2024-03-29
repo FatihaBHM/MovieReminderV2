@@ -35,8 +35,9 @@ public class PlayListTvRepositoryAdapter implements PlayListTvRepository {
 
     @Override
     public boolean existsByEpisodeIdAndUserId(Long serieId, Long userId) {
-        return this.playListTvJPARepository.existsByEpisodeIdAndUserId(serieId, userId)    ;
+        return this.playListTvJPARepository.existsByEpisodeIdAndUserId(serieId, userId);
     }
+
     @Override
     public void delete(PlayListTvEntity playListTvEntity) {
         this.playListTvJPARepository.delete(playListTvEntity);

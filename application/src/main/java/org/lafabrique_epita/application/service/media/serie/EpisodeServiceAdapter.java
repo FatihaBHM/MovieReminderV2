@@ -33,7 +33,7 @@ public class EpisodeServiceAdapter implements EpisodeServicePort {
 
         // Si oui, on retourne l'épisode
         if (episodeEntity.isPresent()) {
-           return episodeEntity.get();
+            return episodeEntity.get();
         }
 
         // Sinon, on crée un nouvel épisode et on le retourne

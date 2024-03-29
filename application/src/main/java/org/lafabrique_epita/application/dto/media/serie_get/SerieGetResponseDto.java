@@ -3,7 +3,6 @@ package org.lafabrique_epita.application.dto.media.serie_get;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.lafabrique_epita.application.dto.media.CommentDto;
 import org.lafabrique_epita.application.dto.media.GenreDto;
-import org.lafabrique_epita.application.dto.media.serie_post.SeasonPostDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,7 +36,7 @@ public record SerieGetResponseDto(
 
         List<GenreDto> genres,
 
-        List<SeasonPostDto> seasons
+        List<SeasonGetResponseDto> seasons
 
 
 ) {

@@ -21,6 +21,7 @@ public class SeasonRepositoryAdapter implements SeasonRepository {
     public SeasonEntity save(SeasonEntity seasonEntity) {
         return this.seasonJPARepositoryPort.save(seasonEntity);
     }
+
     @Override
     public List<SeasonEntity> saveAll(Collection<SeasonEntity> seasonEntity) {
         return this.seasonJPARepositoryPort.saveAll(seasonEntity);
