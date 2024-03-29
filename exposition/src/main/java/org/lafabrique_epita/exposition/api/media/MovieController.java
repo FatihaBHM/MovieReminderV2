@@ -127,7 +127,7 @@ public class MovieController extends ApiControllerBase {
             throw new MovieException("Le favori doit être 0 ou 1 (0 => supprimer, 1 => ajouter)", HttpStatus.BAD_REQUEST);
         }
         boolean fav = playlistMovieService.updateFavorite(id, favorite, userEntity.getId());
-        Favorite favoriteResponse = new Favorite(fav);
+        Favorite favoriteResponse = new Favorite(id, fav);
 
         return ResponseEntity.ok(favoriteResponse);
     }
@@ -138,7 +138,7 @@ public class MovieController extends ApiControllerBase {
         }
         StatusEnum statusEnum = statusToString(status);
         playlistMovieService.updateStatus(id, statusEnum, userEntity.getId());
-        Status s = new Status(statusEnum);
+        Status s = new Status(id, statusEnum);
         return ResponseEntity.ok(s);
     }
 
