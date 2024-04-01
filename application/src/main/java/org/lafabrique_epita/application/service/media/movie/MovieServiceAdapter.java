@@ -27,10 +27,10 @@ public class MovieServiceAdapter implements MovieServicePort {
         return movieRepository.findAll();
     }
 
-    @Override
-    public MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) {
-        return this.movieRepository.findByIdTmdb(idTmdb)
-                .map(MovieGetResponseDtoMapper::convertToMovieDto)
-                .orElse(null);
-    }
+//    @Override
+//    public MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) {
+//        return this.movieRepository.findByIdTmdb(idTmdb)
+//                .map((MovieEntity movieEntity) -> MovieGetResponseDtoMapper.convertToMovieDto(movieEntity, null))
+//                .orElse(null);
+//    }
 }

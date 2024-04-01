@@ -11,5 +11,5 @@ public interface MovieServicePort {
 
     List<MovieEntity> getAll();
 
-    MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) throws MovieException;
+//    MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) throws MovieException;
 }

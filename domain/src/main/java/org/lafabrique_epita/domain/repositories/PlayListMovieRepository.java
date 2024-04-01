@@ -13,7 +13,7 @@ public interface PlayListMovieRepository {
 
     Optional<PlayListMovieEntity> findByMovieIdAndUserId(PlayListMovieID playListMovieID);
 
-    List<MovieEntity> findMoviesByUserId(UserEntity user);
+    List<PlayListMovieEntity> findMoviesByUserId(UserEntity user);
 
     boolean existsByMovieIdAndUserId(Long movieId, Long userId);
 

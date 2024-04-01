@@ -133,27 +133,27 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
         }
     }
 
-    @Override
-    public MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) throws MovieException {
-        Optional<MovieEntity> movieEntity = this.movieRepository.findByIdTmdb(idTmdb);
-        if (movieEntity.isPresent()) {
-            return MovieGetResponseDtoMapper.convertToMovieDto(movieEntity.get());
-        }
-        throw new MovieException(MOVIE_NOT_FOUND, HttpStatus.NOT_FOUND);
-    }
+//    @Override
+//    public MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) throws MovieException {
+//        Optional<MovieEntity> movieEntity = this.movieRepository.findByIdTmdb(idTmdb);
+//        if (movieEntity.isPresent()) {
+//            return MovieGetResponseDtoMapper.convertToMovieDto(movieEntity.get(), null);
+//        }
+//        throw new MovieException(MOVIE_NOT_FOUND, HttpStatus.NOT_FOUND);
+//    }
 
     @Override
     public List<MovieGetResponseDTO> findAllMoviesByUser(UserEntity user, MovieSort sort) {
-        List<MovieEntity> playlists = playListMovieRepository.findMoviesByUserId(user);
+        List<PlayListMovieEntity> playlists = playListMovieRepository.findMoviesByUserId(user);
 
-        Comparator<MovieEntity> comparator = Comparator.comparing(MovieEntity::getCreatedDate);
+        Comparator<MovieGetResponseDTO> comparator = Comparator.comparing(MovieGetResponseDTO::createdDate);
         if (sort == MovieSort.CREATED_DATE_DESC) {
             comparator = comparator.reversed();
         }
 
         return playlists.stream()
+                .map((PlayListMovieEntity playListMovieEntity) -> MovieGetResponseDtoMapper.convertToMovieDto(playListMovieEntity.getMovie(), playListMovieEntity))
                 .sorted(comparator)
-                .map(MovieGetResponseDtoMapper::convertToMovieDto)
                 .toList();
     }
 

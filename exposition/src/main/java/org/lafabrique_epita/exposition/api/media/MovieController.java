@@ -198,23 +198,23 @@ public class MovieController extends ApiControllerBase {
         return ResponseEntity.ok(new ErrorMessage(200, "Film supprimé"));
     }
 
-    @Operation(summary = "Obtenir un film par son id TMDB")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Film trouvé",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieGetResponseDTO.class))
-            ),
-            @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
-                    mediaType = "application/json",
-                    examples = @ExampleObject(value = "{\"error_message\":\"Film introuvable\",\"status\":404}"),
-                    schema = @Schema(implementation = ErrorMessage.class)
-            ))
-    })
-    @GetMapping("/movies/{idTmdb}")
-    public ResponseEntity<MovieGetResponseDTO> getMovieByIdTmdb(@PathVariable Long idTmdb) throws MovieException {
-        MovieGetResponseDTO movie = movieService.findMovieByIdTmdb(idTmdb);
-        if (movie == null) {
-            throw new MovieException("Film introuvable", HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(movie);
-    }
+//    @Operation(summary = "Obtenir un film par son id TMDB")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Film trouvé",
+//                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = MovieGetResponseDTO.class))
+//            ),
+//            @ApiResponse(responseCode = "404", description = "Film introuvable", content = @Content(
+//                    mediaType = "application/json",
+//                    examples = @ExampleObject(value = "{\"error_message\":\"Film introuvable\",\"status\":404}"),
+//                    schema = @Schema(implementation = ErrorMessage.class)
+//            ))
+//    })
+//    @GetMapping("/movies/{idTmdb}")
+//    public ResponseEntity<MovieGetResponseDTO> getMovieByIdTmdb(@PathVariable Long idTmdb) throws MovieException {
+//        MovieGetResponseDTO movie = movieService.findMovieByIdTmdb(idTmdb);
+//        if (movie == null) {
+//            throw new MovieException("Film introuvable", HttpStatus.NOT_FOUND);
+//        }
+//        return ResponseEntity.ok(movie);
+//    }
 }
