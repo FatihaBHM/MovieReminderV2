@@ -13,8 +13,8 @@ import java.util.Optional;
 public interface PlayListMovieJPARepositoryPort extends JpaRepository<PlayListMovieEntity, Long> {
     Optional<PlayListMovieEntity> findByMovieIdAndUserId(Long movieId, Long userId);
 
-    @Query("SELECT movie FROM PlayListMovieEntity WHERE user = :user")
-    List<MovieEntity> findMoviesByUserId(@PathVariable UserEntity user);
+    @Query("FROM PlayListMovieEntity WHERE user = :user")
+    List<PlayListMovieEntity> findMoviesByUserId(@PathVariable UserEntity user);
 
     boolean existsByMovieIdAndUserId(Long movieId, Long userId);
 

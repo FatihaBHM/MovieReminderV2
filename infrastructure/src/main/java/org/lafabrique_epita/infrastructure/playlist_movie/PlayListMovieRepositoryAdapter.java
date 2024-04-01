@@ -31,7 +31,7 @@ public class PlayListMovieRepositoryAdapter implements PlayListMovieRepository {
     }
 
     @Override
-    public List<MovieEntity> findMoviesByUserId(UserEntity user) {
+    public List<PlayListMovieEntity> findMoviesByUserId(UserEntity user) {
         return this.playListMovieJPARepository.findMoviesByUserId(user);
     }
 

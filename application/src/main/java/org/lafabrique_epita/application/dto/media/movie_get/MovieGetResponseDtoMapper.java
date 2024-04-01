@@ -5,13 +5,14 @@ import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.lafabrique_epita.domain.entities.CommentEntity;
 import org.lafabrique_epita.domain.entities.GenreEntity;
 import org.lafabrique_epita.domain.entities.MovieEntity;
+import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 
 public class MovieGetResponseDtoMapper {
 
     private MovieGetResponseDtoMapper() {
     }
 
-    public static MovieGetResponseDTO convertToMovieDto(MovieEntity movieEntity) {
+    public static MovieGetResponseDTO convertToMovieDto(MovieEntity movieEntity, PlayListMovieEntity playListMovieEntity) {
         return new MovieGetResponseDTO(
                 movieEntity.getId(),
                 movieEntity.getIdTmdb(),
@@ -24,6 +25,8 @@ public class MovieGetResponseDtoMapper {
                         .map(MovieGetResponseDtoMapper::convertToGenreDto)
                         .toList(),
                 movieEntity.getReleaseDate(),
+                playListMovieEntity.getStatus().ordinal(),
+                movieEntity.getCreatedDate(),
                 movieEntity.getComments().stream()
                         .map(MovieGetResponseDtoMapper::convertToCommentDto)
                         .toList()

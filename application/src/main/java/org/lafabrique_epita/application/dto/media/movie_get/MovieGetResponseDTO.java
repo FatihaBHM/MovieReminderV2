@@ -6,6 +6,7 @@ import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record MovieGetResponseDTO(
@@ -30,6 +31,11 @@ public record MovieGetResponseDTO(
         @JsonProperty("release_date")
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate releaseDate,
+
+        Integer status,
+
+        @JsonProperty("-")
+        LocalDateTime createdDate,
 
         List<CommentDto> comments
 
