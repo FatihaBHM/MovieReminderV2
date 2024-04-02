@@ -26,6 +26,9 @@ public record EpisodePostDto(
         @Positive(message = "L'id TMDB doit être positif")
         Long idTmdb,
 
+        @NotBlank(message = "La durée ne doit pas être vide")
+        @NotNull(message = "La durée ne doit pas être nulle")
+        @PositiveOrZero(message = "La durée doit être positive ou nulle")
         int duration,
 
         @PositiveOrZero(message = "Le numéro de la saison doit être positif ou nul")

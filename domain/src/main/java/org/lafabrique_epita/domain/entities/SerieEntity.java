@@ -41,7 +41,7 @@ public class SerieEntity extends MasterClass {
     private Float score;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "serie", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "serie", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<SeasonEntity> seasons = new ArrayList<>();
 
     @ManyToMany

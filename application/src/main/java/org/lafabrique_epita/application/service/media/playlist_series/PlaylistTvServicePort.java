@@ -14,9 +14,7 @@ import java.util.List;
 
 public interface PlaylistTvServicePort {
 
-    SeriePostResponseDto save(SeriePostDto seriePostDto, UserEntity user) throws SerieException;
-
-    EpisodePostDto save(EpisodeEntity episodeEntity, UserEntity user) throws EpisodeException;
+    SeriePostResponseDto save(SeriePostDto seriePostDto, UserEntity user) throws SerieException, EpisodeException;
 
     List<SerieGetResponseDto> findAllEpisodesByUser(UserEntity user);
 

@@ -111,7 +111,7 @@ public class EpisodeController extends ApiControllerBase {
 
         List<ResponseStatusAndFavorite> response = new ArrayList<>();
         for (EpisodeEntity episode : episodes) {
-            this.playlistTvService.save(episode, userEntity);
+            this.episodeService.save(episode, userEntity);
             if (favorite != null) {
                 response.add(updateFavorite(episode.getId(), favorite, userEntity));
             } else {

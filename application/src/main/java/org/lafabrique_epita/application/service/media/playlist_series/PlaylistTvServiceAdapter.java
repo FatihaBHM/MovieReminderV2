@@ -10,14 +10,12 @@ import org.lafabrique_epita.domain.entities.*;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.EpisodeException;
 import org.lafabrique_epita.domain.exceptions.SerieException;
-import org.lafabrique_epita.domain.repositories.GenreRepository;
-import org.lafabrique_epita.domain.repositories.PlayListTvRepository;
-import org.lafabrique_epita.domain.repositories.SeasonRepository;
-import org.lafabrique_epita.domain.repositories.SerieRepository;
+import org.lafabrique_epita.domain.repositories.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -28,80 +26,95 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
     private final GenreRepository genreRepository;
     private final SeasonRepository seasonRepository;
 
-    public PlaylistTvServiceAdapter(PlayListTvRepository playListTvRepository, SerieRepository serieRepository, GenreRepository genreRepository, SeasonRepository seasonRepository) {
+    private final EpisodeRepository episodeRepository;
+
+    public PlaylistTvServiceAdapter(PlayListTvRepository playListTvRepository, SerieRepository serieRepository, GenreRepository genreRepository, SeasonRepository seasonRepository, EpisodeRepository episodeRepository) {
         this.playListTvRepository = playListTvRepository;
         this.serieRepository = serieRepository;
         this.genreRepository = genreRepository;
         this.seasonRepository = seasonRepository;
+        this.episodeRepository = episodeRepository;
     }
 
 
     @Override
-    public SeriePostResponseDto save(SeriePostDto seriePostDto, UserEntity user) throws SerieException {
-        // vérifier si l'utilisateur n'a pas déjà ajouté cette série à sa liste
-        Optional<SerieEntity> serieEntity = this.serieRepository.findByIdTmdb(seriePostDto.idTmdb());
-        SerieEntity serie;
-        if (serieEntity.isPresent()) {
-            serie = serieEntity.get();
-            boolean existsBySerieIdAndUserId = this.playListTvRepository.existsByEpisodeIdAndUserId(serie.getId(), user.getId());
-            if (existsBySerieIdAndUserId) {
-                throw new SerieException("La série existe déjà dans la playlist", HttpStatus.CONFLICT);
-            }
+    public SeriePostResponseDto save(SeriePostDto seriePostDto, UserEntity user) throws SerieException, EpisodeException {
+        // Convertir la DTO en entité
+        SerieEntity serie = SeriePostDtoMapper.convertToSerieEntity(seriePostDto);
+
+        // Vérifier si la série existe
+        SerieEntity existingSerie = serieRepository.findByIdTmdb(serie.getIdTmdb()).orElse(null);
+        if (existingSerie != null) {
+            // Utiliser l'entité existante si la série est déjà présente
+            serie = existingSerie;
         } else {
-            serie = SeriePostDtoMapper.convertToSerieEntity(seriePostDto);
+            // Gérer les genres
+            handleGenres(serie, seriePostDto.genres());
 
-            // vérifier si les genres existent déjà en base par leur 'name' et dans ce cas save le genre
-            // qui n'existe pas puis récupérer tous les genres pour les envoyer dans serie
-            List<String> genres = seriePostDto.genres().stream().map(GenreDto::name).toList();
-            List<GenreEntity> genreEntities = new ArrayList<>(genreRepository.findAllByName(genres));
-            for (GenreEntity genre : serie.getGenres()) {
-                if (genreEntities.stream().noneMatch(genreEntity -> genreEntity.getName().equals(genre.getName()))) {
-                    genreEntities.add(genreRepository.save(genre));
-                }
-            }
-            serie.setGenres(genreEntities);
-
-            log.error("Série: {}", serie);
-            serie = this.serieRepository.save(serie);
+            // Sauvegarder la nouvelle série
+            serie = serieRepository.save(serie);
         }
 
-        createAndSavePlayListTvEntity(serie);
+        for (SeasonPostDto seasonDto : seriePostDto.seasons()) {
+            SerieEntity finalSerie = serie;
+            SeasonEntity season = serie.getSeasons().stream()
+                    .filter(s -> s.getIdTmdb().equals(seasonDto.idTmdb()))
+                    .findFirst()
+                    .orElseGet(() -> {
+                        SeasonEntity newSeason = SeasonPostDtoMapper.convertToSeasonEntity(seasonDto);
+                        newSeason.setSerie(finalSerie);
+                        finalSerie.getSeasons().add(newSeason);
+                        return newSeason;
+                    });
+
+            for (EpisodePostDto episodeDto : seasonDto.episodes()) {
+                season.getEpisodes().stream()
+                        .filter(e -> e.getIdTmdb().equals(episodeDto.idTmdb()))
+                        .findFirst()
+                        .orElseGet(() -> {
+                            EpisodeEntity newEpisode = EpisodePostDtoMapper.convertToEntity(episodeDto);
+                            newEpisode.setSeason(season);
+                            season.getEpisodes().add(newEpisode);
+                            return newEpisode;
+                        });
+            }
+        }
+
+        serieRepository.save(serie);
+
+        // Sauvegarder la série dans la playlist de l'utilisateur
+        serie.getSeasons()
+                .forEach(season -> season.getEpisodes()
+                        .forEach(episode -> {
+                            PlayListEpisodeEntity playListEpisodeEntity = new PlayListEpisodeEntity();
+                            PlayListEpisodeID playListEpisodeID = new PlayListEpisodeID();
+                            playListEpisodeID.setEpisodeId(episode.getId());
+                            playListEpisodeID.setUserId(user.getId());
+                            playListEpisodeEntity.setId(playListEpisodeID);
+                            playListEpisodeEntity.setEpisode(episode);
+                            playListEpisodeEntity.setUser(user);
+                            playListEpisodeEntity.setStatus(StatusEnum.A_REGARDER);
+                            playListEpisodeEntity.setFavorite(false);
+                            playListTvRepository.save(playListEpisodeEntity);
+                        }));
+
+        // Retourner la réponse DTO
         return SeriePostDtoResponseMapper.convertToSerieDto(serie);
     }
 
-    @Override
-    public EpisodePostDto save(EpisodeEntity episodeEntity, UserEntity user) throws EpisodeException {
-        PlayListEpisodeEntity playListEpisodeEntity = new PlayListEpisodeEntity();
-        playListEpisodeEntity.setEpisode(episodeEntity);
-        playListEpisodeEntity.setUser(user);
-        playListEpisodeEntity.setFavorite(false);
-        playListEpisodeEntity.setStatus(StatusEnum.A_REGARDER);
-        playListEpisodeEntity.setScore(0);
+    private void handleGenres(SerieEntity serie, List<GenreDto> genreDtos) {
+        List<String> genreNames = genreDtos.stream().map(GenreDto::name).toList();
+        List<GenreEntity> existingGenres = genreRepository.findAllByName(genreNames);
 
-        PlayListEpisodeID playListEpisodeID = new PlayListEpisodeID();
-        playListEpisodeID.setEpisodeId(episodeEntity.getId());
-        playListEpisodeID.setUserId(user.getId());
-
-        playListEpisodeEntity.setId(playListEpisodeID);
-
-        PlayListEpisodeEntity pl = this.playListTvRepository.save(playListEpisodeEntity);
-        return EpisodePostDtoMapper.convertToDto(pl.getEpisode());
-    }
-
-    @SneakyThrows
-    private void createAndSavePlayListTvEntity(SerieEntity serie) {
-        try {
-            List<SeasonEntity> seasons = serie.getSeasons();
-
-            for (SeasonEntity season : seasons) {
-                season.setSerie(serie);
-                this.seasonRepository.save(season);
+        for (GenreDto genreDto : genreDtos) {
+            GenreEntity genre = existingGenres.stream()
+                    .filter(g -> g.getName().equals(genreDto.name()))
+                    .findFirst()
+                    .orElseGet(() -> genreRepository.save(new GenreEntity(null, genreDto.id(), genreDto.name())));
+            if (!serie.getGenres().contains(genre)) {
+                serie.getGenres().add(genre);
             }
-
-        } catch (Exception e) {
-            throw new SerieException("Un problème est survenu lors de l'enregistrement des épisodes dans la playlist TV", HttpStatus.CONFLICT);
         }
-
     }
 
 
