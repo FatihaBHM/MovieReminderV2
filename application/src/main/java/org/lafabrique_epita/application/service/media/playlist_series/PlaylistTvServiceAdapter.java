@@ -1,7 +1,6 @@
 package org.lafabrique_epita.application.service.media.playlist_series;
 
 import jakarta.transaction.Transactional;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.lafabrique_epita.application.dto.media.serie_get.*;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -50,53 +48,28 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
         } else {
             // Gérer les genres
             handleGenres(serie, seriePostDto.genres());
-
-            // Sauvegarder la nouvelle série
-            serie = serieRepository.save(serie);
+            // Enregistrer la série
+            serieRepository.save(serie);
         }
 
+        List<SeasonEntity> seasons = new ArrayList<>();
         for (SeasonPostDto seasonDto : seriePostDto.seasons()) {
-            SerieEntity finalSerie = serie;
-            SeasonEntity season = serie.getSeasons().stream()
-                    .filter(s -> s.getIdTmdb().equals(seasonDto.idTmdb()))
+            SeasonEntity seasonEntity = serie.getSeasons().stream()
+                    .filter(season -> season.getIdTmdb().equals(seasonDto.idTmdb()))
                     .findFirst()
-                    .orElseGet(() -> {
-                        SeasonEntity newSeason = SeasonPostDtoMapper.convertToSeasonEntity(seasonDto);
-                        newSeason.setSerie(finalSerie);
-                        finalSerie.getSeasons().add(newSeason);
-                        return newSeason;
-                    });
+                    .orElse(new SeasonEntity()); // Crée une nouvelle SeasonEntity si aucune correspondance n'est trouvée
 
-            for (EpisodePostDto episodeDto : seasonDto.episodes()) {
-                season.getEpisodes().stream()
-                        .filter(e -> e.getIdTmdb().equals(episodeDto.idTmdb()))
-                        .findFirst()
-                        .orElseGet(() -> {
-                            EpisodeEntity newEpisode = EpisodePostDtoMapper.convertToEntity(episodeDto);
-                            newEpisode.setSeason(season);
-                            season.getEpisodes().add(newEpisode);
-                            return newEpisode;
-                        });
-            }
+            seasonEntity.setIdTmdb(seasonDto.idTmdb());
+            seasonEntity.setOverview(seasonDto.overview());
+            seasonEntity.setPosterPath(seasonDto.posterPath());
+            seasonEntity.setSeasonNumber(seasonDto.seasonNumber());
+            seasonEntity.setSerie(serie);
+            this.seasonRepository.save(seasonEntity);
+            seasons.add(seasonEntity);
         }
 
+        serie.setSeasons(seasons);
         serieRepository.save(serie);
-
-        // Sauvegarder la série dans la playlist de l'utilisateur
-        serie.getSeasons()
-                .forEach(season -> season.getEpisodes()
-                        .forEach(episode -> {
-                            PlayListEpisodeEntity playListEpisodeEntity = new PlayListEpisodeEntity();
-                            PlayListEpisodeID playListEpisodeID = new PlayListEpisodeID();
-                            playListEpisodeID.setEpisodeId(episode.getId());
-                            playListEpisodeID.setUserId(user.getId());
-                            playListEpisodeEntity.setId(playListEpisodeID);
-                            playListEpisodeEntity.setEpisode(episode);
-                            playListEpisodeEntity.setUser(user);
-                            playListEpisodeEntity.setStatus(StatusEnum.A_REGARDER);
-                            playListEpisodeEntity.setFavorite(false);
-                            playListTvRepository.save(playListEpisodeEntity);
-                        }));
 
         // Retourner la réponse DTO
         return SeriePostDtoResponseMapper.convertToSerieDto(serie);
@@ -105,18 +78,25 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
     private void handleGenres(SerieEntity serie, List<GenreDto> genreDtos) {
         List<String> genreNames = genreDtos.stream().map(GenreDto::name).toList();
         List<GenreEntity> existingGenres = genreRepository.findAllByName(genreNames);
-
+        // Ajouter les genres manquants dans la base de données avec le nom est idTmdb
+        List<GenreEntity> genres = new ArrayList<>();
         for (GenreDto genreDto : genreDtos) {
-            GenreEntity genre = existingGenres.stream()
-                    .filter(g -> g.getName().equals(genreDto.name()))
-                    .findFirst()
-                    .orElseGet(() -> genreRepository.save(new GenreEntity(null, genreDto.id(), genreDto.name())));
-            if (!serie.getGenres().contains(genre)) {
-                serie.getGenres().add(genre);
+            if (existingGenres.stream().noneMatch(genre -> genre.getName().equalsIgnoreCase(genreDto.name()))) {
+                GenreEntity genre = new GenreEntity();
+                genre.setName(genreDto.name());
+                genre.setIdTmdb(genreDto.id());
+                genreRepository.save(genre);
+                genres.add(genre);
+            } else {
+                GenreEntity genre = existingGenres.stream()
+                        .filter(g -> g.getName().equalsIgnoreCase(genreDto.name()))
+                        .findFirst()
+                        .orElseThrow();
+                genres.add(genre);
             }
         }
+        serie.setGenres(genres);
     }
-
 
     @Override
     public boolean updateFavorite(Long episodeId, Integer favorite, Long userId) throws SerieException {

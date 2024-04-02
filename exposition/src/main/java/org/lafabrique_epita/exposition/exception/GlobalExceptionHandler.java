@@ -62,7 +62,11 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<String> getStringResponseEntity(Exception exception) {
-        Map<String, ?> m = Map.of(STATUS, 500, ERROR_MESSAGE, exception.getMessage());
+        String message = "Une erreur s'est produite";
+        if (exception.getMessage() != null) {
+            message = exception.getMessage();
+        }
+        Map<String, ?> m = Map.of(STATUS, 500, ERROR_MESSAGE, message);
         try {
             String responseBody = mapper.writeValueAsString(m);
             return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_PROBLEM_JSON).body(responseBody);

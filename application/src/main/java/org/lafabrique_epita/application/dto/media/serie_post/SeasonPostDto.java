@@ -7,6 +7,9 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.List;
 
+/**
+ * DTO pour la création d'une saison
+ */
 public record SeasonPostDto(
         String overview,
 
@@ -20,8 +23,6 @@ public record SeasonPostDto(
 
         @PositiveOrZero(message = "Le nombre d'épisodes doit être positif ou nul")
         @JsonProperty("season_number")
-        int seasonNumber,
-
-        List<EpisodePostDto> episodes
+        Integer seasonNumber
 ) {
 }
