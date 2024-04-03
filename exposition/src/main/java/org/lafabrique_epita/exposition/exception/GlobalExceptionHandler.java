@@ -14,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -54,6 +55,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleException(Exception exception) {
         log.error("Une erreur s'est produite", exception);
         return getStringResponseEntity(exception);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        String message = "L'ID du film doit être un nombre. Valeur incorrecte : " + ex.getValue();
+        Map<String, ?> m = Map.of(STATUS, 500, ERROR_MESSAGE, message);
+        return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_PROBLEM_JSON).body(m.toString());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
