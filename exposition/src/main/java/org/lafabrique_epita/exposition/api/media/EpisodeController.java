@@ -113,9 +113,9 @@ public class EpisodeController extends ApiControllerBase {
         for (EpisodeEntity episode : episodes) {
             this.episodeService.save(episode, userEntity);
             if (favorite != null) {
-                response.add(updateFavorite(episode.getId(), favorite, userEntity));
+                response.add(updateFavorite(episode.getIdTmdb(), favorite, userEntity));
             } else {
-                response.add(updateStatus(episode.getId(), status, userEntity));
+                response.add(updateStatus(episode.getIdTmdb(), status, userEntity));
             }
         }
         return ResponseEntity.ok().body(response);
