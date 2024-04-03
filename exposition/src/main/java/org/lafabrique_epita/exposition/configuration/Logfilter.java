@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-public class RootRedirectionFilter extends OncePerRequestFilter {
+public class Logfilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
