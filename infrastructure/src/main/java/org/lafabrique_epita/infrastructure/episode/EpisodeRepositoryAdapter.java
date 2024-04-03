@@ -30,4 +30,9 @@ public class EpisodeRepositoryAdapter implements EpisodeRepository {
     public Optional<EpisodeEntity> findByIdTmdb(Long idTmdb) {
         return this.episodeJPARepository.findByIdTmdb(idTmdb);
     }
+
+    @Override
+    public void delete(EpisodeEntity episode) {
+        this.episodeJPARepository.delete(episode);
+    }
 }

@@ -5,13 +5,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDto;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDtoMapper;
 import org.lafabrique_epita.domain.entities.EpisodeEntity;
+import org.lafabrique_epita.domain.entities.PlayListEpisodeEntity;
+import org.lafabrique_epita.domain.entities.SeasonEntity;
 import org.lafabrique_epita.domain.entities.SerieEntity;
 import org.lafabrique_epita.domain.exceptions.SerieException;
-import org.lafabrique_epita.domain.repositories.PlayListTvRepository;
+import org.lafabrique_epita.domain.repositories.EpisodeRepository;
+import org.lafabrique_epita.domain.repositories.PlayListEpisodeRepository;
+import org.lafabrique_epita.domain.repositories.SeasonRepository;
 import org.lafabrique_epita.domain.repositories.SerieRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -19,19 +25,19 @@ import java.util.List;
 public class SerieServiceAdapter implements SerieServicePort {
 
     private final SerieRepository serieRepository;
-    private final PlayListTvRepository playlistTvService;
+    private final PlayListEpisodeRepository playListEpisodeRepository;
+    private final EpisodeRepository episodeRepository;
+    private final SeasonRepository seasonRepository;
 
-    public SerieServiceAdapter(SerieRepository serieRepository, PlayListTvRepository playlistTvService) {
+    public SerieServiceAdapter(SerieRepository serieRepository, PlayListEpisodeRepository playListEpisodeRepository, EpisodeRepository episodeRepository, SeasonRepository seasonRepository) {
         this.serieRepository = serieRepository;
-        this.playlistTvService = playlistTvService;
+        this.playListEpisodeRepository = playListEpisodeRepository;
+        this.episodeRepository = episodeRepository;
+        this.seasonRepository = seasonRepository;
     }
 
     public SerieEntity save(SerieEntity serie) {
         return serieRepository.save(serie);
-    }
-
-    public List<SerieEntity> getAll() {
-        return serieRepository.findAll();
     }
 
     @Override
@@ -43,27 +49,47 @@ public class SerieServiceAdapter implements SerieServicePort {
 
     @Override
     public void delete(Long serieId, Long userId) throws SerieException {
-        SerieEntity serie = this.serieRepository.findById(serieId)
-                .orElseThrow(() -> new SerieException("Série introuvable"));
+        // Trouvez la série par son ID
+        SerieEntity serie = findSerieById(serieId);
+        boolean isUsedByOtherUsers = false;
 
-        try {
-            List<EpisodeEntity> episodes = serie.getSeasons().stream()
-                    .flatMap(season -> season.getEpisodes().stream()).toList();
-
-            episodes.stream()
-                    .map(episode -> playlistTvService.findByEpisodeIdAndUserId(episode.getId(), userId))
-                    .forEach(playlistTvEntity -> playlistTvEntity.ifPresent(playlistTvService::delete));
-        } catch (Exception e) {
-            log.error("Erreur lors de la suppression d'épisodes de la playlist", e);
-            throw new SerieException("Erreur lors de la suppression d'épisodes de la playlist");
+        // Pour chaque saison de la série
+        for (SeasonEntity season : serie.getSeasons()) {
+            // Pour chaque épisode de la saison
+            for (EpisodeEntity episode : season.getEpisodes()) {
+                isUsedByOtherUsers = handleEpisodeDeletion(episode, userId, isUsedByOtherUsers);
+            }
+            if (!isUsedByOtherUsers) {
+                seasonRepository.delete(season);
+            }
         }
 
-        try {
+        if (!isUsedByOtherUsers) {
             serieRepository.delete(serie);
-        } catch (Exception e) {
-            log.error("La série est utilisée par quelqu'un d'autre", e);
-            throw new SerieException("La série est supprimé de votre playlist");
+        } else {
+            log.error("La série | id: {} - id_tmdb: {} - title: {} | est utilisée par quelqu'un d'autre", serie.getId(), serie.getIdTmdb(), serie.getTitle());
+            throw new SerieException("La série est supprimée de votre playlist", HttpStatus.CONFLICT);
         }
+    }
+
+    private SerieEntity findSerieById(Long serieId) throws SerieException {
+        return serieRepository.findById(serieId)
+                .orElseThrow(() -> new SerieException("Série introuvable", HttpStatus.NOT_FOUND));
+    }
+
+    private boolean handleEpisodeDeletion(EpisodeEntity episode, Long userId, boolean isUsedByOtherUsers) {
+        // Supprimer les épisodes de la playlist de l'utilisateur
+        Optional<PlayListEpisodeEntity> byEpisodeIdAndUserId = playListEpisodeRepository.findByEpisodeIdAndUserId(episode.getId(), userId);
+        byEpisodeIdAndUserId.ifPresent(playListEpisodeRepository::delete);
+
+        // Supprimer les épisodes si aucun autre utilisateur ne les utilise
+        List<PlayListEpisodeEntity> otherUsersPlaylists = playListEpisodeRepository.findByEpisodeAndUserIdNot(episode, userId);
+        if (otherUsersPlaylists.isEmpty()) {
+            episodeRepository.delete(episode);
+        } else {
+            isUsedByOtherUsers = true;
+        }
+        return isUsedByOtherUsers;
     }
 
 }

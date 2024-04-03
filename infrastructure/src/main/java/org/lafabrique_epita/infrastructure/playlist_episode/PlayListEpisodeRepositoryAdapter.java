@@ -1,20 +1,20 @@
-package org.lafabrique_epita.infrastructure.playlist_tv;
+package org.lafabrique_epita.infrastructure.playlist_episode;
 
 import org.lafabrique_epita.domain.entities.EpisodeEntity;
 import org.lafabrique_epita.domain.entities.PlayListEpisodeEntity;
 import org.lafabrique_epita.domain.entities.UserEntity;
-import org.lafabrique_epita.domain.repositories.PlayListTvRepository;
+import org.lafabrique_epita.domain.repositories.PlayListEpisodeRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class PlayListTvRepositoryAdapter implements PlayListTvRepository {
+public class PlayListEpisodeRepositoryAdapter implements PlayListEpisodeRepository {
 
-    private final PlayListTvJPARepositoryPort playListTvJPARepository;
+    private final PlayListEpisodeJPARepositoryPort playListTvJPARepository;
 
-    public PlayListTvRepositoryAdapter(PlayListTvJPARepositoryPort playListTvJPARepository) {
+    public PlayListEpisodeRepositoryAdapter(PlayListEpisodeJPARepositoryPort playListTvJPARepository) {
         this.playListTvJPARepository = playListTvJPARepository;
     }
 
@@ -34,8 +34,8 @@ public class PlayListTvRepositoryAdapter implements PlayListTvRepository {
     }
 
     @Override
-    public boolean existsByEpisodeIdAndUserId(Long serieId, Long userId) {
-        return this.playListTvJPARepository.existsByEpisodeIdAndUserId(serieId, userId);
+    public List<PlayListEpisodeEntity> findByEpisodeAndUserIdNot(EpisodeEntity episode, Long userId) {
+        return this.playListTvJPARepository.findByEpisodeIdAndUserIdNot(episode.getId(), userId);
     }
 
     @Override

@@ -4,8 +4,6 @@ import org.lafabrique_epita.domain.entities.SeasonEntity;
 import org.lafabrique_epita.domain.repositories.SeasonRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,12 +21,12 @@ public class SeasonRepositoryAdapter implements SeasonRepository {
     }
 
     @Override
-    public List<SeasonEntity> saveAll(Collection<SeasonEntity> seasonEntity) {
-        return this.seasonJPARepositoryPort.saveAll(seasonEntity);
+    public Optional<SeasonEntity> findByIdTmdb(Long idTmdbSeason) {
+        return this.seasonJPARepositoryPort.findByIdTmdb(idTmdbSeason);
     }
 
     @Override
-    public Optional<SeasonEntity> findByIdTmdb(Long idTmdbSeason) {
-        return this.seasonJPARepositoryPort.findByIdTmdb(idTmdbSeason);
+    public void delete(SeasonEntity season) {
+        this.seasonJPARepositoryPort.delete(season);
     }
 }

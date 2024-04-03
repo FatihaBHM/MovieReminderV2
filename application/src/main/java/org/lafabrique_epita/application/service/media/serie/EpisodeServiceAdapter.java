@@ -8,7 +8,7 @@ import org.lafabrique_epita.domain.enums.StatusEnum;
 import org.lafabrique_epita.domain.exceptions.EpisodeException;
 import org.lafabrique_epita.domain.exceptions.SerieException;
 import org.lafabrique_epita.domain.repositories.EpisodeRepository;
-import org.lafabrique_epita.domain.repositories.PlayListTvRepository;
+import org.lafabrique_epita.domain.repositories.PlayListEpisodeRepository;
 import org.lafabrique_epita.domain.repositories.SeasonRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +25,12 @@ public class EpisodeServiceAdapter implements EpisodeServicePort {
 
     private final EpisodeRepository episodeRepository;
     private final SeasonRepository seasonRepository;
-    private final PlayListTvRepository playListTvRepository;
+    private final PlayListEpisodeRepository playListEpisodeRepository;
 
-    public EpisodeServiceAdapter(EpisodeRepository episodeRepository, SeasonRepository seasonRepository, PlayListTvRepository playListTvRepository) {
+    public EpisodeServiceAdapter(EpisodeRepository episodeRepository, SeasonRepository seasonRepository, PlayListEpisodeRepository playListEpisodeRepository) {
         this.episodeRepository = episodeRepository;
         this.seasonRepository = seasonRepository;
-        this.playListTvRepository = playListTvRepository;
+        this.playListEpisodeRepository = playListEpisodeRepository;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class EpisodeServiceAdapter implements EpisodeServicePort {
 
         playListEpisodeEntity.setId(playListEpisodeID);
 
-        PlayListEpisodeEntity pl = this.playListTvRepository.save(playListEpisodeEntity);
+        PlayListEpisodeEntity pl = this.playListEpisodeRepository.save(playListEpisodeEntity);
         return EpisodePostDtoMapper.convertToDto(pl.getEpisode());
     }
 }

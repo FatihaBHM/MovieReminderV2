@@ -18,20 +18,17 @@ import java.util.*;
 @Slf4j
 @Service
 @Transactional
-public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
-    private final PlayListTvRepository playListTvRepository;
+public class PlaylistEpisodeServiceAdapter implements PlaylistEpisodeServicePort {
+    private final PlayListEpisodeRepository playListEpisodeRepository;
     private final SerieRepository serieRepository;
     private final GenreRepository genreRepository;
     private final SeasonRepository seasonRepository;
 
-    private final EpisodeRepository episodeRepository;
-
-    public PlaylistTvServiceAdapter(PlayListTvRepository playListTvRepository, SerieRepository serieRepository, GenreRepository genreRepository, SeasonRepository seasonRepository, EpisodeRepository episodeRepository) {
-        this.playListTvRepository = playListTvRepository;
+    public PlaylistEpisodeServiceAdapter(PlayListEpisodeRepository playListEpisodeRepository, SerieRepository serieRepository, GenreRepository genreRepository, SeasonRepository seasonRepository) {
+        this.playListEpisodeRepository = playListEpisodeRepository;
         this.serieRepository = serieRepository;
         this.genreRepository = genreRepository;
         this.seasonRepository = seasonRepository;
-        this.episodeRepository = episodeRepository;
     }
 
 
@@ -100,7 +97,7 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
 
     @Override
     public boolean updateFavorite(Long episodeId, Integer favorite, Long userId) throws SerieException {
-        Optional<PlayListEpisodeEntity> playListTvEntity = this.playListTvRepository.findByEpisodeIdAndUserId(episodeId, userId);
+        Optional<PlayListEpisodeEntity> playListTvEntity = this.playListEpisodeRepository.findByEpisodeIdAndUserId(episodeId, userId);
 
         if (playListTvEntity.isEmpty()) {
             throw new SerieException("Épisode introuvable", HttpStatus.NOT_FOUND);
@@ -108,17 +105,17 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
 
         playListTvEntity.get().setFavorite(favorite == 1);
 
-        PlayListEpisodeEntity s = this.playListTvRepository.save(playListTvEntity.get());
+        PlayListEpisodeEntity s = this.playListEpisodeRepository.save(playListTvEntity.get());
         return s.isFavorite();
 
     }
 
     public void updateStatus(Long episodeId, StatusEnum status, Long userId) throws SerieException {
-        Optional<PlayListEpisodeEntity> playListTvEntity = this.playListTvRepository.findByEpisodeIdAndUserId(episodeId, userId);
+        Optional<PlayListEpisodeEntity> playListTvEntity = this.playListEpisodeRepository.findByEpisodeIdAndUserId(episodeId, userId);
 
         if (playListTvEntity.isPresent()) {
             playListTvEntity.get().setStatus(status);
-            this.playListTvRepository.save(playListTvEntity.get());
+            this.playListEpisodeRepository.save(playListTvEntity.get());
             return;
         }
         throw new SerieException("Série introuvable", HttpStatus.NOT_FOUND);
@@ -126,11 +123,11 @@ public class PlaylistTvServiceAdapter implements PlaylistTvServicePort {
 
     @Override
     public List<SerieGetResponseDto> findAllEpisodesByUser(UserEntity user) {
-        List<EpisodeEntity> playlists = playListTvRepository.findEpisodesByUserId(user);
+        List<EpisodeEntity> playlists = playListEpisodeRepository.findEpisodesByUserId(user);
 
         List<EpisodeGetResponseDto> episodeDtos = playlists.stream()
                 .map(episodeEntity -> {
-                    Optional<PlayListEpisodeEntity> playListEpisodeEntity = playListTvRepository.findByEpisodeIdAndUserId(episodeEntity.getId(), user.getId());
+                    Optional<PlayListEpisodeEntity> playListEpisodeEntity = playListEpisodeRepository.findByEpisodeIdAndUserId(episodeEntity.getId(), user.getId());
                     return playListEpisodeEntity.map(listEpisodeEntity -> EpisodeGetResponseMapper.convertToDto(episodeEntity, listEpisodeEntity.isFavorite(), listEpisodeEntity.getStatus())).orElseGet(() -> EpisodeGetResponseMapper.convertToDto(episodeEntity, false, StatusEnum.A_REGARDER));
                 })
                 .toList();
