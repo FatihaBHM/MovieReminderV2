@@ -68,7 +68,7 @@ public class SerieServiceAdapter implements SerieServicePort {
             serieRepository.delete(serie);
         } else {
             log.error("La série | id: {} - id_tmdb: {} - title: {} | est utilisée par quelqu'un d'autre", serie.getId(), serie.getIdTmdb(), serie.getTitle());
-            throw new SerieException("La série est supprimée de votre playlist", HttpStatus.CONFLICT);
+            throw new SerieException("La série est supprimée de votre playlist", HttpStatus.OK);
         }
     }
 
