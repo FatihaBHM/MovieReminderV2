@@ -1,7 +1,10 @@
 package org.lafabrique_epita.application.dto.media.serie_post;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.springframework.format.annotation.DateTimeFormat;
 

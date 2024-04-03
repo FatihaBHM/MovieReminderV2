@@ -1,7 +1,6 @@
 package org.lafabrique_epita.application.dto.media.serie_get;
 
 import org.lafabrique_epita.domain.entities.EpisodeEntity;
-import org.lafabrique_epita.domain.entities.PlayListEpisodeEntity;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 
 public class EpisodeGetResponseMapper {

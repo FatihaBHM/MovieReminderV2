@@ -6,7 +6,6 @@ import org.lafabrique_epita.domain.entities.SerieEntity;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SeriePostDtoMapper {
 
@@ -42,7 +41,7 @@ public class SeriePostDtoMapper {
         return seriePostDto.seasons()
                 .stream()
                 .map(SeasonPostDtoMapper::convertToSeasonEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private static List<GenreEntity> getGenres(SeriePostDto seriePostDto) {
@@ -52,6 +51,6 @@ public class SeriePostDtoMapper {
         return seriePostDto.genres()
                 .stream()
                 .map(genre -> new GenreEntity(null, genre.id(), genre.name()))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

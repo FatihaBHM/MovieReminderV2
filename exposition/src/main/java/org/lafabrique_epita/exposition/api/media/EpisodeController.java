@@ -11,8 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.lafabrique_epita.application.dto.media.serie_post.EpisodePostDto;
-import org.lafabrique_epita.application.service.media.playlist_series.PlaylistEpisodeServiceAdapter;
-import org.lafabrique_epita.application.service.media.serie.EpisodeServiceAdapter;
+import org.lafabrique_epita.application.service.media.playlist_series.PlaylistEpisodeServicePort;
+import org.lafabrique_epita.application.service.media.serie.EpisodeServicePort;
 import org.lafabrique_epita.domain.entities.EpisodeEntity;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.enums.StatusEnum;
@@ -35,10 +35,10 @@ import java.util.List;
 @RestController
 public class EpisodeController extends ApiControllerBase {
 
-    private final PlaylistEpisodeServiceAdapter playlistTvService;
-    private final EpisodeServiceAdapter episodeService;
+    private final PlaylistEpisodeServicePort playlistTvService;
+    private final EpisodeServicePort episodeService;
 
-    public EpisodeController(PlaylistEpisodeServiceAdapter playlistTvService, EpisodeServiceAdapter episodeService) {
+    public EpisodeController(PlaylistEpisodeServicePort playlistTvService, EpisodeServicePort episodeService) {
         this.playlistTvService = playlistTvService;
         this.episodeService = episodeService;
     }
@@ -72,7 +72,7 @@ public class EpisodeController extends ApiControllerBase {
                                             "statut")
                             },
                             array = @ArraySchema(schema = @Schema(implementation = ResponseStatusAndFavorite.class, oneOf = {Favorite.class, Status.class}))
-                            )
+                    )
             ),
             @ApiResponse(responseCode = "400", description = "Demande invalide de changement de favori ou de statut", content = @Content(
                     mediaType = "application/json",

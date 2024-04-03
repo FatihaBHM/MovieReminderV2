@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -28,9 +27,5 @@ public class EpisodeGetResponseDto {
     private String imagePath;
     private boolean favorite;
     private StatusEnum status;
-
-    public EpisodeGetResponseDto(LocalDate airDate, int episodeNumber, String title, String overview, Long idTmdb, int duration, int seasonNumber, String imagePath) {
-        this(airDate, episodeNumber, title, overview, idTmdb, duration, seasonNumber, imagePath, false, null);
-    }
 
 }
