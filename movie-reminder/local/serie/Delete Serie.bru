@@ -1,0 +1,15 @@
+meta {
+  name: Delete Serie
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{local_url}}/series/27
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token_2}}
+}
