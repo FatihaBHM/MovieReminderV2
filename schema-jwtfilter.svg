@@ -1,0 +1,356 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1837.696390978929 1096.735933052877" width="1837.696390978929" height="1096.735933052877">
+    <!-- svg-source:excalidraw -->
+
+    <defs>
+        <style class="style-fonts">
+            @font-face {
+            font-family: "Virgil";
+            src: url("https://excalidraw.com/Virgil.woff2");
+            }
+            @font-face {
+            font-family: "Cascadia";
+            src: url("https://excalidraw.com/Cascadia.woff2");
+            }
+            @font-face {
+            font-family: "Assistant";
+            src: url("https://excalidraw.com/Assistant-Regular.woff2");
+            }
+        </style>
+
+    </defs>
+    <rect x="0" y="0" width="1837.696390978929" height="1096.735933052877" fill="#ffffff"></rect>
+    <g stroke-linecap="round" transform="translate(1028.8001981526193 11.44535866666115) rotate(0 144.748046875 54.238003333963405)">
+        <path d="M27.12 0 C79.08 0, 131.04 0, 262.38 0 M27.12 0 C92.27 0, 157.41 0, 262.38 0 M262.38 0 C280.46 0, 289.5 9.04, 289.5 27.12 M262.38 0 C280.46 0, 289.5 9.04, 289.5 27.12 M289.5 27.12 C289.5 47.43, 289.5 67.74, 289.5 81.36 M289.5 27.12 C289.5 40.4, 289.5 53.68, 289.5 81.36 M289.5 81.36 C289.5 99.44, 280.46 108.48, 262.38 108.48 M289.5 81.36 C289.5 99.44, 280.46 108.48, 262.38 108.48 M262.38 108.48 C195.91 108.48, 129.44 108.48, 27.12 108.48 M262.38 108.48 C185.08 108.48, 107.79 108.48, 27.12 108.48 M27.12 108.48 C9.04 108.48, 0 99.44, 0 81.36 M27.12 108.48 C9.04 108.48, 0 99.44, 0 81.36 M0 81.36 C0 62.34, 0 43.32, 0 27.12 M0 81.36 C0 63.35, 0 45.35, 0 27.12 M0 27.12 C0 9.04, 9.04 0, 27.12 0 M0 27.12 C0 9.04, 9.04 0, 27.12 0"
+              stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+    </g>
+    <g transform="translate(1088.5238309651193 31.183362000624555) rotate(0 85.0244140625 34.5)">
+        <text x="85.0244140625" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">JwtService
+        </text>
+        <text x="85.0244140625" y="41.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">@Inject
+        </text>
+        <text x="85.0244140625" y="64.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">UserDetailsService
+        </text>
+    </g>
+    <g stroke-linecap="round">
+        <g transform="translate(1172.6290397344396 120.98762440297452) rotate(0 0 339.865250983641)">
+            <path d="M0 0 C0 113.29, 0 566.44, 0 679.73 M0 0 C0 113.29, 0 566.44, 0 679.73" stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g stroke-linecap="round" transform="translate(519.4000990763096 10) rotate(0 144.748046875 54.238003333963405)">
+        <path d="M27.12 0 C80.36 0, 133.6 0, 262.38 0 M27.12 0 C89.47 0, 151.81 0, 262.38 0 M262.38 0 C280.46 0, 289.5 9.04, 289.5 27.12 M262.38 0 C280.46 0, 289.5 9.04, 289.5 27.12 M289.5 27.12 C289.5 41.8, 289.5 56.48, 289.5 81.36 M289.5 27.12 C289.5 45.14, 289.5 63.17, 289.5 81.36 M289.5 81.36 C289.5 99.44, 280.46 108.48, 262.38 108.48 M289.5 81.36 C289.5 99.44, 280.46 108.48, 262.38 108.48 M262.38 108.48 C202.71 108.48, 143.04 108.48, 27.12 108.48 M262.38 108.48 C176.95 108.48, 91.52 108.48, 27.12 108.48 M27.12 108.48 C9.04 108.48, 0 99.44, 0 81.36 M27.12 108.48 C9.04 108.48, 0 99.44, 0 81.36 M0 81.36 C0 69.79, 0 58.22, 0 27.12 M0 81.36 C0 67.43, 0 53.5, 0 27.12 M0 27.12 C0 9.04, 9.04 0, 27.12 0 M0 27.12 C0 9.04, 9.04 0, 27.12 0"
+              stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+    </g>
+    <g transform="translate(565.2174818888096 29.738003333963405) rotate(0 98.9306640625 34.5)">
+        <text x="98.9306640625" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">JwtFilter
+        </text>
+        <text x="98.9306640625" y="41.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">extends
+        </text>
+        <text x="98.9306640625" y="64.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">OncePerRequestFilter
+        </text>
+    </g>
+    <g stroke-linecap="round">
+        <g transform="translate(663.22894065813 119.54226573631337) rotate(0 0 483.5968336582818)">
+            <path d="M0 0 C0 161.2, 0 805.99, 0 967.19 M0 0 C0 161.2, 0 805.99, 0 967.19" stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g stroke-linecap="round" transform="translate(10 10) rotate(0 144.748046875 54.238003333963405)">
+        <path d="M27.12 0 C89.47 0, 151.81 0, 262.38 0 M27.12 0 C90.08 0, 153.04 0, 262.38 0 M262.38 0 C280.46 0, 289.5 9.04, 289.5 27.12 M262.38 0 C280.46 0, 289.5 9.04, 289.5 27.12 M289.5 27.12 C289.5 45.14, 289.5 63.17, 289.5 81.36 M289.5 27.12 C289.5 43.27, 289.5 59.43, 289.5 81.36 M289.5 81.36 C289.5 99.44, 280.46 108.48, 262.38 108.48 M289.5 81.36 C289.5 99.44, 280.46 108.48, 262.38 108.48 M262.38 108.48 C176.95 108.48, 91.52 108.48, 27.12 108.48 M262.38 108.48 C169.45 108.48, 76.52 108.48, 27.12 108.48 M27.12 108.48 C9.04 108.48, 0 99.44, 0 81.36 M27.12 108.48 C9.04 108.48, 0 99.44, 0 81.36 M0 81.36 C0 67.43, 0 53.5, 0 27.12 M0 81.36 C0 61.89, 0 42.43, 0 27.12 M0 27.12 C0 9.04, 9.04 0, 27.12 0 M0 27.12 C0 9.04, 9.04 0, 27.12 0"
+              stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+    </g>
+    <g transform="translate(129.181640625 52.738003333963405) rotate(0 25.56640625 11.5)">
+        <text x="25.56640625" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">Client
+        </text>
+    </g>
+    <g stroke-linecap="round">
+        <g transform="translate(153.82884158182037 119.54226573631337) rotate(0 -2.842170943040401e-14 482.38771828350997)">
+            <path d="M0 0 C0 160.8, 0 803.98, 0 964.78 M0 0 C0 160.8, 0 803.98, 0 964.78" stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g stroke-linecap="round" transform="translate(1538.200297228929 10) rotate(0 144.748046875 54.238003333963405)">
+        <path d="M27.12 0 C95.32 0, 163.53 0, 262.38 0 M27.12 0 C113.15 0, 199.18 0, 262.38 0 M262.38 0 C280.46 0, 289.5 9.04, 289.5 27.12 M262.38 0 C280.46 0, 289.5 9.04, 289.5 27.12 M289.5 27.12 C289.5 39, 289.5 50.89, 289.5 81.36 M289.5 27.12 C289.5 39.62, 289.5 52.12, 289.5 81.36 M289.5 81.36 C289.5 99.44, 280.46 108.48, 262.38 108.48 M289.5 81.36 C289.5 99.44, 280.46 108.48, 262.38 108.48 M262.38 108.48 C202.45 108.48, 142.53 108.48, 27.12 108.48 M262.38 108.48 C169.69 108.48, 77.01 108.48, 27.12 108.48 M27.12 108.48 C9.04 108.48, 0 99.44, 0 81.36 M27.12 108.48 C9.04 108.48, 0 99.44, 0 81.36 M0 81.36 C0 66.52, 0 51.68, 0 27.12 M0 81.36 C0 64.3, 0 47.24, 0 27.12 M0 27.12 C0 9.04, 9.04 0, 27.12 0 M0 27.12 C0 9.04, 9.04 0, 27.12 0"
+              stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+    </g>
+    <g transform="translate(1612.923930041429 52.738003333963405) rotate(0 70.0244140625 11.5)">
+        <text x="70.0244140625" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">MovieController
+        </text>
+    </g>
+    <g stroke-linecap="round">
+        <g transform="translate(1682.0291388107494 119.54226573631337) rotate(0 0 482.77556549328966)">
+            <path d="M0 0 C0 160.93, 0 804.63, 0 965.55 M0 0 C0 160.93, 0 804.63, 0 965.55" stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g mask="url(#mask-DUUAgoGLH6YtOY-CvT2Yt)" stroke-linecap="round">
+        <g transform="translate(151.7894055271962 198.76290475443886) rotate(0 255.37238303638043 0)">
+            <path d="M0 0 C85.12 0, 425.62 0, 510.74 0 M0 0 C85.12 0, 425.62 0, 510.74 0" stroke="#1971c2" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(151.7894055271962 198.76290475443886) rotate(0 255.37238303638043 0)">
+            <path d="M487.25 8.55 C496.31 5.26, 505.36 1.96, 510.74 0 M487.25 8.55 C495.23 5.65, 503.21 2.74, 510.74 0" stroke="#1971c2" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(151.7894055271962 198.76290475443886) rotate(0 255.37238303638043 0)">
+            <path d="M487.25 -8.55 C496.31 -5.26, 505.36 -1.96, 510.74 0 M487.25 -8.55 C495.23 -5.65, 503.21 -2.74, 510.74 0" stroke="#1971c2" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask id="mask-DUUAgoGLH6YtOY-CvT2Yt">
+        <rect x="0" y="0" fill="#fff" width="762.5341715999571" height="298.76290475443886"></rect>
+        <rect x="342.69401512607664" y="187.26290475443886" fill="#000" width="128.935546875" height="23" opacity="1"></rect>
+    </mask>
+    <g transform="translate(342.6940151260767 187.26290475443886) rotate(0 64.4677734375 11.5)">
+        <text x="64.4677734375" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1971c2" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">1. Get /movies
+        </text>
+    </g>
+    <g stroke-linecap="round">
+        <g transform="translate(666.511618663208 199.1821197563139) rotate(0 36.36335076252868 0)">
+            <path d="M0 0 C12.12 0, 60.61 0, 72.73 0 M0 0 C12.12 0, 60.61 0, 72.73 0" stroke="#1971c2" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g stroke-linecap="round">
+        <g transform="translate(738.9821814556494 199.55150920737867) rotate(0 0 63.66845682772302)">
+            <path d="M0 0 C0 21.22, 0 106.11, 0 127.34 M0 0 C0 21.22, 0 106.11, 0 127.34" stroke="#1971c2" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g stroke-linecap="round">
+        <g transform="translate(739.1535190342692 326.96724128070935) rotate(0 -36.17758763458562 0)">
+            <path d="M0 0 C-12.06 0, -60.3 0, -72.36 0 M0 0 C-12.06 0, -60.3 0, -72.36 0" stroke="#1971c2" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(739.1535190342692 326.96724128070935) rotate(0 -36.17758763458562 0)">
+            <path d="M-48.86 -8.55 C-53.59 -6.83, -58.31 -5.11, -72.36 0 M-48.86 -8.55 C-54.35 -6.55, -59.83 -4.56, -72.36 0" stroke="#1971c2" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(739.1535190342692 326.96724128070935) rotate(0 -36.17758763458562 0)">
+            <path d="M-48.86 8.55 C-53.59 6.83, -58.31 5.11, -72.36 0 M-48.86 8.55 C-54.35 6.55, -59.83 4.56, -72.36 0" stroke="#1971c2" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g transform="translate(751.9550750457126 223.40848836292918) rotate(0 96.71875 34.5)">
+        <text x="0" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">2. Vérifie si la requête
+        </text>
+        <text x="0" y="41.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">à le token. Si oui,
+        </text>
+        <text x="0" y="64.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">on extrait le token
+        </text>
+    </g>
+    <g stroke-linecap="round">
+        <g transform="translate(668.5224856464984 360.7336732088216) rotate(0 249.88344458159793 0)">
+            <path d="M0 0 C83.29 0, 416.47 0, 499.77 0 M0 0 C83.29 0, 416.47 0, 499.77 0" stroke="#9c36b5" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(668.5224856464984 360.7336732088216) rotate(0 249.88344458159793 0)">
+            <path d="M476.27 8.55 C485.56 5.17, 494.85 1.79, 499.77 0 M476.27 8.55 C484.93 5.4, 493.58 2.25, 499.77 0" stroke="#9c36b5" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(668.5224856464984 360.7336732088216) rotate(0 249.88344458159793 0)">
+            <path d="M476.27 -8.55 C485.56 -5.17, 494.85 -1.79, 499.77 0 M476.27 -8.55 C484.93 -5.4, 493.58 -2.25, 499.77 0" stroke="#9c36b5" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g transform="translate(776.4402553187783 365.39195223627695) rotate(0 150.068359375 11.5)">
+        <text x="0" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">3. On appelle: UserDetailsService
+        </text>
+    </g>
+    <g transform="translate(763.5007899909228 395.6536831585984) rotate(0 164.0625 12)">
+        <text x="0" y="19.3125" font-family="Cascadia, Segoe UI Emoji" font-size="20px" fill="#1971c2" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">
+            loadUserByUsername(username)
+        </text>
+    </g>
+    <g mask="url(#mask-ZkTnUf-B6O4iqTR7Rs7OX)" stroke-linecap="round">
+        <g transform="translate(1170.8849851890625 456.79199052868654) rotate(0 -250.95190265117878 0)">
+            <path d="M0 0 C-83.65 0, -418.25 0, -501.9 0 M0 0 C-83.65 0, -418.25 0, -501.9 0" stroke="#9c36b5" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(1170.8849851890625 456.79199052868654) rotate(0 -250.95190265117878 0)">
+            <path d="M-478.41 -8.55 C-485.65 -5.92, -492.88 -3.28, -501.9 0 M-478.41 -8.55 C-486.68 -5.54, -494.95 -2.53, -501.9 0" stroke="#9c36b5" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(1170.8849851890625 456.79199052868654) rotate(0 -250.95190265117878 0)">
+            <path d="M-478.41 8.55 C-485.65 5.92, -492.88 3.28, -501.9 0 M-478.41 8.55 C-486.68 5.54, -494.95 2.53, -501.9 0" stroke="#9c36b5" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask id="mask-ZkTnUf-B6O4iqTR7Rs7OX">
+        <rect x="0" y="0" fill="#fff" width="1772.78879049142" height="556.7919905286865"></rect>
+        <rect x="824.3422622253838" y="445.2919905286866" fill="#000" width="191.181640625" height="23" opacity="1"></rect>
+    </mask>
+    <g transform="translate(824.3422622253838 445.2919905286866) rotate(0 95.5908203125 11.5)">
+        <text x="95.5908203125" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#9c36b5" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">4. Return UserDetails
+        </text>
+    </g>
+    <g stroke-linecap="round">
+        <g transform="translate(666.0153832101402 597.2706506885584) rotate(0 252.34205433273843 0)">
+            <path d="M0 0 C84.11 0, 420.57 0, 504.68 0 M0 0 C84.11 0, 420.57 0, 504.68 0" stroke="#0c8599" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(666.0153832101402 597.2706506885584) rotate(0 252.34205433273843 0)">
+            <path d="M481.19 8.55 C486.66 6.56, 492.13 4.57, 504.68 0 M481.19 8.55 C488.96 5.72, 496.72 2.9, 504.68 0" stroke="#0c8599" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(666.0153832101402 597.2706506885584) rotate(0 252.34205433273843 0)">
+            <path d="M481.19 -8.55 C486.66 -6.56, 492.13 -4.57, 504.68 0 M481.19 -8.55 C488.96 -5.72, 496.72 -2.9, 504.68 0" stroke="#0c8599" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g transform="translate(799.9958992852346 603.3439408091483) rotate(0 120.9912109375 11.5)">
+        <text x="0" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">5. Validation du JWT Token
+        </text>
+    </g>
+    <g transform="translate(780.1573050133352 630.7453507211474) rotate(0 140.625 12)">
+        <text x="0" y="19.3125" font-family="Cascadia, Segoe UI Emoji" font-size="20px" fill="#1971c2" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">
+            isTokenExpired(jwtToken)
+        </text>
+    </g>
+    <g transform="translate(774.5027352227346 661.0496846953461) rotate(0 146.484375 12)">
+        <text x="0" y="19.3125" font-family="Cascadia, Segoe UI Emoji" font-size="20px" fill="#1971c2" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">
+            extractUsername(jwtToken)
+        </text>
+    </g>
+    <g mask="url(#mask-dlZn1pH4C0Tld02bH_Bso)" stroke-linecap="round">
+        <g transform="translate(1170.6496743922496 722.2363883941775) rotate(0 -250.71159574585096 0)">
+            <path d="M0 0 C-83.57 0, -417.85 0, -501.42 0 M0 0 C-83.57 0, -417.85 0, -501.42 0" stroke="#0c8599" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(1170.6496743922496 722.2363883941775) rotate(0 -250.71159574585096 0)">
+            <path d="M-477.93 -8.55 C-484.42 -6.19, -490.92 -3.82, -501.42 0 M-477.93 -8.55 C-486.32 -5.5, -494.7 -2.45, -501.42 0" stroke="#0c8599" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(1170.6496743922496 722.2363883941775) rotate(0 -250.71159574585096 0)">
+            <path d="M-477.93 8.55 C-484.42 6.19, -490.92 3.82, -501.42 0 M-477.93 8.55 C-486.32 5.5, -494.7 2.45, -501.42 0" stroke="#0c8599" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask id="mask-dlZn1pH4C0Tld02bH_Bso">
+        <rect x="0" y="0" fill="#fff" width="1772.0728658839516" height="822.2363883941775"></rect>
+        <rect x="776.5298755213987" y="710.7363883941774" fill="#000" width="286.81640625" height="23" opacity="1"></rect>
+    </mask>
+    <g transform="translate(776.5298755213987 710.7363883941774) rotate(0 143.40820312499994 11.5)">
+        <text x="143.408203125" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#0c8599" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">6. Return true si token est valide
+        </text>
+    </g>
+    <g stroke-linecap="round">
+        <g transform="translate(666.9947569567469 795.2935665162622) rotate(0 36.36335076252868 0)">
+            <path d="M0 0 C12.12 0, 60.61 0, 72.73 0 M0 0 C12.12 0, 60.61 0, 72.73 0" stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g stroke-linecap="round">
+        <g transform="translate(739.4653197491884 795.662955967327) rotate(0 0 63.66845682772305)">
+            <path d="M0 0 C0 21.22, 0 106.11, 0 127.34 M0 0 C0 21.22, 0 106.11, 0 127.34" stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g stroke-linecap="round">
+        <g transform="translate(739.636657327808 923.0786880406577) rotate(0 -36.17758763458562 0)">
+            <path d="M0 0 C-12.06 0, -60.3 0, -72.36 0 M0 0 C-12.06 0, -60.3 0, -72.36 0" stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(739.636657327808 923.0786880406577) rotate(0 -36.17758763458562 0)">
+            <path d="M-48.86 -8.55 C-54.34 -6.56, -59.81 -4.57, -72.36 0 M-48.86 -8.55 C-56.11 -5.91, -63.36 -3.28, -72.36 0" stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(739.636657327808 923.0786880406577) rotate(0 -36.17758763458562 0)">
+            <path d="M-48.86 8.55 C-54.34 6.56, -59.81 4.57, -72.36 0 M-48.86 8.55 C-56.11 5.91, -63.36 3.28, -72.36 0" stroke="#1e1e1e" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask></mask>
+    <g transform="translate(770.83341384718 811.5801207039142) rotate(0 153.41796875 46)">
+        <text x="0" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">7. Si le token est valide,
+        </text>
+        <text x="0" y="41.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">on va dans SpringSecurity
+        </text>
+        <text x="0" y="64.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">afin de savoir si nous avons le rôle
+        </text>
+        <text x="0" y="87.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">adéquate à la route
+        </text>
+    </g>
+    <g mask="url(#mask-GD7w4GLHWWRv7NBpzgQKA)" stroke-linecap="round">
+        <g transform="translate(666.5853071289941 1013.6371297512364) rotate(0 507.07888826854753 0)">
+            <path d="M0 0 C169.03 0, 845.13 0, 1014.16 0 M0 0 C169.03 0, 845.13 0, 1014.16 0" stroke="#2f9e44" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(666.5853071289941 1013.6371297512364) rotate(0 507.07888826854753 0)">
+            <path d="M990.67 8.55 C999.03 5.51, 1007.39 2.46, 1014.16 0 M990.67 8.55 C999.83 5.22, 1008.99 1.88, 1014.16 0" stroke="#2f9e44" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(666.5853071289941 1013.6371297512364) rotate(0 507.07888826854753 0)">
+            <path d="M990.67 -8.55 C999.03 -5.51, 1007.39 -2.46, 1014.16 0 M990.67 -8.55 C999.83 -5.22, 1008.99 -1.88, 1014.16 0" stroke="#2f9e44" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask id="mask-GD7w4GLHWWRv7NBpzgQKA">
+        <rect x="0" y="0" fill="#fff" width="1780.7430836660892" height="1113.6371297512364"></rect>
+        <rect x="939.2891953975416" y="1001.6371297512364" fill="#000" width="468.75" height="24" opacity="1"></rect>
+    </mask>
+    <g transform="translate(939.2891953975416 1001.6371297512364) rotate(0 234.3750000000001 12)">
+        <text x="234.375" y="19.3125" font-family="Cascadia, Segoe UI Emoji" font-size="20px" fill="#2f9e44" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">getAllMoviesByUser(sort, authentication)
+        </text>
+    </g>
+    <g mask="url(#mask-WaCI6FJ8k6RhZyCssMZC-)" stroke-linecap="round">
+        <g transform="translate(1681.8788888108768 1068.646258638093) rotate(0 -762.0855549442629 0)">
+            <path d="M0 0 C-254.03 0, -1270.14 0, -1524.17 0 M0 0 C-254.03 0, -1270.14 0, -1524.17 0" stroke="#2f9e44" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(1681.8788888108768 1068.646258638093) rotate(0 -762.0855549442629 0)">
+            <path d="M-1500.68 -8.55 C-1509.4 -5.38, -1518.12 -2.2, -1524.17 0 M-1500.68 -8.55 C-1508.43 -5.73, -1516.18 -2.91, -1524.17 0" stroke="#2f9e44" stroke-width="4" fill="none"></path>
+        </g>
+        <g transform="translate(1681.8788888108768 1068.646258638093) rotate(0 -762.0855549442629 0)">
+            <path d="M-1500.68 8.55 C-1509.4 5.38, -1518.12 2.2, -1524.17 0 M-1500.68 8.55 C-1508.43 5.73, -1516.18 2.91, -1524.17 0" stroke="#2f9e44" stroke-width="4" fill="none"></path>
+        </g>
+    </g>
+    <mask id="mask-WaCI6FJ8k6RhZyCssMZC-">
+        <rect x="0" y="0" fill="#fff" width="3306.0499986994027" height="1168.646258638093"></rect>
+        <rect x="767.4495838666139" y="1056.646258638093" fill="#000" width="304.6875" height="24" opacity="1"></rect>
+    </mask>
+    <g transform="translate(767.4495838666139 1056.6462586380928) rotate(0 152.34375 12)">
+        <text x="152.34375" y="19.3125" font-family="Cascadia, Segoe UI Emoji" font-size="20px" fill="#2f9e44" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">Return List&lt;PlayListMovie&gt;
+        </text>
+    </g>
+    <g mask="url(#mask-R9QtzBC8uBoBTvlnBqme2)" stroke-linecap="round">
+        <g transform="translate(659.5942135285425 457.85237967509875) rotate(0 -251.0799404202123 0)">
+            <path d="M0 0 C-83.69 0, -418.47 0, -502.16 0" stroke="#9c36b5" stroke-width="4.5" fill="none" stroke-dasharray="8 12"></path>
+        </g>
+        <g transform="translate(659.5942135285425 457.85237967509875) rotate(0 -251.0799404202123 0)">
+            <path d="M-478.67 -8.55 C-483.97 -6.62, -489.28 -4.69, -502.16 0" stroke="#9c36b5" stroke-width="4.5" fill="none"></path>
+        </g>
+        <g transform="translate(659.5942135285425 457.85237967509875) rotate(0 -251.0799404202123 0)">
+            <path d="M-478.67 8.55 C-483.97 6.62, -489.28 4.69, -502.16 0" stroke="#9c36b5" stroke-width="4.5" fill="none"></path>
+        </g>
+    </g>
+    <mask id="mask-R9QtzBC8uBoBTvlnBqme2">
+        <rect x="0" y="0" fill="#fff" width="1261.7540943689671" height="557.8523796750987"></rect>
+        <rect x="320.72130435833014" y="446.3523796750987" fill="#000" width="175.5859375" height="23" opacity="1"></rect>
+    </mask>
+    <g transform="translate(320.72130435833014 446.3523796750987) rotate(0 87.79296875000003 11.5)">
+        <text x="87.79296875" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#9c36b5" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">Error : JWT invalide
+        </text>
+    </g>
+    <g mask="url(#mask-lH_sw1Cn7BXbm8E2D2BQ4)" stroke-linecap="round">
+        <g transform="translate(659.7769177354489 721.664980480147) rotate(0 -250.91179762791361 0)">
+            <path d="M0 0 C-83.64 0, -418.19 0, -501.82 0" stroke="#0c8599" stroke-width="4.5" fill="none" stroke-dasharray="8 12"></path>
+        </g>
+        <g transform="translate(659.7769177354489 721.664980480147) rotate(0 -250.91179762791361 0)">
+            <path d="M-478.33 -8.55 C-484.65 -6.25, -490.98 -3.95, -501.82 0" stroke="#0c8599" stroke-width="4.5" fill="none"></path>
+        </g>
+        <g transform="translate(659.7769177354489 721.664980480147) rotate(0 -250.91179762791361 0)">
+            <path d="M-478.33 8.55 C-484.65 6.25, -490.98 3.95, -501.82 0" stroke="#0c8599" stroke-width="4.5" fill="none"></path>
+        </g>
+    </g>
+    <mask id="mask-lH_sw1Cn7BXbm8E2D2BQ4">
+        <rect x="0" y="0" fill="#fff" width="1261.6005129912762" height="821.664980480147"></rect>
+        <rect x="327.7469560450353" y="710.164980480147" fill="#000" width="162.236328125" height="23" opacity="1"></rect>
+    </mask>
+    <g transform="translate(327.7469560450353 710.164980480147) rotate(0 81.11816406250003 11.5)">
+        <text x="81.1181640625" y="18.400390625" font-family="Helvetica, Segoe UI Emoji" font-size="20px" fill="#0c8599" text-anchor="middle" style="white-space: pre;" direction="ltr"
+              dominant-baseline="alphabetic">Error : JWT expiré
+        </text>
+    </g>
+</svg>

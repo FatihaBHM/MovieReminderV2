@@ -4,8 +4,6 @@ import org.lafabrique_epita.application.dto.media.CommentDtoMapper;
 import org.lafabrique_epita.application.dto.media.GenreDtoMapper;
 import org.lafabrique_epita.domain.entities.SerieEntity;
 
-import java.util.stream.Collectors;
-
 public class SeriePostDtoResponseMapper {
 
     private SeriePostDtoResponseMapper() {
@@ -26,12 +24,12 @@ public class SeriePostDtoResponseMapper {
                 serieEntity.getScore(),
                 serieEntity.getGenres().stream()
                         .map(GenreDtoMapper::convertToDto)
-                        .collect(Collectors.toList()),
+                        .toList(),
                 serieEntity.getComments().stream()
                         .map(CommentDtoMapper::convertToDto)
-                        .collect(Collectors.toList()),
+                        .toList(),
                 serieEntity.getSeasons().stream()
-                        .map(SeasonPostDtoMapper::convertToDto).collect(Collectors.toList())
+                        .map(SeasonPostDtoMapper::convertToDto).toList()
         );
     }
 

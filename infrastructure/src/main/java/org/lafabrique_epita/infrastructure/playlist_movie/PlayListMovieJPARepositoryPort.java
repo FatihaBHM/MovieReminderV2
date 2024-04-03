@@ -1,6 +1,5 @@
 package org.lafabrique_epita.infrastructure.playlist_movie;
 
-import org.lafabrique_epita.domain.entities.MovieEntity;
 import org.lafabrique_epita.domain.entities.PlayListMovieEntity;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

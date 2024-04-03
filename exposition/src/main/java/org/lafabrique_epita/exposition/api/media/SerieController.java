@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDto;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostDto;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostResponseDto;
-import org.lafabrique_epita.application.service.media.playlist_series.PlaylistEpisodeServiceAdapter;
+import org.lafabrique_epita.application.service.media.playlist_series.PlaylistEpisodeServicePort;
 import org.lafabrique_epita.application.service.media.serie.SerieServicePort;
 import org.lafabrique_epita.domain.entities.UserEntity;
 import org.lafabrique_epita.domain.exceptions.EpisodeException;
@@ -31,12 +31,12 @@ import java.util.List;
 @RestController
 public class SerieController extends ApiControllerBase {
 
-    private final PlaylistEpisodeServiceAdapter playlistTvService;
+    private final PlaylistEpisodeServicePort playlistTvService;
 
     private final SerieServicePort serieService;
 
 
-    public SerieController(PlaylistEpisodeServiceAdapter playlistTvService, SerieServicePort serieService) {
+    public SerieController(PlaylistEpisodeServicePort playlistTvService, SerieServicePort serieService) {
         this.playlistTvService = playlistTvService;
         this.serieService = serieService;
     }

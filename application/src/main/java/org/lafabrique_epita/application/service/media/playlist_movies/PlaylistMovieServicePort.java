@@ -25,6 +25,4 @@ public interface PlaylistMovieServicePort {
     void updateStatus(Long movieId, StatusEnum status, Long userId) throws MovieException;
 
     void delete(Long movieId, int i, Long userId) throws MovieException;
-
-//    MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) throws MovieException;
 }

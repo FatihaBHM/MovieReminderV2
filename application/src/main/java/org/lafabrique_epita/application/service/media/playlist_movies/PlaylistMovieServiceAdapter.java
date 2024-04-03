@@ -133,15 +133,6 @@ public class PlaylistMovieServiceAdapter implements PlaylistMovieServicePort {
         }
     }
 
-//    @Override
-//    public MovieGetResponseDTO findMovieByIdTmdb(Long idTmdb) throws MovieException {
-//        Optional<MovieEntity> movieEntity = this.movieRepository.findByIdTmdb(idTmdb);
-//        if (movieEntity.isPresent()) {
-//            return MovieGetResponseDtoMapper.convertToMovieDto(movieEntity.get(), null);
-//        }
-//        throw new MovieException(MOVIE_NOT_FOUND, HttpStatus.NOT_FOUND);
-//    }
-
     @Override
     public List<MovieGetResponseDTO> findAllMoviesByUser(UserEntity user, MovieSort sort) {
         List<PlayListMovieEntity> playlists = playListMovieRepository.findMoviesByUserId(user);
