@@ -17,7 +17,6 @@ public class SeasonPostDtoMapper {
 
     }
 
-
     public static SeasonPostDto convertToDto(SeasonEntity seasonEntity) {
         return new SeasonPostDto(
                 seasonEntity.getOverview(),
@@ -26,4 +25,5 @@ public class SeasonPostDtoMapper {
                 seasonEntity.getSeasonNumber()
         );
     }
+
 }

@@ -4,7 +4,9 @@ import org.lafabrique_epita.domain.entities.GenreEntity;
 import org.lafabrique_epita.domain.entities.SeasonEntity;
 import org.lafabrique_epita.domain.entities.SerieEntity;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SeriePostDtoMapper {
 
@@ -35,21 +37,21 @@ public class SeriePostDtoMapper {
 
     private static List<SeasonEntity> getSeasons(SeriePostDto seriePostDto) {
         if (seriePostDto.seasons() == null) {
-            return List.of();
+            return Collections.emptyList();
         }
         return seriePostDto.seasons()
                 .stream()
                 .map(SeasonPostDtoMapper::convertToSeasonEntity)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private static List<GenreEntity> getGenres(SeriePostDto seriePostDto) {
         if (seriePostDto.genres() == null) {
-            return List.of();
+            return Collections.emptyList();
         }
         return seriePostDto.genres()
                 .stream()
                 .map(genre -> new GenreEntity(null, genre.id(), genre.name()))
-                .toList();
+                .collect(Collectors.toList());
     }
 }

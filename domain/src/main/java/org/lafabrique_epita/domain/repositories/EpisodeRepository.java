@@ -11,4 +11,6 @@ public interface EpisodeRepository {
     List<EpisodeEntity> saveAll(List<EpisodeEntity> episodeEntity);
 
     Optional<EpisodeEntity> findByIdTmdb(Long idTmdb);
+
+    void delete(EpisodeEntity episode);
 }

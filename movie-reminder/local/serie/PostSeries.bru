@@ -5,7 +5,55 @@ meta {
 }
 
 post {
-  url: 
-  body: none
-  auth: none
+  url: {{local_url}}/series
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "backdrop_path": "/mcgZDwhMlrFsfpbvCeg5RY5mhiu.jpg",
+    "first_air_date": "2008-09-03",
+    "genres": [
+      {
+        "id": 80,
+        "name": "Crime"
+      },
+      {
+        "id": 18,
+        "name": "Drama"
+      }
+    ],
+    "id_tmdb": 1409,
+    "languages": [
+      "en"
+    ],
+    "last_air_date": "2014-12-09",
+    "name": "Sons of Anarchy",
+    "next_episode_to_air": null,
+    "number_of_episodes": 92,
+    "number_of_seasons": 7,
+    "original_language": "en",
+    "title": "Sons of Anarchy",
+    "overview": "An adrenalized drama with darkly comedic undertones that explores a notorious outlaw motorcycle club’s (MC) desire to protect its livelihood while ensuring that their simple, sheltered town of Charming, California remains exactly that, charming. The MC must confront threats from drug dealers, corporate developers, and overzealous law officers. Behind the MC’s familial lifestyle and legally thriving automotive shop is a ruthless and illegal arms business driven by the seduction of money, power, and blood.",
+    "poster_path": "/yPLkf4EiCkR0NOvMfmpHMA2zfN3.jpg",
+    "seasons": [
+      {
+        "air_date": "2011-09-01",
+        "episode_count": 97,
+        "id_tmdb": 3683,
+        "name": "Specials",
+        "overview": "",
+        "poster_path": "/yn029EQ54ZNoz8udq7EPzTb12YD.jpg",
+        "season_number": 0,
+        "vote_average": 0
+      }
+    ],
+    "vote_average": 8.4,
+    "vote_count": 2711
+  }
 }

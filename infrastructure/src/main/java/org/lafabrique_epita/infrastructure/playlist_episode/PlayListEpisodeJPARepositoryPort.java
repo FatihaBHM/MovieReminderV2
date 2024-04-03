@@ -1,4 +1,4 @@
-package org.lafabrique_epita.infrastructure.playlist_tv;
+package org.lafabrique_epita.infrastructure.playlist_episode;
 
 import org.lafabrique_epita.domain.entities.EpisodeEntity;
 import org.lafabrique_epita.domain.entities.PlayListEpisodeEntity;
@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Optional;
 
-public interface PlayListTvJPARepositoryPort extends JpaRepository<PlayListEpisodeEntity, Long> {
+public interface PlayListEpisodeJPARepositoryPort extends JpaRepository<PlayListEpisodeEntity, Long> {
 
     Optional<PlayListEpisodeEntity> findByEpisodeIdAndUserId(Long episodeId, Long userId);
 
+    List<PlayListEpisodeEntity> findByEpisodeIdAndUserIdNot(Long episodeId, Long userId);
+
     @Query("SELECT episode FROM PlayListEpisodeEntity WHERE user = :user")
     List<EpisodeEntity> findEpisodesByUserId(@PathVariable UserEntity user);
-
-    boolean existsByEpisodeIdAndUserId(Long serieId, Long userId);
-
 
 }

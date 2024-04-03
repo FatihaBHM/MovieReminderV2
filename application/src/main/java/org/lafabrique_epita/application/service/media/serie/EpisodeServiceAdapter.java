@@ -3,10 +3,12 @@ package org.lafabrique_epita.application.service.media.serie;
 import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.application.dto.media.serie_post.EpisodePostDto;
 import org.lafabrique_epita.application.dto.media.serie_post.EpisodePostDtoMapper;
-import org.lafabrique_epita.domain.entities.EpisodeEntity;
-import org.lafabrique_epita.domain.entities.SeasonEntity;
+import org.lafabrique_epita.domain.entities.*;
+import org.lafabrique_epita.domain.enums.StatusEnum;
+import org.lafabrique_epita.domain.exceptions.EpisodeException;
 import org.lafabrique_epita.domain.exceptions.SerieException;
 import org.lafabrique_epita.domain.repositories.EpisodeRepository;
+import org.lafabrique_epita.domain.repositories.PlayListEpisodeRepository;
 import org.lafabrique_epita.domain.repositories.SeasonRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +25,12 @@ public class EpisodeServiceAdapter implements EpisodeServicePort {
 
     private final EpisodeRepository episodeRepository;
     private final SeasonRepository seasonRepository;
+    private final PlayListEpisodeRepository playListEpisodeRepository;
 
-    public EpisodeServiceAdapter(EpisodeRepository episodeRepository, SeasonRepository seasonRepository) {
+    public EpisodeServiceAdapter(EpisodeRepository episodeRepository, SeasonRepository seasonRepository, PlayListEpisodeRepository playListEpisodeRepository) {
         this.episodeRepository = episodeRepository;
         this.seasonRepository = seasonRepository;
+        this.playListEpisodeRepository = playListEpisodeRepository;
     }
 
     @Override
@@ -54,5 +58,24 @@ public class EpisodeServiceAdapter implements EpisodeServicePort {
         }
 
         return this.episodeRepository.saveAll(finalEpisodes);
+    }
+
+    @Override
+    public EpisodePostDto save(EpisodeEntity episodeEntity, UserEntity user) throws EpisodeException {
+        PlayListEpisodeEntity playListEpisodeEntity = new PlayListEpisodeEntity();
+        playListEpisodeEntity.setEpisode(episodeEntity);
+        playListEpisodeEntity.setUser(user);
+        playListEpisodeEntity.setFavorite(false);
+        playListEpisodeEntity.setStatus(StatusEnum.A_REGARDER);
+        playListEpisodeEntity.setScore(0);
+
+        PlayListEpisodeID playListEpisodeID = new PlayListEpisodeID();
+        playListEpisodeID.setEpisodeId(episodeEntity.getId());
+        playListEpisodeID.setUserId(user.getId());
+
+        playListEpisodeEntity.setId(playListEpisodeID);
+
+        PlayListEpisodeEntity pl = this.playListEpisodeRepository.save(playListEpisodeEntity);
+        return EpisodePostDtoMapper.convertToDto(pl.getEpisode());
     }
 }

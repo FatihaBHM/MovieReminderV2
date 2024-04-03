@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.lafabrique_epita.application.dto.media.serie_post.EpisodePostDto;
-import org.lafabrique_epita.application.service.media.playlist_series.PlaylistTvServiceAdapter;
+import org.lafabrique_epita.application.service.media.playlist_series.PlaylistEpisodeServiceAdapter;
 import org.lafabrique_epita.application.service.media.serie.EpisodeServiceAdapter;
 import org.lafabrique_epita.domain.entities.EpisodeEntity;
 import org.lafabrique_epita.domain.entities.UserEntity;
@@ -35,10 +35,10 @@ import java.util.List;
 @RestController
 public class EpisodeController extends ApiControllerBase {
 
-    private final PlaylistTvServiceAdapter playlistTvService;
+    private final PlaylistEpisodeServiceAdapter playlistTvService;
     private final EpisodeServiceAdapter episodeService;
 
-    public EpisodeController(PlaylistTvServiceAdapter playlistTvService, EpisodeServiceAdapter episodeService) {
+    public EpisodeController(PlaylistEpisodeServiceAdapter playlistTvService, EpisodeServiceAdapter episodeService) {
         this.playlistTvService = playlistTvService;
         this.episodeService = episodeService;
     }
@@ -111,7 +111,7 @@ public class EpisodeController extends ApiControllerBase {
 
         List<ResponseStatusAndFavorite> response = new ArrayList<>();
         for (EpisodeEntity episode : episodes) {
-            this.playlistTvService.save(episode, userEntity);
+            this.episodeService.save(episode, userEntity);
             if (favorite != null) {
                 response.add(updateFavorite(episode.getId(), favorite, userEntity));
             } else {

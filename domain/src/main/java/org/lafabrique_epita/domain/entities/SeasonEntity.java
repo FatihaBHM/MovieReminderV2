@@ -37,7 +37,7 @@ public class SeasonEntity extends MasterClass {
     private SerieEntity serie;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "season", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "season")
     private List<EpisodeEntity> episodes = new ArrayList<>();
 
     @ManyToMany

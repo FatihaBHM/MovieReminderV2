@@ -1,9 +1,7 @@
 package org.lafabrique_epita.application.dto.media.serie_post;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import org.lafabrique_epita.application.dto.media.GenreDto;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,6 +29,8 @@ public record SeriePostDto(
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate lastAirDate,
 
+        @NotNull(message = "Le titre ne doit pas être nul")
+        @Size(min = 1, message = "Le titre ne doit pas être vide")
         String title,
 
         @PositiveOrZero(message = "Le nombre d'épisodes doit être positif ou nul")

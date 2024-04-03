@@ -7,7 +7,7 @@ import org.lafabrique_epita.domain.entities.UserEntity;
 import java.util.List;
 import java.util.Optional;
 
-public interface PlayListTvRepository {
+public interface PlayListEpisodeRepository {
 
     PlayListEpisodeEntity save(PlayListEpisodeEntity playListEpisodeEntity);
 
@@ -17,6 +17,5 @@ public interface PlayListTvRepository {
 
     List<EpisodeEntity> findEpisodesByUserId(UserEntity user);
 
-    boolean existsByEpisodeIdAndUserId(Long episodeId, Long userId);
-
+    List<PlayListEpisodeEntity> findByEpisodeAndUserIdNot(EpisodeEntity episode, Long userId);
 }

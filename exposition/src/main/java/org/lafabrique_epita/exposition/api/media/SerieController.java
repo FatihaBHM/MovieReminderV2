@@ -8,12 +8,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.lafabrique_epita.application.dto.media.serie_get.SerieGetResponseDto;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostDto;
 import org.lafabrique_epita.application.dto.media.serie_post.SeriePostResponseDto;
-import org.lafabrique_epita.application.service.media.playlist_series.PlaylistTvServiceAdapter;
+import org.lafabrique_epita.application.service.media.playlist_series.PlaylistEpisodeServiceAdapter;
 import org.lafabrique_epita.application.service.media.serie.SerieServicePort;
 import org.lafabrique_epita.domain.entities.UserEntity;
+import org.lafabrique_epita.domain.exceptions.EpisodeException;
 import org.lafabrique_epita.domain.exceptions.SerieException;
 import org.lafabrique_epita.exposition.api.ApiControllerBase;
 import org.lafabrique_epita.exposition.exception.ErrorMessage;
@@ -24,16 +26,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Tag(name = "Serie", description = "L'API Série")
 @RestController
 public class SerieController extends ApiControllerBase {
 
-    private final PlaylistTvServiceAdapter playlistTvService;
+    private final PlaylistEpisodeServiceAdapter playlistTvService;
 
     private final SerieServicePort serieService;
 
 
-    public SerieController(PlaylistTvServiceAdapter playlistTvService, SerieServicePort serieService) {
+    public SerieController(PlaylistEpisodeServiceAdapter playlistTvService, SerieServicePort serieService) {
         this.playlistTvService = playlistTvService;
         this.serieService = serieService;
     }
@@ -50,7 +53,7 @@ public class SerieController extends ApiControllerBase {
             ))
     })
     @PostMapping("/series")
-    public ResponseEntity<SeriePostResponseDto> getFrontSerie(@Valid @RequestBody SeriePostDto seriePostDto, Authentication authentication) throws SerieException {
+    public ResponseEntity<SeriePostResponseDto> getFrontSerie(@Valid @RequestBody SeriePostDto seriePostDto, Authentication authentication) throws SerieException, EpisodeException {
         UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         SeriePostResponseDto serieDto = playlistTvService.save(seriePostDto, userEntity);
