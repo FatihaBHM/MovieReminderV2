@@ -113,29 +113,29 @@ public class EpisodeController extends ApiControllerBase {
         for (EpisodeEntity episode : episodes) {
             this.episodeService.save(episode, userEntity);
             if (favorite != null) {
-                response.add(updateFavorite(episode.getId(), favorite, userEntity));
+                response.add(updateFavorite(episode.getIdTmdb(), favorite, userEntity));
             } else {
-                response.add(updateStatus(episode.getId(), status, userEntity));
+                response.add(updateStatus(episode.getIdTmdb(), status, userEntity));
             }
         }
         return ResponseEntity.ok().body(response);
     }
 
-    private ResponseStatusAndFavorite updateFavorite(Long episodeId, Integer favorite, UserEntity userEntity) throws SerieException {
+    private ResponseStatusAndFavorite updateFavorite(Long episodeTmdbId, Integer favorite, UserEntity userEntity) throws SerieException {
         if (favorite < 0 || favorite > 1) {
             throw new SerieException("Le favori doit être 0 ou 1 (0 => supprimer, 1 => ajouter)", HttpStatus.BAD_REQUEST);
         }
-        boolean fav = playlistTvService.updateFavorite(episodeId, favorite, userEntity.getId());
-        return new Favorite(episodeId, fav);
+        boolean fav = playlistTvService.updateFavorite(episodeTmdbId, favorite, userEntity.getId());
+        return new Favorite(episodeTmdbId, fav);
     }
 
-    private ResponseStatusAndFavorite updateStatus(Long episodeId, Integer status, UserEntity userEntity) throws SerieException {
+    private ResponseStatusAndFavorite updateStatus(Long episodeTmdbId, Integer status, UserEntity userEntity) throws SerieException {
         if (status < 0 || status > 3) {
             throw new SerieException("Le statut doit être 0, 1, 2 ou 3 (0 => A_REGARDER, 1 => EN_COURS, 2 => VU, 3 => ABANDON)", HttpStatus.BAD_REQUEST);
         }
         StatusEnum statusEnum = statusToString(status);
-        playlistTvService.updateStatus(episodeId, statusEnum, userEntity.getId());
-        return new Status(episodeId, statusEnum);
+        playlistTvService.updateStatus(episodeTmdbId, statusEnum, userEntity.getId());
+        return new Status(episodeTmdbId, statusEnum);
     }
 
     private StatusEnum statusToString(int status) {

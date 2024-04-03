@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.lafabrique_epita.domain.enums.StatusEnum;
 
 public record Status(
-        @JsonProperty("media_id")
-        Long mediaId,
+        @JsonProperty("tmdb_id")
+        Long tmdbId,
 
         @JsonProperty("status")
         StatusEnum status

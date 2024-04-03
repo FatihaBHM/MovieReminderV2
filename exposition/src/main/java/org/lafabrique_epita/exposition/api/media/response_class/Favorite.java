@@ -3,8 +3,8 @@ package org.lafabrique_epita.exposition.api.media.response_class;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record Favorite(
-        @JsonProperty("media_id")
-        Long mediaId,
+        @JsonProperty("tmdb_id")
+        Long tmdbId,
 
         @JsonProperty("favorite")
         boolean favorite
